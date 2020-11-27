@@ -1,0 +1,7 @@
+/* grid 부분 css */
+
+.grid_container {
+  height: 100%;
+  width: 77%;
+  border-right: 3px solid #e1e1e1;
+}
