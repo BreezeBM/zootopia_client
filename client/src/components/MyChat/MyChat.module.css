@@ -1,0 +1,80 @@
+.talkBox {
+  display: flexbox;
+  width: 20rem;
+  transition: all 250ms ease-in-out;
+}
+
+.message {
+  position: relative;
+  display: flex;
+  padding: 2%;
+  border: 2px solid #e7e7e7;
+  border-radius: 1rem;
+  width: 70%;
+  left: 110%;
+  font-family: MaplestoryOTFLight;
+  font-size: 0.8rem;
+  transition: all 180ms ease-in-out;
+  word-break: break-all;
+}
+
+.dates {
+  position: relative;
+  display: flex;
+  left: 153%;
+  font-family: MaplestoryOTFLight;
+  color: #8f8f8f;
+  font-size: 0.6rem;
+  margin-bottom: 0.5rem;
+  transition: all 180ms ease-in-out;
+}
+
+@media (max-width: 1400px) {
+  .message {
+    left: 100%;
+  }
+
+  .dates {
+    left: 140%;
+  }
+}
+
+@media (max-width: 1315px) {
+  .message {
+    left: 90%;
+  }
+
+  .dates {
+    left: 130%;
+  }
+}
+
+@media (max-width: 1230px) {
+  .message {
+    left: 81%;
+  }
+
+  .dates {
+    left: 123%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .message {
+    left: 55%;
+  }
+
+  .dates {
+    left: 95%;
+  }
+}
+
+@media (max-width: 800px) {
+  .message {
+    left: 40%;
+  }
+
+  .dates {
+    left: 82%;
+  }
+}

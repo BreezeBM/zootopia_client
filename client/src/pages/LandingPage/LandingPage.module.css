@@ -1,5 +1,132 @@
-.landingpage{
-    background-color: lightgray;
-    height:50rem;
-    font-size: 50px;
+.landingpage {
+  background-image: url('../../images/qulityBack.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flexbox;
+}
+
+.buttonBox {
+  width: 35%;
+  height: 15%;
+  display: flexbox;
+  position: relative;
+  top: 63%;
+  left: 33%;
+}
+
+.google {
+  position: absolute;
+  display: flex;
+  width: 4rem;
+  height: 4rem;
+  margin: 3rem;
+  cursor: pointer;
+  transition: all 250ms ease-in-out;
+}
+
+.google:hover {
+  transform: scale(1.2);
+}
+
+.github {
+  position: absolute;
+  display: flex;
+  width: 4rem;
+  height: 4rem;
+  margin: 3rem;
+  cursor: pointer;
+  transition: all 250ms ease-in-out;
+  left: 35%;
+}
+
+.github:hover {
+  transform: scale(1.2);
+}
+
+.guest {
+  position: absolute;
+  display: flex;
+  width: 4rem;
+  height: 4rem;
+  margin: 3rem;
+  cursor: pointer;
+  transition: all 250ms ease-in-out;
+  left: 70%;
+}
+
+.guest:hover {
+  transform: scale(1.2);
+}
+
+.login {
+  display: flex;
+  color: white;
+  font-family: MaplestoryOTFBold;
+  font-size: 1.3rem;
+  font-weight: bold;
+  position: absolute;
+  top: 63%;
+  left: 45%;
+}
+
+@media (max-width: 1000px) {
+  .google {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .github {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .guest {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .buttonBox {
+    left: 29%;
+    transition: all 250ms ease-in-out;
+  }
+  .login {
+    transition: all 250ms ease-in-out;
+    left: 41%;
+    font-size: 1rem;
+  }
+}
+
+@media (max-height: 310px) {
+  .landingpage {
+    transition: all 250ms ease-in-out;
+    height: 18.6rem;
+  }
+  .buttonBox {
+    left: 25%;
+  }
+  .login {
+    left: 36%;
+  }
+}
+
+@media (max-width: 450px) {
+  .landingpage {
+    background-image: url('../../images/mobileBack.png');
+  }
+  .buttonBox {
+    top: 63%;
+    left: 17%;
+    width: 50%;
+  }
+  .login {
+    left: 33%;
+    font-size: 0.9rem;
+  }
+  .google {
+    margin-right: 20px;
+  }
 }

@@ -44,7 +44,9 @@
       "consistent-return": 0,
       "react/no-array-index-key": 0,
       "jsx-a11y/no-noninteractive-element-interactions": 0,
-      "jsx-a11y/label-has-associated-control": 0
+      "jsx-a11y/label-has-associated-control": 0,
+      "no-restricted-globals": 0,
+      "no-use-before-define": 0
     }
   },
   "browserslist": {
