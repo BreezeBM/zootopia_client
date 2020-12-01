@@ -3,7 +3,7 @@ import Cropper from 'react-easy-crop';
 import styles from './CropModal.module.css';
 // import close from '../../images/close.png';
 
-const CropModal = ({ setNowImg, imgSrc, isModalOn, handleClose }) => {
+const CropModal = ({ setNowImg, imgSrc, isModalOn }) => {
   const cropRef = createRef();
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -53,10 +53,6 @@ const CropModal = ({ setNowImg, imgSrc, isModalOn, handleClose }) => {
     }
   };
 
-  const cropDone = () => {
-    handleClose();
-  };
-
   return (
     <div className={`${styles.modal} ${isModalOn && styles.isOn}`} id="cropper">
       <Cropper
@@ -69,9 +65,6 @@ const CropModal = ({ setNowImg, imgSrc, isModalOn, handleClose }) => {
         onCropChange={onCropChange}
         onZoomChange={setZoom}
       />
-      <button type="button" onClick={cropDone}>
-        시발
-      </button>
     </div>
   );
 };

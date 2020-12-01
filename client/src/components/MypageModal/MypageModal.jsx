@@ -120,7 +120,6 @@ const MypageModal = ({ isModalOn, handleClose }) => {
 
   return (
     <>
-      {yeah && <img src={yeah} alt="fuck" />}
       <CropModal
         imgSrc={imgSrc}
         setNowImg={handleNowImg}
