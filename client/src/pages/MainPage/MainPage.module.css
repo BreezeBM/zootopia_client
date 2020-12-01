@@ -1,3 +1,11 @@
+.dic {
+  display: none;
+}
+
+#source {
+  width: 300;
+  height: 227;
+}
 /* 배경화면 적용을 위한 main 부분 css */
 
 .main {

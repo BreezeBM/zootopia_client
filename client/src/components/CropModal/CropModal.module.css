@@ -1,4 +1,77 @@
+.crop_container {
+  position: fixed;
+  z-index: 0;
+  opacity: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+}
 
-.crop-container {
+.crop_container.isOn {
+  z-index: 4;
+  opacity: 1;
+}
+
+.close {
   position: absolute;
-} */
+  width: 1.2rem;
+  right: 1.2rem;
+  top: 1.2rem;
+  cursor: pointer;
+  z-index: 5;
+  color: white;
+}
+
+.zoomControl {
+  color: white;
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  width: 25%;
+  display: flex;
+  align-items: center;
+}
+
+.editBtn {
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: white;
+  cursor: pointer;
+  font-family: MapleStoryOTFBold;
+  font-size: 1.3rem;
+  padding: 0.8rem;
+}
+
+.zoomPart {
+  margin-left: 1.7rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.zoomAnnounce {
+  font-size: 1.5rem;
+  width: 100%;
+  text-align: center;
+  font-family: MapleStoryOTFLight;
+}
+
+.slider {
+  color: white !important;
+}
+
+@media screen and (max-width: 65rem) {
+  .zoomPart {
+    display: none;
+  }
+
+  .editBtn {
+    position: fixed;
+    right: 1.2rem;
+    bottom: 1.2rem;
+  }
+}

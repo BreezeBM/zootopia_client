@@ -10,15 +10,16 @@ import CropModal from '../CropModal/CropModal';
 
 const MypageModal = ({ isModalOn, handleClose }) => {
   // img 변경관련 로직
+
   const [cropModalOn, setCropModalOn] = useState(false);
   const handleCropModalOn = () => {
     setCropModalOn(!cropModalOn);
   };
   const [imgSrc, setImgSrc] = useState(null);
-  const [nowImg, setNowImg] = useState(defaultProfile);
-  const handleNowImg = (newImg) => {
-    setNowImg(newImg);
-  };
+  const [nowImg] = useState(defaultProfile);
+  // const handleNowImg = (newImg) => {
+  //   setNowImg(newImg);
+  // };
 
   const changeProfile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -120,7 +121,6 @@ const MypageModal = ({ isModalOn, handleClose }) => {
 
   return (
     <>
-      <CropModal isModalOn={cropModalOn} handleClose={handleCropModalOn} />
       <DeleteModal isModalOn={deleteModalOn} handleClose={viewDeleteModal} />
       <Modal isModalOn={isModalOn} handleClose={handleClose}>
         <div className={styles.MypageModal}>
@@ -219,6 +219,11 @@ const MypageModal = ({ isModalOn, handleClose }) => {
           </div>
         </div>
       </Modal>
+      <CropModal
+        imgSrc={imgSrc}
+        isModalOn={cropModalOn}
+        handleClose={handleCropModalOn}
+      />
     </>
   );
 };
