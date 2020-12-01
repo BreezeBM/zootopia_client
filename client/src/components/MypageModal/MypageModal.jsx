@@ -120,12 +120,7 @@ const MypageModal = ({ isModalOn, handleClose }) => {
 
   return (
     <>
-      <CropModal
-        imgSrc={imgSrc}
-        setNowImg={handleNowImg}
-        isModalOn={cropModalOn}
-        handleClose={handleCropModalOn}
-      />
+      <CropModal isModalOn={cropModalOn} handleClose={handleCropModalOn} />
       <DeleteModal isModalOn={deleteModalOn} handleClose={viewDeleteModal} />
       <Modal isModalOn={isModalOn} handleClose={handleClose}>
         <div className={styles.MypageModal}>
