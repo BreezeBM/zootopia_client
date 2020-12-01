@@ -1,0 +1,51 @@
+.modal {
+  position: fixed;
+  z-index: 0;
+  opacity: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+  /* background-color: rgba(0, 0, 0, 0.4); */
+  transition: all 20ms ease-in-out;
+}
+
+.modal.isOn {
+  z-index: 5;
+  opacity: 1;
+}
+
+.box {
+  position: relative;
+
+  width: 60rem;
+  height: 30rem;
+  background: #ffc600;
+  border-radius: 25px;
+  box-shadow: 2px 4px 9px 0 rgba(0, 0, 0, 0.5);
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.close {
+  position: absolute;
+  width: 1.2rem;
+  right: 1.2rem;
+  top: 1.2rem;
+  cursor: pointer;
+}
+
+#cropper {
+  position: relative;
+}
+
+button {
+  width: 100%;
+  z-index: 99;
+  height: 20%;
+}
