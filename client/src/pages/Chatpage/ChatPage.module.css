@@ -1,6 +1,254 @@
-.chatpage{
-    background-color: lightgray;
-    height:40rem;
-    font-size: 50px;
-    margin-top:4rem;
+.main {
+  background-image: url('../../images/Background_main.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: all 250ms ease-in-out;
+}
+
+.flexBox {
+  position: relative;
+  display: flex;
+  width: 60%;
+  height: 100%;
+  margin-left: 20%;
+  border-left: 2px solid #e1e1e1;
+  border-right: 2px solid #e1e1e1;
+  border-bottom: 2px solid #e1e1e1;
+  transition: all 250ms ease-in-out;
+}
+
+.listBox {
+  position: relative;
+  display: flexbox;
+  background-color: white;
+  width: 30%;
+  overflow: auto;
+  transition: all 250ms ease-in-out;
+}
+
+.profile {
+  position: relative;
+  display: flexbox;
+  width: 100%;
+  height: 23%;
+  border-bottom: 2px solid #e1e1e1;
+}
+
+.image {
+  position: relative;
+  display: flex;
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  top: 50%;
+  left: 7%;
+  margin: 0%;
+  transition: all 250ms ease-in-out;
+}
+
+.name {
+  position: relative;
+  display: flex;
+  width: 9rem;
+  top: 20%;
+  left: 35%;
+  margin: 0%;
+  font-family: MaplestoryOTFBold;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: all 250ms ease-in-out;
+}
+
+.breed {
+  position: relative;
+  display: flex;
+  width: 9rem;
+  top: 27%;
+  left: 35%;
+  margin: 0%;
+  font-family: MaplestoryOTFLight;
+  color: #8f8f8f;
+  font-size: 0.6rem;
+  transition: all 250ms ease-in-out;
+}
+
+.chatBox {
+  position: relative;
+  display: flexbox;
+  width: 70%;
+  border-left: 1.6px solid #e1e1e1;
+  transition: all 250ms ease-in-out;
+}
+
+.chatonBoard {
+  display: flexbox;
+  background-color: white;
+  height: 90%;
+  width: 100%;
+  transition: all 250ms ease-in-out;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.chatPost {
+  position: absolute;
+  display: flex;
+  background-color: white;
+  height: 10%;
+  width: 100%;
+  border-top: 1.6px solid #e1e1e1;
+  border-left: transparent;
+  border-right: transparent;
+  border-bottom: transparent;
+  transition: all 250ms ease-in-out;
+  outline: none;
+}
+
+@media (max-width: 1200px) {
+  .image {
+    width: 2.5rem;
+    height: 2.5rem;
+    top: 57%;
+    left: 7%;
+  }
+
+  .name {
+    width: 7rem;
+    top: 31%;
+    font-size: 0.8rem;
+  }
+
+  .breed {
+    width: 7rem;
+    top: 33%;
+    left: 34%;
+    font-size: 0.36rem;
+  }
+
+  .listBox {
+    width: 14rem;
+  }
+
+  .flexBox {
+    width: 40rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .flexBox {
+    width: 36rem;
+    height: 100%;
+    margin-left: 6rem;
+  }
+
+  .profile {
+    height: 9rem;
+  }
+
+  .image {
+    width: 2.2rem;
+    height: 2.2rem;
+    top: 57%;
+    left: 7%;
+  }
+
+  .name {
+    width: 7rem;
+    top: 31%;
+    font-size: 0.8rem;
+  }
+
+  .breed {
+    width: 7rem;
+    top: 33%;
+    left: 34%;
+    font-size: 0.36rem;
+  }
+}
+
+@media (max-height: 630px) {
+  .flexBox {
+    height: 36rem;
+    transition: all 250ms ease-in-out;
+  }
+
+  .profile {
+    height: 9rem;
+    transition: all 250ms ease-in-out;
+  }
+
+  .image {
+    width: 2.2rem;
+    height: 2.2rem;
+    top: 57%;
+    left: 7%;
+    transition: all 250ms ease-in-out;
+  }
+
+  .name {
+    width: 7rem;
+    top: 31%;
+    font-size: 0.8rem;
+    transition: all 250ms ease-in-out;
+  }
+
+  .breed {
+    width: 7rem;
+    top: 33%;
+    left: 34%;
+    font-size: 0.36rem;
+    transition: all 250ms ease-in-out;
+  }
+}
+
+.block {
+  position: relative;
+  display: flex;
+  height: 4.125rem;
+  transition: all 250ms ease-in-out;
+}
+
+.talkBox {
+  display: flexbox;
+  width: 20rem;
+  transition: all 250ms ease-in-out;
+}
+
+.message {
+  position: relative;
+  display: flex;
+  padding: 2%;
+  border: 2px solid #e7e7e7;
+  border-radius: 1rem;
+  width: 70%;
+  left: 3rem;
+  font-family: MaplestoryOTFLight;
+  font-size: 0.8rem;
+  transition: all 250ms ease-in-out;
+  word-break: break-all;
+}
+
+.chatProfile {
+  position: relative;
+  display: inline-flex;
+  border-radius: 50%;
+  width: 2.2rem;
+  height: 2.2rem;
+  left: 1rem;
+  transition: all 250ms ease-in-out;
+}
+
+.dates {
+  position: relative;
+  display: flex;
+  left: 3.6rem;
+  font-family: MaplestoryOTFLight;
+  color: #8f8f8f;
+  font-size: 0.6rem;
+  margin-bottom: 0.5rem;
+  transition: all 250ms ease-in-out;
 }
