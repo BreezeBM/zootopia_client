@@ -11,13 +11,15 @@ const DeleteModal = ({ isModalOn, handleClose }) => {
 
   const deleteAccount = async () => {
     try {
-      const response = await axios.delete('/user');
-      if (response.status === 200) {
+      const response = await axios.delete(
+        'https://server.codestates-project.tk/user',
+      );
+      if (response.status === 201) {
         setDeleted(true);
         setTimeout(() => {
           // 탈퇴 완료후에 랜딩페이지로 자동 이동(4초후에)
           history.push('/');
-        }, 4000);
+        }, 5000);
       }
     } catch (err) {
       if (err.response.status === 501) {
