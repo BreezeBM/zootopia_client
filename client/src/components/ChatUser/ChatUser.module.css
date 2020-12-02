@@ -3,6 +3,12 @@
   display: flexbox;
   height: 4rem;
   background-color: white;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+}
+
+.usercard:hover {
+  transform: scale(1.05);
 }
 
 .userProfile {
@@ -44,4 +50,18 @@
   font-family: MaplestoryOTFLight;
   color: #ffc600;
   font-size: 0.6rem;
+}
+
+@media (max-width: 600px) {
+  .username {
+    left: 5rem;
+  }
+
+  .userbreed {
+    left: 5rem;
+  }
+
+  .status {
+    left: 5rem;
+  }
 }

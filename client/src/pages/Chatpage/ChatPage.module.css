@@ -13,6 +13,7 @@
   position: relative;
   display: flex;
   width: 60%;
+  top: 2%;
   height: 100%;
   margin-left: 20%;
   border-left: 2px solid #e1e1e1;
@@ -92,6 +93,7 @@
   transition: all 250ms ease-in-out;
   overflow-y: scroll;
   overflow-x: hidden;
+  -ms-overflow-style: none;
 }
 
 .chatPost {
@@ -106,6 +108,10 @@
   border-bottom: transparent;
   transition: all 250ms ease-in-out;
   outline: none;
+}
+
+.profileBlock {
+  display: none;
 }
 
 @media (max-width: 1200px) {
@@ -138,8 +144,15 @@
   }
 }
 
+@media (max-width: 1038px) {
+  .flexBox {
+    top: 7.7%;
+  }
+}
+
 @media (max-width: 800px) {
   .flexBox {
+    top: 10%;
     width: 36rem;
     height: 100%;
     margin-left: 6rem;
@@ -156,7 +169,7 @@
     left: 7%;
   }
 
-  .name {
+  #name {
     width: 7rem;
     top: 31%;
     font-size: 0.8rem;
@@ -251,4 +264,42 @@
   font-size: 0.6rem;
   margin-bottom: 0.5rem;
   transition: all 250ms ease-in-out;
+}
+
+@media (max-width: 600px) {
+  .profile {
+    display: none;
+  }
+
+  .chatBox {
+    display: none;
+    height: 36rem;
+  }
+
+  .listBox {
+    position: relative;
+    display: flexbox;
+    background-color: white;
+    width: 23rem;
+    overflow: auto;
+    transition: all 250ms ease-in-out;
+  }
+
+  .main {
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+
+  .flexBox {
+    margin-left: 16%;
+  }
+
+  .profileBlock {
+    display: flex;
+    height: 3rem;
+    color: white;
+  }
+  .block {
+    height: 6rem;
+  }
 }
