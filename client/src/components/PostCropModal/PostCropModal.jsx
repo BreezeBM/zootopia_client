@@ -1,13 +1,13 @@
 import { React, useState } from 'react';
 import Cropper from 'react-easy-crop';
-import axios from 'axios';
 import Slider from '@material-ui/core/Slider';
-import styles from './CropModal.module.css';
+import styles from './PostCropModal.module.css';
 import close from '../../images/close(white).png';
 
-const CropModal = ({
+const PostCropModal = ({
+  setImgSrcs,
+  inputNum,
   setImgSrc,
-  setNowImg,
   imgSrc,
   isModalOn,
   handleClose,
@@ -68,28 +68,8 @@ const CropModal = ({
     makeClientCrop(croppedAreaPixels);
   };
 
-  const editPicture = async () => {
-    const encodeData = croppedData.replace('data:image/png;base64,', '');
-    const decodImg = atob(encodeData);
-    const array = [];
-    for (let i = 0; i < decodImg.length; i += 1) {
-      array.push(decodImg.charCodeAt(i));
-    }
-    const file = new Blob([new Uint8Array(array)], { type: 'image/png' });
-    const fileName = 'canvas_img_'.concat(new Date().getMilliseconds(), '.png');
-
-    const formData = new FormData();
-    formData.append('image', file, fileName);
-
-    const response = await axios({
-      method: 'post',
-      url: 'https://server.codestates-project.tk/user/photo',
-      data: formData,
-      headers: {
-        'Content-Type': `multipart/form-data`,
-      },
-    });
-    setNowImg(response.data.thumbnail);
+  const uploadPicture = async () => {
+    setImgSrcs(inputNum, croppedData);
     setImgSrc(null);
     handleClose();
   };
@@ -120,9 +100,9 @@ const CropModal = ({
           <button
             className={styles.editBtn}
             type="button"
-            onClick={editPicture}
+            onClick={uploadPicture}
           >
-            Update
+            Upload
           </button>
         </div>
         <div className={styles.zoomPart}>
@@ -142,4 +122,4 @@ const CropModal = ({
   );
 };
 
-export default CropModal;
+export default PostCropModal;

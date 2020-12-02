@@ -56,6 +56,7 @@
   display: flex;
   height: 35%;
   margin-left: 2rem;
+  margin-bottom: 1.1rem;
 }
 
 .imgInput {
@@ -93,7 +94,6 @@
 }
 
 .textInputPart {
-  margin-top: 1.2rem;
   text-align: center;
   height: 50%;
   width: 100%;
@@ -109,6 +109,17 @@
   padding: 1rem;
   border: 3px grey solid;
   border-radius: 0.5rem;
+}
+
+.textInput.isOn::placeholder {
+  color: red;
+}
+
+.imgCheck {
+  font-family: MaplestoryOTFLight;
+  color: red;
+  text-align: center;
+  padding-bottom: 0.3rem;
 }
 
 .btnInputPart {
