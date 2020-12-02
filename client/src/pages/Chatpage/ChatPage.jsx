@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import styles from './ChatPage.module.css';
 import iguanaImg from '../../images/iguana.jpeg';
 import ChatUser from '../../components/ChatUser/ChatUser';
@@ -10,30 +10,35 @@ const messageContent =
   '본사는 소규모창업아이템으로 성공한 사례와 실패 사례에관한 경험을 바탕으로 외식업 창업 성공에 관한 전문지식을 갖춘 창업 전문가들이 상권분석, 매장계약, 오픈 전까지의 모든 과정을 컨설팅하여 진행 중”이라며 “한식도시락배달 창업 또는 샵인샵배달창업을 고려하고 있는 예비 가맹점주들은 전문 상담을 통해 문의 해보길 바란다”고 전했다.';
 
 const ChatPage = () => {
+  const test = createRef();
+
   const myFunction = function () {
-    alert('test');
+    console.log('working');
+    test.current.style.display = 'none';
   };
+
   return (
     <div className={styles.main}>
       <div className={styles.main}> </div>
       <div className={styles.flexBox}>
-        <div className={styles.listBox}>
+        <div className={styles.listBox} ref={test}>
           <div className={styles.profile}>
             <img className={styles.image} src={iguanaImg} alt="profile" />
             <div className={styles.name}>{username}</div>
             <div className={styles.breed}>{breedname}</div>
           </div>
           <div className={styles.userlist}>
+            <div className={styles.profileBlock}>모바일 버전용</div>
+            <ChatUser onClick={myFunction} />
             <ChatUser />
-            <ChatUser />
-            <ChatUser />
-            <ChatUser />
-            <ChatUser />
-            <ChatUser />
-            <ChatUser />
-            <ChatUser />
-            <ChatUser />
-            <ChatUser />
+            <ChatUser func={myFunction} />
+            <ChatUser func={myFunction} />
+            <ChatUser func={myFunction} />
+            <ChatUser func={myFunction} />
+            <ChatUser func={myFunction} />
+            <ChatUser func={myFunction} />
+            <ChatUser func={myFunction} />
+            <ChatUser func={myFunction} />
           </div>
         </div>
         <div className={styles.chatBox}>
