@@ -1,27 +1,31 @@
-import { React, useEffect } from 'react';
+import { React, useEffect, createRef } from 'react';
 import styles from './Posts.module.css';
 import Post from '../Post/Post';
 
 const Posts = ({ posts, addPost, viewPost }) => {
   //   infinite scroll logic with IntersectionObserver API
-  const options = {
-    root: document.querySelector(styles.grid_container),
-    rootMargin: '0px',
-    threshold: 1.0,
+  const target = createRef();
+  // const [isLoaded, setIsLoaded] = useState(false);
+
+  const fetchItems = async () => {
+    // setIsLoaded(true);
+    await addPost();
+    // setIsLoaded(false);
   };
 
-  const callback = (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting && entry.boundingClientRect.top >= 870)
-        addPost();
-    });
+  const onIntersect = async ([entry], observer) => {
+    if (entry.isIntersecting) {
+      console.log('intersecting');
+      observer.unobserve(entry.target);
+      await fetchItems();
+      observer.observe(entry.target);
+    }
   };
-
-  const observer = new IntersectionObserver(callback, options);
 
   useEffect(() => {
-    const target = document.querySelector('.observer');
-    observer.observe(target);
+    const observer = new IntersectionObserver(onIntersect, { threshold: 0.5 });
+    observer.observe(target.current);
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -30,7 +34,9 @@ const Posts = ({ posts, addPost, viewPost }) => {
         {posts.map((post, idx) => (
           <Post dummyData={post.title} key={idx} viewPost={viewPost} />
         ))}
-        <div className="observer" />
+        <div ref={target} className={styles.observer}>
+          isLoading...
+        </div>
       </div>
     </div>
   );

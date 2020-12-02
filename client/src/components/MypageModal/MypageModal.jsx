@@ -16,9 +16,9 @@ const MypageModal = ({ isModalOn, handleClose }) => {
   };
   const [imgSrc, setImgSrc] = useState(null);
   const [nowImg, setNowImg] = useState(defaultProfile);
-  const handleNowImg = (newImg) => {
-    setNowImg(newImg);
-  };
+  // const handleNowImg = (newImg) => {
+  //   setNowImg(newImg);
+  // };
 
   const changeProfile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -65,17 +65,19 @@ const MypageModal = ({ isModalOn, handleClose }) => {
     if (checked.petname) {
       try {
         const response = await axios.patch(
-          '/user/petname',
+          'https://server.codestates-project.tk/user/petname',
           {
             petName,
           },
           { withCredentials: true },
         );
-        if (response.status === 200) {
+        if (response.status === 201) {
           setNowPetName(petName);
-          petnameRef.current.blur();
+          setPetname(petName);
+          petnameRef.current.blur(); // 해결하기
         }
       } catch (err) {
+        // 중복 펫네임 409
         if (err.response.status === 501) {
           alert('some errors occur at server, please try again');
         } else if (err.response.status === 404) {
@@ -92,14 +94,15 @@ const MypageModal = ({ isModalOn, handleClose }) => {
     if (checked.breed) {
       try {
         const response = await axios.patch(
-          '/user/breed',
+          'https://server.codestates-project.tk/user/breed',
           {
             breed,
           },
           { withCredentials: true },
         );
-        if (response.status === 200) {
+        if (response.status === 201) {
           setNowBreed(breed);
+          setBreed(breed);
           breedRef.current.blur();
         }
       } catch (err) {
@@ -112,6 +115,13 @@ const MypageModal = ({ isModalOn, handleClose }) => {
     }
   };
 
+  const resetAndTurnOffTheModal = () => {
+    setPetname(nowPetName);
+    setBreed(nowBreed);
+    setChecked({ petname: true, breed: true });
+    handleClose();
+  };
+
   // 회원 탈퇴 모달은 디폴트 모달을 재활용하지 않는 것이기에 따로 state로 관리
   const [deleteModalOn, setDeleteModalOn] = useState(false);
   const viewDeleteModal = () => {
@@ -120,14 +130,8 @@ const MypageModal = ({ isModalOn, handleClose }) => {
 
   return (
     <>
-      <CropModal
-        imgSrc={imgSrc}
-        setNowImg={handleNowImg}
-        isModalOn={cropModalOn}
-        handleClose={handleCropModalOn}
-      />
       <DeleteModal isModalOn={deleteModalOn} handleClose={viewDeleteModal} />
-      <Modal isModalOn={isModalOn} handleClose={handleClose}>
+      <Modal isModalOn={isModalOn} handleClose={resetAndTurnOffTheModal}>
         <div className={styles.MypageModal}>
           <div className={styles.profile}>
             <div className={styles.imgPart}>
@@ -224,6 +228,13 @@ const MypageModal = ({ isModalOn, handleClose }) => {
           </div>
         </div>
       </Modal>
+      <CropModal
+        setNowImg={setNowImg}
+        imgSrc={imgSrc}
+        setImgSrc={setImgSrc}
+        isModalOn={cropModalOn}
+        handleClose={handleCropModalOn}
+      />
     </>
   );
 };

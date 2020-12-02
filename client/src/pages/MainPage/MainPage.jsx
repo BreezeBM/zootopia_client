@@ -21,16 +21,10 @@ const MainPage = () => {
     { title: 'a' },
     { title: 'a' },
     { title: 'a' },
-    { title: 'a' },
-    { title: 'a' },
-    { title: 'a' },
-    { title: 'a' },
-    { title: 'a' },
-    { title: 'a' },
   ];
   const [posts, setPosts] = useState(fakePosts);
   //   const [isLoading, setIsLoading] = useState(false);
-  const addPost = async () => {
+  const addPost = () => {
     const arr = [
       { title: 'a' },
       { title: 'a' },
@@ -42,9 +36,7 @@ const MainPage = () => {
       { title: 'a' },
       { title: 'a' },
     ];
-    await setPosts((prev) => {
-      return [...arr, ...prev];
-    });
+    setPosts((prev) => [...arr, ...prev]);
   };
   const [isAddPostOn, setIsAddPostOn] = useState(false);
   const [isPostOn, setIsPostOn] = useState(false);
