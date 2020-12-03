@@ -1,16 +1,7 @@
-.dic {
-  display: none;
-}
-
-#source {
-  width: 300;
-  height: 227;
-}
 /* 배경화면 적용을 위한 main 부분 css */
 
 .main {
   background-image: url('../../images/Background_main.png');
-
   position: absolute;
   width: 100%;
   height: 100%;
@@ -19,6 +10,7 @@
 /* profile, grid 를 묶어놓은 flexbox */
 
 .flexBox {
+  position: absolute;
   display: flex;
   width: 80%;
   height: 100%;

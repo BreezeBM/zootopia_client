@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import axios from 'axios';
 import styles from './MainPage.module.css';
 import Posts from '../../components/Posts/Posts';
@@ -6,46 +6,80 @@ import profileImg from '../../images/iguana.jpeg';
 import addPostImg from '../../images/bark.png';
 import PostModal from '../../components/PostModal/PostModal';
 import PostNewFormModal from '../../components/PostNewFormModal/PostNewFormModal';
+import img from '../../thumbnails/post_g.png';
 
 const MainPage = () => {
   const viewProfile = () => {
     console.log('해당 프로필 유저의 posts를 렌더링');
   };
-  const fakePosts = [
-    { title: 'a' },
-    { title: 'a' },
-    { title: 'a' },
-    { title: 'a' },
-    { title: 'a' },
-    { title: 'a' },
-    { title: 'a' },
-    { title: 'a' },
-    { title: 'a' },
-  ];
-  const [posts, setPosts] = useState(fakePosts);
-  //   const [isLoading, setIsLoading] = useState(false);
-  const addPost = () => {
-    const arr = [
-      { title: 'a' },
-      { title: 'a' },
-      { title: 'a' },
-      { title: 'a' },
-      { title: 'a' },
-      { title: 'a' },
-      { title: 'a' },
-      { title: 'a' },
-      { title: 'a' },
-    ];
-    setPosts((prev) => [...arr, ...prev]);
-  };
+
+  const [posts, setPosts] = useState({ postData: [], postsCount: 0 });
+  // 서버에 요청중일 때
+  const [isLoading, setIsLoading] = useState(true);
   const [isAddPostOn, setIsAddPostOn] = useState(false);
   const [isPostOn, setIsPostOn] = useState(false);
+
   const viewAddPost = () => {
     setIsAddPostOn(!isAddPostOn);
   };
+
   const viewPost = () => {
     setIsPostOn(!isPostOn);
   };
+
+  // 처음에 ComponentDidMount에 쓰이는 함수
+  // postCount, count
+  const acceptPosts = async () => {
+    setIsLoading(true);
+    // 일단 로딩중을 띄우고(자료를 받는데 꽤 걸릴 수 있으니) 나중에 스피너 만들어서 container 안에 넣기
+    // try {
+    //   const response = await axios.post(
+    //     'https://server.codestates-project.tk/post/grid/latest',
+    //     { offset: postCount, count },
+    //     { withCredentials: true },
+    //   );
+    //   const acceptedPosts = response.data;
+    //   setIsLoading(false);
+    //   setPosts((prev) => {
+    //     acceptedPosts = acceptedPosts.concat(prev.postData);
+    //     return { postData: acceptedPosts, postsCount: acceptedPosts.length };
+    //   });
+    // } catch(err) {
+    //   console.log(err);
+    // }
+
+    // 서버에 요청을 보내고, 배열 형태의 자료를 받아서,
+    // [{postId=30, thumbnail:'http://...'}] 이런 형태의 자료
+    let acceptedPosts = [
+      { postId: 1, thumbnail: img },
+      { postId: 2, thumbnail: img },
+      { postId: 3, thumbnail: img },
+      { postId: 4, thumbnail: img },
+      { postId: 5, thumbnail: img },
+      { postId: 6, thumbnail: img },
+      { postId: 7, thumbnail: img },
+      { postId: 8, thumbnail: img },
+      { postId: 9, thumbnail: img },
+      { postId: 10, thumbnail: img },
+      { postId: 11, thumbnail: img },
+      { postId: 12, thumbnail: img },
+      { postId: 13, thumbnail: img },
+      { postId: 14, thumbnail: img },
+      { postId: 15, thumbnail: img },
+    ];
+    // flex로 바꿨기에 배열 내 요소를 세개의 요소로 이루어진 배열로 만들어놔야함
+    setIsLoading(false);
+    setPosts((prev) => {
+      acceptedPosts = acceptedPosts.concat(prev.postData);
+      return { postData: acceptedPosts, postsCount: acceptedPosts.length };
+    });
+  };
+
+  // 처음에 ComponentDidMount
+  useEffect(() => {
+    acceptPosts();
+    // render 완료!
+  }, []);
 
   return (
     <>
@@ -62,8 +96,13 @@ const MainPage = () => {
               <div className={styles.postsCountNumber}>22</div>
             </div>
           </div>
-          <Posts addPost={addPost} posts={posts} viewPost={viewPost} />
-          {/* {isLoading ? <div>isLoading...</div> : null} */}
+          <Posts
+            isLoading={isLoading}
+            addPosts={acceptPosts}
+            posts={posts.postData}
+            viewPost={viewPost}
+            postsCount={posts.postsCount}
+          />
         </div>
         <div className={styles.addButton} onClick={viewAddPost}>
           <img className={styles.addPostImg} src={addPostImg} alt="addPost" />
