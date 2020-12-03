@@ -1,42 +1,49 @@
-import { React, useEffect, createRef } from 'react';
+import { React, useRef, useState } from 'react';
 import styles from './Posts.module.css';
 import Post from '../Post/Post';
+import useIntersectionObserver from '../useIntersectionObserver/useIntersectionObserver';
 
-const Posts = ({ posts, addPost, viewPost }) => {
+const Posts = ({ postsCount, isLoading, posts, addPosts, viewPost }) => {
   //   infinite scroll logic with IntersectionObserver API
-  const target = createRef();
-  // const [isLoaded, setIsLoaded] = useState(false);
-
-  const fetchItems = async () => {
-    // setIsLoaded(true);
-    await addPost();
-    // setIsLoaded(false);
-  };
-
-  const onIntersect = async ([entry], observer) => {
-    if (entry.isIntersecting) {
-      console.log('intersecting');
-      observer.unobserve(entry.target);
-      await fetchItems();
-      observer.observe(entry.target);
-    }
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(onIntersect, { threshold: 0.5 });
-    observer.observe(target.current);
-    return () => observer.disconnect();
-  }, []);
+  const rootRef = useRef(null);
+  const targetRef = useRef(null);
+  const [renderCount, setRenderCount] = useState(0);
+  useIntersectionObserver({
+    root: rootRef.current,
+    target: targetRef.current,
+    onIntersect: ([{ isIntersecting }]) => {
+      if (isIntersecting && !isLoading && postsCount >= 13) {
+        if (renderCount === 0) {
+          setRenderCount(renderCount + 1);
+          return;
+        }
+        addPosts();
+      }
+    },
+  });
 
   return (
-    <div className={styles.grid_border}>
+    <div ref={rootRef} className={styles.grid_border}>
       <div className={styles.grid_container}>
-        {posts.map((post, idx) => (
-          <Post dummyData={post.title} key={idx} viewPost={viewPost} />
-        ))}
-        <div ref={target} className={styles.observer}>
-          isLoading...
-        </div>
+        {posts.map((post, idx) => {
+          return (
+            <Post
+              thumbnail={post.thumbnail}
+              key={idx}
+              // post.postId
+              viewPost={viewPost}
+            />
+          );
+        })}
+      </div>
+      <div
+        ref={targetRef}
+        className={`${styles.target} ${postsCount >= 13 && styles.isOn}`}
+      >
+        Loading..
+        {/* <div className={styles.spinner}>
+          <i className="fas fa-sync" />
+        </div> */}
       </div>
     </div>
   );
