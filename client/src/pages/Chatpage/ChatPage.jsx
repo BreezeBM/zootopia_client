@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import styles from './ChatPage.module.css';
 import iguanaImg from '../../images/iguana.jpeg';
 import ChatUser from '../../components/ChatUser/ChatUser';
@@ -11,11 +11,25 @@ const messageContent =
 
 const ChatPage = () => {
   const test = createRef();
+  const test2 = createRef();
 
-  const myFunction = function () {
-    console.log('working');
-    test.current.style.display = 'none';
+  const myFunction = function (e) {
+    if (e.keyCode === 13) {
+      console.log(isOn);
+      alert('엔터치셨네요. 채팅치는 기능은 곧 나옵니다!');
+    }
   };
+  const [isOn, isOntoggle] = useState(1);
+
+  useEffect(() => {
+    const arr = ['Win16', 'Win32', 'Win64', 'Mac', 'MacIntel'];
+    if (arr.includes(navigator.platform)) {
+      console.log(test.current.style);
+      if (isOn > 2) {
+        test.current.style.display = 'none';
+      }
+    }
+  });
 
   return (
     <div className={styles.main}>
@@ -29,16 +43,24 @@ const ChatPage = () => {
           </div>
           <div className={styles.userlist}>
             <div className={styles.profileBlock}>모바일 버전용</div>
-            <ChatUser onClick={myFunction} />
-            <ChatUser />
-            <ChatUser func={myFunction} />
-            <ChatUser func={myFunction} />
-            <ChatUser func={myFunction} />
-            <ChatUser func={myFunction} />
-            <ChatUser func={myFunction} />
-            <ChatUser func={myFunction} />
-            <ChatUser func={myFunction} />
-            <ChatUser func={myFunction} />
+            <ChatUser
+              idValue={3}
+              state={isOn}
+              stateFunc={isOntoggle}
+              ref={test}
+            />
+            <ChatUser
+              idValue={5}
+              state={isOn}
+              stateFunc={isOntoggle}
+              ref={test}
+            />
+            <ChatUser
+              idValue={20}
+              state={isOn}
+              stateFunc={isOntoggle}
+              ref={test}
+            />
           </div>
         </div>
         <div className={styles.chatBox}>
@@ -53,7 +75,7 @@ const ChatPage = () => {
               <div className={styles.message}>{messageContent}</div>
               <div className={styles.dates}>2020-11-30-MON</div>
             </div>
-            <div className={styles.talkBox}>
+            <div className={styles.talkBox} ref={test2}>
               <img
                 className={styles.chatProfile}
                 src={iguanaImg}
