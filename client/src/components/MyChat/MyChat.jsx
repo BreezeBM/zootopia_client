@@ -1,9 +1,8 @@
 import React from 'react';
 import styles from './MyChat.module.css';
 
-const MyChat = () => {
-  const messageContent =
-    '나의 메시지 위치 테스트0000000000000000000000sdasdasdasd';
+const MyChat = ({ textData }) => {
+  const messageContent = textData;
   return (
     <div className={styles.talkBox}>
       <div className={styles.message}>{messageContent}</div>
