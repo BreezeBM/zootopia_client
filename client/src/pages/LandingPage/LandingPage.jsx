@@ -11,10 +11,12 @@ const LandingPage = () => {
   const handleLogin = async (e) => {
     if (e.target.name === 'google') {
       alert('1.2패치 이후 제공예정');
+      window.location.href = 'https://e3fc39a5efdc.ngrok.io/main';
     } else if (e.target.name === 'github') {
       window.location.href = `https://github.com/login/oauth/authorize?client_id=${githubId}&scope=user:email&redirect_uri=${githubReURI}`;
     } else if (e.target.name === 'guest') {
       alert('1.2패치 이후 제공예정');
+      window.location.href = 'https://e3fc39a5efdc.ngrok.io/chat';
     }
   };
 
