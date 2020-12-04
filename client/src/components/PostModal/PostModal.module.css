@@ -1,3 +1,45 @@
+/* 재활용 Modal 과는 다른 형태로 만들어야하기에 그대로 복붙해서 가져옴 */
+.modal {
+  position: fixed;
+  z-index: 0;
+  opacity: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  transition: all 20ms ease-in-out;
+}
+
+.modal.isOn {
+  z-index: 3;
+  opacity: 1;
+}
+
+.box {
+  position: relative;
+  width: 45rem;
+  height: 28rem;
+  background: white;
+  border-radius: 25px;
+  box-shadow: 2px 4px 9px 0 rgba(0, 0, 0, 0.5);
+  padding-top: 1.3rem;
+}
+
+.close {
+  position: absolute;
+  width: 1.2rem;
+  right: 1.2rem;
+  top: 1.2rem;
+  cursor: pointer;
+  z-index: 3;
+}
+
+/* 재활용 Modal 과는 다른 형태로 만들어야하기에 그대로 복붙해서 가져옴 */
+
 .postModal {
   display: flex;
   width: 100%;
@@ -46,7 +88,7 @@
 
 .breed {
   font-family: 'bazzi';
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: gray;
 }
 
@@ -56,6 +98,14 @@
   margin-top: 0.5rem;
   font-family: 'bazzi';
   font-size: 1.2rem;
+  height: 30vh;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.textArea::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* Chrome/Safari/Webkit */
 }
 
 .date {
@@ -106,6 +156,37 @@
   user-select: none;
 }
 
+/* comment 접고 펼치는 toggle */
+.sampleComments {
+  height: 5vh;
+  overflow: hidden;
+}
+
+.commentFolder {
+  margin-top: 0.7rem;
+  font-size: 0.9rem;
+  font-family: MaplestoryOTFLight;
+  cursor: pointer;
+  color: grey;
+}
+
+/* 웹에서만 보이는 댓글창 설정 */
+.commentsScreen {
+}
+.commentsPart {
+  overflow-y: scroll;
+  height: 55vh;
+}
+
+.goBackBtn {
+  cursor: pointer;
+  margin-top: -0.5rem;
+  margin-left: 0.8rem;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
 /* comment input part */
 
 .inputPart {
@@ -142,4 +223,40 @@
   position: absolute;
   right: 5%;
   cursor: pointer;
+}
+
+@media screen and (max-width: 65rem) {
+  .grid_item {
+    padding: 0;
+  }
+
+  .box {
+    all: unset;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    background: white;
+  }
+
+  .postModal {
+    all: unset;
+    width: 100%;
+  }
+
+  .contents {
+    margin-left: 0;
+    padding: 1.5vh 2.5vw;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+  }
+  .textArea {
+    height: 15vh;
+    overflow-y: scroll;
+  }
+  .close {
+    top: 0.5rem;
+    color: grey;
+  }
 }

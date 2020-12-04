@@ -23,8 +23,13 @@ const ImageSlide = ({ imageUrls }) => {
   };
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 65rem)');
     slideRef.current.style.transition = 'all 0.5s ease-in-out';
-    slideRef.current.style.transform = `translateX(-${currentSlide}00%)`; // 백틱을 사용하여 슬라이드로 이동하는 애니메이션을 만듭니다.
+    if (mediaQuery.matches) {
+      slideRef.current.style.transform = `translateX(-${currentSlide}00vw)`;
+    } else {
+      slideRef.current.style.transform = `translateX(${-25 * currentSlide}vw)`;
+    }
   }, [currentSlide]);
 
   return (
@@ -48,16 +53,21 @@ export default ImageSlide;
 
 // ** css styled definitions **
 const Container = styled.div`
-  width: 59%;
+  width: 25vw;
+  height: 25rem;
   overflow: hidden;
   position: relative;
+
+  @media (max-width: 65rem) {
+    width: 100vw;
+  }
 `;
 
 const Button = styled.button`
   all: unset;
   z-index: 3;
-  position: absolute;
   top: 45%;
+  position: absolute;
   font-weight: bold;
   font-size: 1.5rem;
   color: white;
@@ -65,10 +75,16 @@ const Button = styled.button`
   &:hover {
     color: grey;
   }
+  @media (max-width: 65rem) {
+    opacity: 0.5;
+    &:hover {
+      color: white;
+    }
+  }
 `;
 
 const SliderContainer = styled.div`
   width: 100%;
-  display: flex; //이미지들을 가로로 나열합니다.
+  display: flex;
 `;
 // ** css styled definitions **

@@ -24,6 +24,7 @@
   flex-direction: column;
   height: 21rem;
   min-width: 20rem;
+  max-width: 20rem;
   align-items: center;
   margin-top: 4.125rem;
   padding-top: 2rem;
@@ -41,16 +42,17 @@
 .petName {
   margin-top: 1.2rem;
   height: 1.75rem;
+  font-size: 1.6rem;
   font-family: MaplestoryOTFBold;
-  font-size: 1.7rem;
-  font-weight: bold;
+  text-align: center;
 }
 .breed {
   font-family: MaplestoryOTFLight;
-  margin-top: 0.8rem;
+  margin-top: 0.5rem;
   height: 1.75rem;
   color: #8f8f8f;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  text-align: center;
 }
 
 .postCountPart {
@@ -106,45 +108,70 @@
   .image {
     width: 5.5rem;
     height: 5.5rem;
+    margin-left: 1.5rem;
   }
 
   .flexBox {
+    position: fixed;
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
+    top: 7rem;
     align-items: center;
   }
 
   .petName {
-    margin-top: 1rem;
+    all: unset;
+    font-size: 1rem;
+    font-family: MaplestoryOTFBold;
   }
+
   .breed {
-    margin-top: 0.5rem;
+    all: unset;
+    margin-top: 0.1rem;
+    font-size: 0.8rem;
+    font-family: MaplestoryOTFLight;
+    color: #8f8f8f;
   }
+
   .profile {
     border-bottom: 4px solid #e1e1e1;
-    margin-top: 7rem;
+    margin-top: 0;
     width: 100%;
-    height: 16rem;
-    flex-direction: column;
     text-align: center;
+    flex-direction: row;
+    min-width: unset;
+    max-width: unset;
+  }
+
+  .userInform {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-left: 1.2rem;
   }
 
   .postCountPart {
-    margin-top: 0.8rem;
     flex-direction: row;
     align-items: center;
+    margin-top: 0.5rem;
   }
 
   .postsCount {
+    all: unset;
     margin-top: 0;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: Arial;
   }
 
   .postsCountNumber {
+    all: unset;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: Arial;
     margin-left: 0.5rem;
-    margin-top: 0;
-    font-size: 1.2rem;
   }
 
   .addButton {

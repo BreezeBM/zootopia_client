@@ -6,8 +6,8 @@ const SubComment = () => {
   return (
     <div className={styles.subComment}>
       <img className={styles.profile} src={dummyImg} alt="profile" />
-      <div className={styles.nickname}>스눕독</div>
-      <div className={styles.text}>핏불이 앨범안내냐</div>
+      <div className={styles.nickname}>스눕독스눕독스눕독스눕독스눕독</div>
+      <div className={styles.text}>핏불이 요즘 앨범 안내냐</div>
       <div className={styles.date}>지금</div>
     </div>
   );

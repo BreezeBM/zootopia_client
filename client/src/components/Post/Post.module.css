@@ -22,4 +22,7 @@
   .grid_item {
     padding: 0;
   }
+  .thumbnail:hover {
+    opacity: 1;
+  }
 }

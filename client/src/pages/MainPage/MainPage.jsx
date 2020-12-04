@@ -7,9 +7,6 @@ import addPostImg from '../../images/bark.png';
 import PostModal from '../../components/PostModal/PostModal';
 import PostNewFormModal from '../../components/PostNewFormModal/PostNewFormModal';
 import img from '../../thumbnails/post_g.png';
-import dummyImg1 from '../../thumbnails/post_g.png';
-import dummyImg2 from '../../thumbnails/post_g.png';
-import dummyImg3 from '../../thumbnails/post_g.png';
 
 const MainPage = () => {
   const viewProfile = () => {
@@ -28,7 +25,7 @@ const MainPage = () => {
   };
 
   const viewPost = () => {
-    const fakeImageUrls = [dummyImg1, dummyImg2, dummyImg3];
+    const fakeImageUrls = [img, img, img];
     setImageUrls((prev) => {
       return [...prev, ...fakeImageUrls];
     });
@@ -101,11 +98,13 @@ const MainPage = () => {
         <div className={styles.flexBox}>
           <div className={styles.profile} onClick={viewProfile}>
             <img src={profileImg} className={styles.image} alt="profile_img" />
-            <div className={styles.petName}>이구아인</div>
-            <div className={styles.breed}>이구아나</div>
-            <div className={styles.postCountPart}>
-              <div className={styles.postsCount}>Posts</div>
-              <div className={styles.postsCountNumber}>22</div>
+            <div className={styles.userInform}>
+              <div className={styles.petName}>곤살로 이구아인</div>
+              <div className={styles.breed}>아르헨티나산 이구아인</div>
+              <div className={styles.postCountPart}>
+                <div className={styles.postsCount}>Posts</div>
+                <div className={styles.postsCountNumber}>22</div>
+              </div>
             </div>
           </div>
           <Posts
