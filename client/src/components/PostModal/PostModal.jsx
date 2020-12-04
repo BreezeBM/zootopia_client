@@ -8,7 +8,7 @@ import likeImg from '../../images/fulfilledHeart.png';
 import unLikeImg from '../../images/unfulfilledHeart.png';
 import chatImg from '../../images/chat.png';
 
-const PostModal = ({ isModalOn, handleClose }) => {
+const PostModal = ({ imageUrls, isModalOn, handleClose }) => {
   const [like, setLike] = useState(false);
   const handleLike = () => {
     setLike(!like);
@@ -16,7 +16,7 @@ const PostModal = ({ isModalOn, handleClose }) => {
   return (
     <Modal isModalOn={isModalOn} handleClose={handleClose}>
       <div className={styles.postModal}>
-        <ImageSlide />
+        <ImageSlide imageUrls={imageUrls} />
         <div className={styles.contents}>
           <div className={styles.userArea}>
             <div className={styles.profile_imgage}>
