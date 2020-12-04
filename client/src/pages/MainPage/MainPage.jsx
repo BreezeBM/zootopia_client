@@ -7,6 +7,9 @@ import addPostImg from '../../images/bark.png';
 import PostModal from '../../components/PostModal/PostModal';
 import PostNewFormModal from '../../components/PostNewFormModal/PostNewFormModal';
 import img from '../../thumbnails/post_g.png';
+import dummyImg1 from '../../thumbnails/post_g.png';
+import dummyImg2 from '../../thumbnails/post_g.png';
+import dummyImg3 from '../../thumbnails/post_g.png';
 
 const MainPage = () => {
   const viewProfile = () => {
@@ -19,11 +22,16 @@ const MainPage = () => {
   const [isAddPostOn, setIsAddPostOn] = useState(false);
   const [isPostOn, setIsPostOn] = useState(false);
 
+  const [imageUrls, setImageUrls] = useState([]);
   const viewAddPost = () => {
     setIsAddPostOn(!isAddPostOn);
   };
 
   const viewPost = () => {
+    const fakeImageUrls = [dummyImg1, dummyImg2, dummyImg3];
+    setImageUrls((prev) => {
+      return [...prev, ...fakeImageUrls];
+    });
     setIsPostOn(!isPostOn);
   };
 
@@ -84,7 +92,11 @@ const MainPage = () => {
   return (
     <>
       <PostNewFormModal isModalOn={isAddPostOn} handleClose={viewAddPost} />
-      <PostModal isModalOn={isPostOn} handleClose={viewPost} />
+      <PostModal
+        imageUrls={imageUrls}
+        isModalOn={isPostOn}
+        handleClose={viewPost}
+      />
       <div className={styles.main}>
         <div className={styles.flexBox}>
           <div className={styles.profile} onClick={viewProfile}>
