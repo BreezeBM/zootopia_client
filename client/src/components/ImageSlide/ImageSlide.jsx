@@ -1,6 +1,5 @@
 import { React, useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
-// import styles from './ImageSlide.module.css';
 import EachSlide from '../EachSlide/EachSlide';
 
 const ImageSlide = ({ imageUrls }) => {

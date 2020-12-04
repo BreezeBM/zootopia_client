@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import styles from './EachSlide.module.css';
 
 const IMG = styled.img`
   width: 22rem;
@@ -9,7 +8,7 @@ const IMG = styled.img`
 
 const EachSlide = ({ imageSrc }) => {
   return (
-    <div className={styles.slide_container}>
+    <div>
       <IMG src={imageSrc} alt="slide img" />
     </div>
   );
