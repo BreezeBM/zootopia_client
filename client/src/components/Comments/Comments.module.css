@@ -1,7 +1,12 @@
 .comments {
-  display: flex;
-  flex-direction: column;
   margin-top: 0.5rem;
-  overflow-y: scroll;
-  overflow-x: none;
+  margin-left: 4rem;
+  /* overflow-y: scroll; */
+}
+
+@media screen and (max-width: 65rem) {
+  .comments {
+    all: unset;
+    margin-top: 0.5rem;
+  }
 }

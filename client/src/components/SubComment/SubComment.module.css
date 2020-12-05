@@ -1,8 +1,9 @@
 .subComment {
-  display: flex;
-  align-items: center;
   margin-top: 0.2rem;
-  width: 95%;
+  width: 100%;
+}
+.contentsPart {
+  display: flex;
 }
 
 .profile {
@@ -12,17 +13,32 @@
 }
 
 .nickname {
+  font-family: Bazzi;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.tagName {
+  font-family: Bazzi;
+  color: #ffd426;
+}
+
+.commentPart {
   margin-left: 0.3rem;
   font-family: Bazzi;
 }
 
-.text {
-  margin-left: 0.5rem;
-  font-family: Bazzi;
+.dateAndBtnPart {
+  margin-left: 1.8rem;
 }
+
 .date {
   font-family: Bazzi;
-  margin-left: 0.5rem;
   color: gray;
-  font-size: 0.8rem;
+}
+
+.commentBtn {
+  font-family: Bazzi;
+  color: gray;
+  margin-left: 0.8rem;
 }

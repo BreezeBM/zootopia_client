@@ -9,10 +9,6 @@ const Comments = () => {
       <Comment />
       <Comment />
       <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
     </div>
   );
 };

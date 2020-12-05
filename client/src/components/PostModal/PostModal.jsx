@@ -39,11 +39,12 @@ const PostModal = ({ imageUrls, isModalOn, handleClose }) => {
           onClick={handleClose}
         />
         {webCommentFolder ? (
-          <div className={styles.commentsScreen} onClick={handleCommentFolder}>
+          <div className={styles.commentsScreen}>
             <img
               className={styles.goBackBtn}
               src={goBackBtn}
               alt="goBackButton"
+              onClick={handleCommentFolder}
             />
             <div className={styles.commentsPart}>
               <Comments />

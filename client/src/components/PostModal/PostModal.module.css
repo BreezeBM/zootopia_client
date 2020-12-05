@@ -171,11 +171,13 @@
 }
 
 /* 웹에서만 보이는 댓글창 설정 */
-.commentsScreen {
-}
+
 .commentsPart {
+  position: absolute;
+  margin-top: 0.5rem;
   overflow-y: scroll;
-  height: 55vh;
+  height: 75%;
+  width: 100%;
 }
 
 .goBackBtn {
