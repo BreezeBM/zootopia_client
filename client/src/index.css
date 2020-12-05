@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Spoqa Han Sans', 'Sans-serif';
+}
+
+/* 이미지를 드래그하고, 이미지 위치에서 드래그해서 옮기는 등의 모션을 막는 css property */
+
+img {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* font import  */
+@font-face {
+  font-family: 'Bazzi';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/Bazzi.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MaplestoryOTFBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'MaplestoryOTFLight';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+input::placeholder {
+  color: rgb(162, 162, 162);
+  font-family: MaplestoryOTFLight;
+}
+
+body {
+  margin: 0;
+}

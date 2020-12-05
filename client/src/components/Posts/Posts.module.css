@@ -1,0 +1,71 @@
+/* grid 부분 css */
+
+.grid_border {
+  margin-top: 4rem;
+  width: 40rem;
+  background-color: white;
+  padding-left: 1rem;
+  padding-right: 0.7rem;
+  border-left: 3px solid #e1e1e1;
+  border-right: 3px solid #e1e1e1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  /* scroll bar 없애기 */
+  /* IE and Edge */
+  /* -ms-overflow-style: none;  */
+  /* Firefox */
+  /* scrollbar-width: none;  */
+}
+
+/* scroll bar 없애기 (chrome, safari version) */
+
+/* .flex_border::-webkit-scrollbar {
+  display: none;
+} */
+
+.grid_container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 1rem;
+}
+
+/* .spinner {
+  animation: spin 1s linear infinite;
+  font-size: 4rem !important;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */
+
+.target {
+  display: none;
+}
+
+.target.isOn {
+  font-size: 1.5rem;
+  display: inline;
+  color: grey;
+  font-family: MaplestoryOTFBold;
+  font-weight: bold;
+  text-align: center;
+}
+
+@media screen and (max-width: 65rem) {
+  .grid_border {
+    border: 0;
+    padding: 0;
+    margin-top: 0rem;
+    width: 100%;
+  }
+  .grid_container {
+    padding-left: 0.3rem;
+  }
+}

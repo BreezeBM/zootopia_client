@@ -1,0 +1,28 @@
+.subComment {
+  display: flex;
+  align-items: center;
+  margin-top: 0.2rem;
+  width: 95%;
+}
+
+.profile {
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.nickname {
+  margin-left: 0.3rem;
+  font-family: Bazzi;
+}
+
+.text {
+  margin-left: 0.5rem;
+  font-family: Bazzi;
+}
+.date {
+  font-family: Bazzi;
+  margin-left: 0.5rem;
+  color: gray;
+  font-size: 0.8rem;
+}

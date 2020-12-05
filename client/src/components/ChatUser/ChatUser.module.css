@@ -1,0 +1,67 @@
+.usercard {
+  position: relative;
+  display: flexbox;
+  height: 4rem;
+  background-color: white;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+}
+
+.usercard:hover {
+  transform: scale(1.05);
+}
+
+.userProfile {
+  position: absolute;
+  display: flex;
+  border-radius: 50%;
+  width: 2.6rem;
+  height: 2.6rem;
+  left: 6.3%;
+  top: 17%;
+  margin: 0%;
+}
+
+.username {
+  position: absolute;
+  display: flex;
+  left: 4rem;
+  top: 0.7rem;
+  font-family: MaplestoryOTFLight;
+  color: black;
+  font-size: 0.65rem;
+}
+
+.userbreed {
+  position: absolute;
+  display: flex;
+  left: 4rem;
+  top: 1.6rem;
+  font-family: MaplestoryOTFLight;
+  color: #8f8f8f;
+  font-size: 0.47rem;
+}
+
+.status {
+  position: absolute;
+  display: flex;
+  left: 4rem;
+  top: 2.6rem;
+  font-family: MaplestoryOTFLight;
+  color: #ffc600;
+  font-size: 0.6rem;
+}
+
+@media (max-width: 600px) {
+  .username {
+    left: 5rem;
+  }
+
+  .userbreed {
+    left: 5rem;
+  }
+
+  .status {
+    left: 5rem;
+  }
+}

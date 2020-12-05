@@ -1,0 +1,162 @@
+/* 배경화면 적용을 위한 main 부분 css */
+
+.main {
+  background-image: url('../../images/Background_main.png');
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* profile, grid 를 묶어놓은 flexbox */
+
+.flexBox {
+  position: absolute;
+  display: flex;
+  width: 80%;
+  height: 100%;
+}
+
+/* profile 부분 css */
+
+.profile {
+  border-bottom: 3px solid #e1e1e1;
+  display: flex;
+  flex-direction: column;
+  height: 21rem;
+  min-width: 20rem;
+  align-items: center;
+  margin-top: 4.125rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  cursor: pointer;
+  background: white;
+}
+
+.image {
+  border-radius: 50%;
+  width: 6.6rem;
+  height: 6.6rem;
+  -webkit-user-drag: none;
+}
+.petName {
+  margin-top: 1.2rem;
+  height: 1.75rem;
+  font-family: MaplestoryOTFBold;
+  font-size: 1.7rem;
+  font-weight: bold;
+}
+.breed {
+  font-family: MaplestoryOTFLight;
+  margin-top: 0.8rem;
+  height: 1.75rem;
+  color: #8f8f8f;
+  font-size: 1.2rem;
+}
+
+.postCountPart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.postsCount {
+  margin-top: 1rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+  font-family: Arial;
+}
+.postsCountNumber {
+  margin-top: 0.4rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  font-family: Arial;
+}
+
+/* add button css */
+
+.addButton {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  font-size: 2.5rem;
+  width: 5.5rem;
+  height: 5.5rem;
+  line-height: 6rem;
+  background: #ffc600;
+  color: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  text-align: center;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.addPostImg {
+  padding-top: 0.2rem;
+  width: 6rem;
+  height: 6rem;
+}
+
+/* 모바일 버전 대응 */
+
+@media screen and (max-width: 65rem) {
+  .main {
+    background-image: unset;
+  }
+  .image {
+    width: 5.5rem;
+    height: 5.5rem;
+  }
+
+  .flexBox {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+  }
+
+  .petName {
+    margin-top: 1rem;
+  }
+  .breed {
+    margin-top: 0.5rem;
+  }
+  .profile {
+    border-bottom: 4px solid #e1e1e1;
+    margin-top: 7rem;
+    width: 100%;
+    height: 16rem;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .postCountPart {
+    margin-top: 0.8rem;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .postsCount {
+    margin-top: 0;
+  }
+
+  .postsCountNumber {
+    margin-left: 0.5rem;
+    margin-top: 0;
+    font-size: 1.2rem;
+  }
+
+  .addButton {
+    right: 1rem;
+    bottom: 1rem;
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .addPostImg {
+    padding-top: 0.4rem;
+    width: 4.2rem;
+    height: 4.2rem;
+  }
+}
