@@ -7,9 +7,9 @@ import addPostImg from '../../images/bark.png';
 import PostModal from '../../components/PostModal/PostModal';
 import PostNewFormModal from '../../components/PostNewFormModal/PostNewFormModal';
 import img from '../../thumbnails/post_g.png';
-import dummyImg1 from '../../thumbnails/post_g.png';
-import dummyImg2 from '../../thumbnails/post_g.png';
-import dummyImg3 from '../../thumbnails/post_g.png';
+import dummyImg1 from '../../thumbnails/post_a.png';
+import dummyImg2 from '../../thumbnails/post_b.png';
+import dummyImg3 from '../../thumbnails/post_c.png';
 
 const MainPage = () => {
   const viewProfile = () => {

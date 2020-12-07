@@ -1,0 +1,40 @@
+.talkBox {
+  display: flexbox;
+  width: 20rem;
+  transition: all 250ms ease-in-out;
+}
+
+.message {
+  position: relative;
+  display: flex;
+  padding: 2%;
+  border: 2px solid #e7e7e7;
+  border-radius: 1rem;
+  width: 70%;
+  left: 3rem;
+  font-family: MaplestoryOTFLight;
+  font-size: 0.8rem;
+  transition: all 250ms ease-in-out;
+  word-break: break-all;
+}
+
+.chatProfile {
+  position: relative;
+  display: inline-flex;
+  border-radius: 50%;
+  width: 2.2rem;
+  height: 2.2rem;
+  left: 1rem;
+  transition: all 250ms ease-in-out;
+}
+
+.dates {
+  position: relative;
+  display: flex;
+  left: 3.6rem;
+  font-family: MaplestoryOTFLight;
+  color: #8f8f8f;
+  font-size: 0.6rem;
+  margin-bottom: 0.5rem;
+  transition: all 250ms ease-in-out;
+}
