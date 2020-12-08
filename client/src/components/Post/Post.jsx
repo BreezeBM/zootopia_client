@@ -1,10 +1,18 @@
 import React from 'react';
 import styles from './Post.module.css';
-// import img from '../../thumbnails/post_g.png';
 
-const Post = ({ viewPost, thumbnail }) => {
+const Post = ({ postId, viewPost, thumbnail }) => {
+  const viewPostModal = (id) => {
+    viewPost(id);
+  };
+
   return (
-    <div className={styles.grid_item} onClick={viewPost}>
+    <div
+      className={styles.grid_item}
+      onClick={() => {
+        viewPostModal(postId);
+      }}
+    >
       <img className={styles.thumbnail} src={thumbnail} alt="post" />
     </div>
   );

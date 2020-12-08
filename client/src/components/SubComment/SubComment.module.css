@@ -15,7 +15,6 @@
 .nickname {
   font-family: Bazzi;
   font-size: 1.1rem;
-  font-weight: bold;
 }
 
 .tagName {
@@ -28,8 +27,22 @@
   font-family: Bazzi;
 }
 
+.textInput {
+  font-size: 1rem;
+  font-family: Bazzi;
+  border: none;
+  outline: none;
+}
+
+.textPart {
+  margin-left: 0.48rem;
+  font-size: 1rem;
+  font-family: Bazzi;
+}
+
 .dateAndBtnPart {
   margin-left: 1.8rem;
+  display: flex;
 }
 
 .date {
@@ -37,8 +50,55 @@
   color: gray;
 }
 
+.updateBtns {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
 .commentBtn {
   font-family: Bazzi;
   color: gray;
   margin-left: 0.8rem;
+  cursor: pointer;
+}
+
+.closeUpdateBtn {
+  cursor: pointer;
+  width: 1rem;
+  height: 1rem;
+  position: relative;
+  top: 0.2rem;
+  left: 0.5rem;
+}
+
+#goToInputBtn {
+  margin-left: 1rem !important;
+  cursor: pointer;
+}
+
+#commentDeleteBtn {
+  margin-left: 0.5rem !important;
+  cursor: pointer;
+}
+
+.dateAndBtnPart .updateBtn {
+  visibility: hidden;
+  /* box-shadow: 2px 4px 9px 0 rgba(0, 0, 0, 0.5); */
+  position: relative;
+  top: 0.2rem;
+  left: 0.5rem;
+  cursor: pointer;
+  width: 1rem;
+  height: 1rem;
+}
+
+.subComment:hover .updateBtn {
+  visibility: visible;
+}
+
+@media screen and (max-width: 65rem) {
+  .dateAndBtnPart .updateBtn {
+    visibility: visible;
+  }
 }

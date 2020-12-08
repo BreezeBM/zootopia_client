@@ -2,11 +2,12 @@ import React from 'react';
 import styles from './SubComments.module.css';
 import SubComment from '../SubComment/SubComment';
 
-const SubComments = () => {
+const SubComments = ({ handleCommentBtn }) => {
   return (
     <div className={styles.subComments}>
-      <SubComment />
-      <SubComment />
+      <SubComment handleCommentBtn={handleCommentBtn} />
+      <SubComment handleCommentBtn={handleCommentBtn} />
+      <SubComment handleCommentBtn={handleCommentBtn} />
     </div>
   );
 };
