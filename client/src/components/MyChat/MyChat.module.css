@@ -1,80 +1,45 @@
 .talkBox {
-  display: flexbox;
-  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   transition: all 250ms ease-in-out;
+  margin-bottom: 0.5rem;
 }
 
-.message {
+.messagesss {
   position: relative;
   display: flex;
   padding: 2%;
   border: 2px solid #e7e7e7;
   border-radius: 1rem;
-  width: 70%;
-  left: 110%;
+  width: 40%;
+  margin-left: 60%;
+  margin-right: 2%;
   font-family: MaplestoryOTFLight;
   font-size: 0.8rem;
   transition: all 180ms ease-in-out;
   word-break: break-all;
+  flex-direction: column;
 }
 
 .dates {
   position: relative;
   display: flex;
-  left: 153%;
+  margin-left: 78%;
   font-family: MaplestoryOTFLight;
   color: #8f8f8f;
   font-size: 0.6rem;
-  margin-bottom: 0.5rem;
   transition: all 180ms ease-in-out;
+  flex-direction: column;
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 600px) {
   .message {
-    left: 100%;
+    background-color: #ffc600;
+    width: 50%;
+    margin-left: 48%;
   }
-
   .dates {
-    left: 140%;
-  }
-}
-
-@media (max-width: 1315px) {
-  .message {
-    left: 90%;
-  }
-
-  .dates {
-    left: 130%;
-  }
-}
-
-@media (max-width: 1230px) {
-  .message {
-    left: 81%;
-  }
-
-  .dates {
-    left: 123%;
-  }
-}
-
-@media (max-width: 1200px) {
-  .message {
-    left: 55%;
-  }
-
-  .dates {
-    left: 95%;
-  }
-}
-
-@media (max-width: 800px) {
-  .message {
-    left: 40%;
-  }
-
-  .dates {
-    left: 82%;
+    margin-left: 70%;
   }
 }
