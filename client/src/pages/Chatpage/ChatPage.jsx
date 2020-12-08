@@ -3,30 +3,61 @@ import styles from './ChatPage.module.css';
 import iguanaImg from '../../images/iguana.jpeg';
 import ChatUser from '../../components/ChatUser/ChatUser';
 import MyChat from '../../components/MyChat/MyChat';
+import UserChat from '../../components/UserChat/UserChat';
 
-const username = '닉네임은팔글자요';
-const breedname = '글자수는열다섯으로기준을잡겠다';
-const messageContent =
-  '본사는 소규모창업아이템으로 성공한 사례와 실패 사례에관한 경험을 바탕으로 외식업 창업 성공에 관한 전문지식을 갖춘 창업 전문가들이 상권분석, 매장계약, 오픈 전까지의 모든 과정을 컨설팅하여 진행 중”이라며 “한식도시락배달 창업 또는 샵인샵배달창업을 고려하고 있는 예비 가맹점주들은 전문 상담을 통해 문의 해보길 바란다”고 전했다.';
+const username = '깽순이가먹다버린빵은슬펐다';
+const breedname = '블라블라블라블라블라블라블라블라블블라블라블라';
+let messageContent = '치즈모짜렐라체다고다치즈페이젝카마렐 ';
+
+const fakeData = [
+  {
+    userId: 2,
+    time: '2020-12-08 22:30',
+    text: '안녕하세요 저는 김코딩입니다.',
+  },
+  { userId: 1, time: '2020-12-08 22:31', text: '누구시죠? 안사요' },
+  {
+    userId: 2,
+    time: '2020-12-08 22:40',
+    text: '아뇨 그게 아니고요 코딩 한수를 배우기 위해서 연락을 드렸습니다.',
+  },
+  {
+    userId: 1,
+    time: '2020-12-08 22:50',
+    text:
+      '입금먼저 하시죠 제가 바로 코딩계 이구아인입니다. 한번 코딩 썻다하면 바로 스트라이크 들어갑니다.',
+  },
+  {
+    userId: 2,
+    time: '2020-12-08 23:30',
+    text: '.......?   @#$@^%^*^&( English test',
+  },
+];
+
+let testContent = fakeData.map((el) => {
+  if (el.userId === 1) {
+    return <MyChat textData={el.text} dateData={el.time} />;
+  } else {
+    return <UserChat textData={el.text} dateData={el.time} />;
+  }
+});
 
 const ChatPage = () => {
-  const test = createRef();
-  const test2 = createRef();
+  const targetUser = createRef();
+  const targetList = createRef();
 
   const myFunction = function (e) {
     if (e.keyCode === 13) {
-      console.log(isOn);
-      alert('엔터치셨네요. 채팅치는 기능은 곧 나옵니다!');
+      messageContent = e.target.value;
     }
   };
-  const [isOn, isOntoggle] = useState(1);
+  const [targetId, targetToggle] = useState(-1);
 
   useEffect(() => {
     const arr = ['Win16', 'Win32', 'Win64', 'Mac', 'MacIntel'];
-    if (arr.includes(navigator.platform)) {
-      console.log(test.current.style);
-      if (isOn > 2) {
-        test.current.style.display = 'none';
+    if (!arr.includes(navigator.platform)) {
+      if (targetId > 0) {
+        targetList.current.style.display = 'none';
       }
     }
   });
@@ -35,7 +66,7 @@ const ChatPage = () => {
     <div className={styles.main}>
       <div className={styles.main}> </div>
       <div className={styles.flexBox}>
-        <div className={styles.listBox} ref={test}>
+        <div className={styles.listBox} ref={targetList}>
           <div className={styles.profile}>
             <img className={styles.image} src={iguanaImg} alt="profile" />
             <div className={styles.name}>{username}</div>
@@ -44,22 +75,88 @@ const ChatPage = () => {
           <div className={styles.userlist}>
             <div className={styles.profileBlock}>모바일 버전용</div>
             <ChatUser
+              idValue={1}
+              state={targetId}
+              stateFunc={targetToggle}
+              ref={targetUser}
+            />
+            <ChatUser
+              idValue={2}
+              state={targetId}
+              stateFunc={targetToggle}
+              ref={targetUser}
+            />
+            <ChatUser
               idValue={3}
-              state={isOn}
-              stateFunc={isOntoggle}
-              ref={test}
+              state={targetId}
+              stateFunc={targetToggle}
+              ref={targetUser}
+            />
+            <ChatUser
+              idValue={4}
+              state={targetId}
+              stateFunc={targetToggle}
+              ref={targetUser}
             />
             <ChatUser
               idValue={5}
-              state={isOn}
-              stateFunc={isOntoggle}
-              ref={test}
+              state={targetId}
+              stateFunc={targetToggle}
+              ref={targetUser}
             />
             <ChatUser
-              idValue={20}
-              state={isOn}
-              stateFunc={isOntoggle}
-              ref={test}
+              idValue={6}
+              state={targetId}
+              stateFunc={targetToggle}
+              ref={targetUser}
+            />
+            <ChatUser
+              idValue={7}
+              state={targetId}
+              stateFunc={targetToggle}
+              ref={targetUser}
+            />
+            <ChatUser
+              idValue={511}
+              state={targetId}
+              stateFunc={targetToggle}
+              ref={targetUser}
+            />
+            <ChatUser
+              idValue={225}
+              state={targetId}
+              stateFunc={targetToggle}
+              ref={targetUser}
+            />
+            <ChatUser
+              idValue={533}
+              state={targetId}
+              stateFunc={targetToggle}
+              ref={targetUser}
+            />
+            <ChatUser
+              idValue={544}
+              state={targetId}
+              stateFunc={targetToggle}
+              ref={targetUser}
+            />
+            <ChatUser
+              idValue={566}
+              state={targetId}
+              stateFunc={targetToggle}
+              ref={targetUser}
+            />
+            <ChatUser
+              idValue={588}
+              state={targetId}
+              stateFunc={targetToggle}
+              ref={targetUser}
+            />
+            <ChatUser
+              idValue={599}
+              state={targetId}
+              stateFunc={targetToggle}
+              ref={targetUser}
             />
           </div>
         </div>
@@ -75,7 +172,7 @@ const ChatPage = () => {
               <div className={styles.message}>{messageContent}</div>
               <div className={styles.dates}>2020-11-30-MON</div>
             </div>
-            <div className={styles.talkBox} ref={test2}>
+            <div className={styles.talkBox}>
               <img
                 className={styles.chatProfile}
                 src={iguanaImg}
@@ -94,7 +191,10 @@ const ChatPage = () => {
               <div className={styles.message}>{messageContent}</div>
               <div className={styles.dates}>2020-11-30-MON</div>
             </div>
-            <MyChat />
+            <MyChat textData={messageContent} />
+            <MyChat textData={messageContent} />
+            <MyChat textData={messageContent} />
+            {testContent}
           </div>
           <input
             className={styles.chatPost}
