@@ -1,119 +1,135 @@
 import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import styles from './MainPage.module.css';
 import Posts from '../../components/Posts/Posts';
-import profileImg from '../../images/iguana.jpeg';
 import addPostImg from '../../images/bark.png';
 import PostModal from '../../components/PostModal/PostModal';
 import PostNewFormModal from '../../components/PostNewFormModal/PostNewFormModal';
-import img from '../../thumbnails/post_g.png';
-import dummyImg1 from '../../thumbnails/post_a.png';
-import dummyImg2 from '../../thumbnails/post_b.png';
-import dummyImg3 from '../../thumbnails/post_c.png';
+import fakedata from '../../fakeData';
 
-const MainPage = () => {
-  const viewProfile = () => {
-    console.log('해당 프로필 유저의 posts를 렌더링');
-  };
-
-  const [posts, setPosts] = useState({ postData: [], postsCount: 0 });
-  // 서버에 요청중일 때
+const MainPage = ({
+  setPosts,
+  posts,
+  getPosts,
+  setProfile,
+  profile,
+  deletePost,
+}) => {
+  // 처음 디폴트 로딩값은 true, 즉, 들어오자마자 스피너 돌아가게
   const [isLoading, setIsLoading] = useState(true);
   const [isAddPostOn, setIsAddPostOn] = useState(false);
-  const [isPostOn, setIsPostOn] = useState(false);
 
-  const [imageUrls, setImageUrls] = useState([]);
+  const [isPostOn, setIsPostOn] = useState(false);
+  const [postModaldata, setPostModalData] = useState({});
+
   const viewAddPost = () => {
     setIsAddPostOn(!isAddPostOn);
   };
 
-  const viewPost = () => {
-    const fakeImageUrls = [dummyImg1, dummyImg2, dummyImg3];
-    setImageUrls((prev) => {
-      return [...prev, ...fakeImageUrls];
-    });
-    setIsPostOn(!isPostOn);
+  const viewPost = async (postId) => {
+    if (isPostOn) {
+      setIsPostOn(false);
+    } else {
+      // try {
+      //   const response = await axios.get(
+      // `https://server.codestates-project.tk/post/${postId}`,
+      //     { withCredentials: true },
+      //   );
+      //   setPostModalData(response.data);
+      // } catch (err) {
+      //   if (err.response.status === 401) {
+      //     // history.push('/');
+      //   } else {
+      //     console.log(err);
+      //   }
+      // } finally {
+      //   setIsPostOn(true);
+      // }
+      setPostModalData(fakedata.post);
+      setIsPostOn(true);
+    }
   };
 
-  // 처음에 ComponentDidMount에 쓰이는 함수
-  // postCount, count
-  const acceptPosts = async () => {
-    setIsLoading(true);
-    // 일단 로딩중을 띄우고(자료를 받는데 꽤 걸릴 수 있으니) 나중에 스피너 만들어서 container 안에 넣기
+  const acceptUserData = async (userId) => {
     // try {
-    //   const response = await axios.post(
-    //     'https://server.codestates-project.tk/post/grid/latest',
-    //     { offset: postCount, count },
+    //   const response = await axios.get(
+    //     `https://server.codestates-project.tk/user/${userId}`,
     //     { withCredentials: true },
     //   );
-    //   const acceptedPosts = response.data;
-    //   setIsLoading(false);
-    //   setPosts((prev) => {
-    //     acceptedPosts = acceptedPosts.concat(prev.postData);
-    //     return { postData: acceptedPosts, postsCount: acceptedPosts.length };
-    //   });
-    // } catch(err) {
-    //   console.log(err);
+    //   setProfile(response.data);
+    // } catch (err) {
+    //   if (err.response.status === 401) {
+    //     // history.push('/');
+    //   } else {
+    //     console.log(err);
+    //   }
     // }
 
-    // 서버에 요청을 보내고, 배열 형태의 자료를 받아서,
-    // [{postId=30, thumbnail:'http://...'}] 이런 형태의 자료
-    let acceptedPosts = [
-      { postId: 1, thumbnail: img },
-      { postId: 2, thumbnail: img },
-      { postId: 3, thumbnail: img },
-      { postId: 4, thumbnail: img },
-      { postId: 5, thumbnail: img },
-      { postId: 6, thumbnail: img },
-      { postId: 7, thumbnail: img },
-      { postId: 8, thumbnail: img },
-      { postId: 9, thumbnail: img },
-      { postId: 10, thumbnail: img },
-      { postId: 11, thumbnail: img },
-      { postId: 12, thumbnail: img },
-      { postId: 13, thumbnail: img },
-      { postId: 14, thumbnail: img },
-      { postId: 15, thumbnail: img },
-    ];
-    // flex로 바꿨기에 배열 내 요소를 세개의 요소로 이루어진 배열로 만들어놔야함
-    setIsLoading(false);
-    setPosts((prev) => {
-      acceptedPosts = acceptedPosts.concat(prev.postData);
-      return { postData: acceptedPosts, postsCount: acceptedPosts.length };
-    });
+    // text용
+    setProfile(fakedata.user);
   };
 
-  // 처음에 ComponentDidMount
+  const viewProfile = () => {
+    getPosts(profile.userId, 0, 0, 15);
+  };
+
+  // ComponentDidMount
   useEffect(() => {
-    acceptPosts();
-    // render 완료!
+    // 처음 렌더링될 때 getPosts로 latest 그리드를 받아서 posts에 업데이트해주고, 렌더링하도록
+    getPosts(0, 0, 0, 15);
+    // 처음 유저 데이터(자신)를 받아서 profile에 업데이트한 뒤에 렌더링
+    acceptUserData(0);
+    // 처음에 Loading자체가 true로 디폴트해놨기에, 여기까지
+    // latest grid 및 유저 정보 렌더링 끝나면 로딩 false로 풀기
+    // 결론적으로 들어오면 바로 스피너 돌고, 스피너 끝날 쯤에 다 렌더링 된 상태
+    setIsLoading(false);
   }, []);
 
   return (
     <>
-      <PostNewFormModal isModalOn={isAddPostOn} handleClose={viewAddPost} />
-      <PostModal
-        imageUrls={imageUrls}
-        isModalOn={isPostOn}
-        handleClose={viewPost}
+      <PostNewFormModal
+        postsKind={posts.kind}
+        setPosts={setPosts}
+        isModalOn={isAddPostOn}
+        handleClose={viewAddPost}
       />
+      {isPostOn ? (
+        <PostModal
+          getPosts={getPosts}
+          getUserData={acceptUserData}
+          postData={postModaldata}
+          isModalOn={isPostOn}
+          handleClose={viewPost}
+          deletePost={deletePost}
+        />
+      ) : null}
+
       <div className={styles.main}>
         <div className={styles.flexBox}>
           <div className={styles.profile} onClick={viewProfile}>
-            <img src={profileImg} className={styles.image} alt="profile_img" />
-            <div className={styles.petName}>이구아인</div>
-            <div className={styles.breed}>이구아나</div>
-            <div className={styles.postCountPart}>
-              <div className={styles.postsCount}>Posts</div>
-              <div className={styles.postsCountNumber}>22</div>
+            <img
+              src={profile.thumbnail}
+              className={styles.image}
+              alt="profile_img"
+            />
+            <div className={styles.userInform}>
+              <div className={styles.petName}>{profile.petName}</div>
+              <div className={styles.breed}>{profile.breed}</div>
+              <div className={styles.postCountPart}>
+                <div className={styles.postsCount}>Posts</div>
+                <div className={styles.postsCountNumber}>
+                  {profile.postCount}
+                </div>
+              </div>
             </div>
           </div>
           <Posts
+            userId={profile.userId}
             isLoading={isLoading}
-            addPosts={acceptPosts}
+            addPosts={getPosts}
             posts={posts.postData}
-            viewPost={viewPost}
             postsCount={posts.postsCount}
+            viewPost={viewPost}
           />
         </div>
         <div className={styles.addButton} onClick={viewAddPost}>
@@ -123,4 +139,5 @@ const MainPage = () => {
     </>
   );
 };
+
 export default MainPage;

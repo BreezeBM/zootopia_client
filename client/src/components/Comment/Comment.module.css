@@ -1,13 +1,8 @@
-.eachComment {
-  display: flex;
-  flex-direction: column;
-}
-
-.comment {
-  display: flex;
-  align-items: center;
+.subComment {
   margin-top: 0.2rem;
-  width: 95%;
+}
+.contentsPart {
+  display: flex;
 }
 
 .profile {
@@ -17,17 +12,92 @@
 }
 
 .nickname {
+  font-family: Bazzi;
+  font-size: 1.1rem;
+}
+
+.tagName {
+  font-family: Bazzi;
+  color: #ffd426;
+}
+
+.commentPart {
   margin-left: 0.3rem;
   font-family: Bazzi;
 }
 
-.text {
-  margin-left: 0.5rem;
+.textInput {
+  font-size: 1rem;
+  font-family: Bazzi;
+  border: none;
+  outline: none;
+}
+
+.textPart {
+  margin-left: 0.48rem;
+  font-size: 1rem;
   font-family: Bazzi;
 }
+
+.dateAndBtnPart {
+  display: flex;
+  margin-left: 1.8rem;
+}
+
 .date {
   font-family: Bazzi;
-  margin-left: 0.5rem;
   color: gray;
-  font-size: 0.8rem;
+}
+
+.updateBtns {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.closeUpdateBtn {
+  cursor: pointer;
+  width: 1rem;
+  height: 1rem;
+  position: relative;
+  top: 0.2rem;
+  left: 0.5rem;
+}
+
+.commentBtn {
+  font-family: Bazzi;
+  color: gray;
+  margin-left: 0.8rem;
+  cursor: pointer;
+}
+
+#goToInputBtn {
+  margin-left: 1rem !important;
+  cursor: pointer;
+}
+
+#commentDeleteBtn {
+  margin-left: 0.5rem !important;
+  cursor: pointer;
+}
+
+.dateAndBtnPart .updateBtn {
+  visibility: hidden;
+  /* box-shadow: 2px 4px 9px 0 rgba(0, 0, 0, 0.5); */
+  cursor: pointer;
+  width: 1rem;
+  height: 1rem;
+  position: relative;
+  top: 0.2rem;
+  left: 0.5rem;
+}
+
+.subComment:hover .updateBtn {
+  visibility: visible;
+}
+
+@media screen and (max-width: 65rem) {
+  .dateAndBtnPart .updateBtn {
+    visibility: visible;
+  }
 }

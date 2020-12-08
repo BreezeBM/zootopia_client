@@ -3,10 +3,18 @@ import styles from './Posts.module.css';
 import Post from '../Post/Post';
 import useIntersectionObserver from '../useIntersectionObserver/useIntersectionObserver';
 
-const Posts = ({ postsCount, isLoading, posts, addPosts, viewPost }) => {
+const Posts = ({
+  // userId
+  postsCount,
+  isLoading,
+  posts,
+  // addPosts,
+  viewPost,
+}) => {
   //   infinite scroll logic with IntersectionObserver API
   const rootRef = useRef(null);
   const targetRef = useRef(null);
+  console.log(posts);
   const [renderCount, setRenderCount] = useState(0);
   useIntersectionObserver({
     root: rootRef.current,
@@ -17,7 +25,8 @@ const Posts = ({ postsCount, isLoading, posts, addPosts, viewPost }) => {
           setRenderCount(renderCount + 1);
           return;
         }
-        addPosts();
+        console.log('hello');
+        // addPosts(userId, posts[0].postId, postsCount, 15);
       }
     },
   });
@@ -25,12 +34,12 @@ const Posts = ({ postsCount, isLoading, posts, addPosts, viewPost }) => {
   return (
     <div ref={rootRef} className={styles.grid_border}>
       <div className={styles.grid_container}>
-        {posts.map((post, idx) => {
+        {posts.map((post) => {
           return (
             <Post
               thumbnail={post.thumbnail}
-              key={idx}
-              // post.postId
+              key={post.postId}
+              postId={post.postId}
               viewPost={viewPost}
             />
           );

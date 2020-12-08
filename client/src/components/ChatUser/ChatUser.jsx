@@ -18,6 +18,7 @@ const ChatUser = ({ idValue, state, stateFunc }) => {
     console.log(changes);
     Card.current.style.backgroundColor = 'rgba(255,198,0)';
   };
+
   return (
     <div className={styles.usercard} ref={Card} onClick={handleCard}>
       <img className={styles.userProfile} src={iguanaImg} alt="userprofile" />

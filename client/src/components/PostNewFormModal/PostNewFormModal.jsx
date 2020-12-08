@@ -1,10 +1,13 @@
 import { createRef, React, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 // import axios from 'axios';
 import styles from './PostNewFormModal.module.css';
 import close from '../../images/close.png';
 import PostCropModal from '../PostCropModal/PostCropModal';
+import FAKEIMG from '../../thumbnails/post_a.png';
 
-const PostNewFormModal = ({ isModalOn, handleClose }) => {
+const PostNewFormModal = ({ postsKind, setPosts, isModalOn, handleClose }) => {
+  const history = useHistory();
   const imgInput1 = createRef();
   const imgInput2 = createRef();
   const imgInput3 = createRef();
@@ -18,6 +21,7 @@ const PostNewFormModal = ({ isModalOn, handleClose }) => {
     setIsCropModalOn(!isCropModalOn);
   };
   const [imgSrc, setImgSrc] = useState(null);
+
   const [imgSrcs, setImgSrcs] = useState({ 1: '+', 2: '+', 3: '+' });
 
   const setImgSrcsFunc = (inputNumber, urlSrc) => {
@@ -66,7 +70,6 @@ const PostNewFormModal = ({ isModalOn, handleClose }) => {
     } else {
       // 이미지가 1개 미만이면 즉, 0개 업로딩이면 못보내게 하기
       const formData = new FormData();
-      formData.append('text', textAreaRef.current.value);
       const dataArr = [];
       for (const el of Object.values(imgSrcs)) {
         if (el !== '+') {
@@ -100,7 +103,8 @@ const PostNewFormModal = ({ isModalOn, handleClose }) => {
       if (image1) formData.append('image1', image1, fileName);
       if (image2) formData.append('image2', image2, fileName);
       if (image3) formData.append('image3', image3, fileName);
-
+      formData.append('text', textAreaRef.current.value);
+      // try {
       // const response = await axios({
       //   method: 'post',
       //   url: 'https://server.codestates-project.tk/post',
@@ -109,7 +113,28 @@ const PostNewFormModal = ({ isModalOn, handleClose }) => {
       //     'Content-Type': `multipart/form-data`,
       //   },
       // });
-      // console.log(response);
+      // if (postsKind === 'latest' || postsKind === 'user') {
+      //   setPosts((prev) => {
+      //     const copyArr = prev.postData.slice();
+      //     copyArr.unshift(response.data);
+      //     return { ...prev, postData: copyArr };
+      //   });
+      // }
+      // resetAndCloseModal();
+      // } catch (err) {
+      //   if (err.response.status === 401) {
+      //     // history.push('/');
+      //   } else {
+      //     alert('sorry, server got an error. please try again');
+      //   }
+      // }
+      if (postsKind === 'latest' || postsKind === 'user') {
+        setPosts((prev) => {
+          const copyArr = prev.postData.slice();
+          copyArr.unshift({ postId: 7, thumbnail: FAKEIMG });
+          return { ...prev, postData: copyArr };
+        });
+      }
       resetAndCloseModal();
     }
   };
