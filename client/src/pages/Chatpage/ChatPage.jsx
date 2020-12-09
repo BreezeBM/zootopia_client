@@ -1,13 +1,15 @@
 import React, { createRef, useEffect, useState } from 'react';
+import axios from 'axios';
 import styles from './ChatPage.module.css';
 import iguanaImg from '../../images/iguana.jpeg';
 import ChatUser from '../../components/ChatUser/ChatUser';
 import MyChat from '../../components/MyChat/MyChat';
 import UserChat from '../../components/UserChat/UserChat';
 
+let roomLists = '';
 const username = '깽순이가먹다버린빵은슬펐다';
 const breedname = '블라블라블라블라블라블라블라블라블블라블라블라';
-let messageContent = '치즈모짜렐라체다고다치즈페이젝카마렐 ';
+const messageContent = '치즈모짜렐라체다고다치즈페이젝카마렐 ';
 
 const fakeData = [
   {
@@ -34,7 +36,7 @@ const fakeData = [
   },
 ];
 
-let testContent = fakeData.map((el) => {
+const testContent = fakeData.map((el) => {
   if (el.userId === 1) {
     return <MyChat textData={el.text} dateData={el.time} />;
   } else {
@@ -46,12 +48,43 @@ const ChatPage = () => {
   const targetUser = createRef();
   const targetList = createRef();
 
-  const myFunction = function (e) {
-    if (e.keyCode === 13) {
-      messageContent = e.target.value;
+  const [testState, setTest] = useState([]);
+  const [targetId, targetToggle] = useState(-1);
+  const testFunc = async function () {
+    try {
+      const res = await axios.get('http://52.78.206.149:3000/messages');
+      setTest(res.data.results);
+    } catch (err) {
+      throw err;
+    } finally {
+      console.log('룸 갯 실행');
     }
   };
-  const [targetId, targetToggle] = useState(-1);
+  console.log(testState);
+
+  if (testState.length > 0) {
+    roomLists = testState.map((el) => {
+      return (
+        <ChatUser
+          idValue={3}
+          state={targetId}
+          stateFunc={targetToggle}
+          roomTitle={el.roomname}
+          roomPeople={10}
+        />
+      );
+    });
+  }
+
+  const myFunction = function (e) {
+    if (e.keyCode === 13) {
+      console.log(testState);
+    }
+  };
+
+  useEffect(() => {
+    testFunc();
+  }, []);
 
   useEffect(() => {
     const arr = ['Win16', 'Win32', 'Win64', 'Mac', 'MacIntel'];
@@ -60,7 +93,7 @@ const ChatPage = () => {
         targetList.current.style.display = 'none';
       }
     }
-  });
+  }, [targetId]);
 
   return (
     <div className={styles.main}>
@@ -74,90 +107,7 @@ const ChatPage = () => {
           </div>
           <div className={styles.userlist}>
             <div className={styles.profileBlock}>모바일 버전용</div>
-            <ChatUser
-              idValue={1}
-              state={targetId}
-              stateFunc={targetToggle}
-              ref={targetUser}
-            />
-            <ChatUser
-              idValue={2}
-              state={targetId}
-              stateFunc={targetToggle}
-              ref={targetUser}
-            />
-            <ChatUser
-              idValue={3}
-              state={targetId}
-              stateFunc={targetToggle}
-              ref={targetUser}
-            />
-            <ChatUser
-              idValue={4}
-              state={targetId}
-              stateFunc={targetToggle}
-              ref={targetUser}
-            />
-            <ChatUser
-              idValue={5}
-              state={targetId}
-              stateFunc={targetToggle}
-              ref={targetUser}
-            />
-            <ChatUser
-              idValue={6}
-              state={targetId}
-              stateFunc={targetToggle}
-              ref={targetUser}
-            />
-            <ChatUser
-              idValue={7}
-              state={targetId}
-              stateFunc={targetToggle}
-              ref={targetUser}
-            />
-            <ChatUser
-              idValue={511}
-              state={targetId}
-              stateFunc={targetToggle}
-              ref={targetUser}
-            />
-            <ChatUser
-              idValue={225}
-              state={targetId}
-              stateFunc={targetToggle}
-              ref={targetUser}
-            />
-            <ChatUser
-              idValue={533}
-              state={targetId}
-              stateFunc={targetToggle}
-              ref={targetUser}
-            />
-            <ChatUser
-              idValue={544}
-              state={targetId}
-              stateFunc={targetToggle}
-              ref={targetUser}
-            />
-            <ChatUser
-              idValue={566}
-              state={targetId}
-              stateFunc={targetToggle}
-              ref={targetUser}
-            />
-            <ChatUser
-              idValue={588}
-              state={targetId}
-              stateFunc={targetToggle}
-              ref={targetUser}
-            />
-            <ChatUser
-              idValue={599}
-              state={targetId}
-              stateFunc={targetToggle}
-              ref={targetUser}
-            />
+            {roomLists}
           </div>
         </div>
         <div className={styles.chatBox}>

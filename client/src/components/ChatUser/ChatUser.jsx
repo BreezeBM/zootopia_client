@@ -2,7 +2,7 @@ import React, { createRef, useEffect, useState } from 'react';
 import styles from './ChatUser.module.css';
 import iguanaImg from '../../images/iguana.jpeg';
 
-const ChatUser = ({ idValue, state, stateFunc }) => {
+const ChatUser = ({ idValue, state, stateFunc, roomTitle, roomPeople }) => {
   const Card = createRef();
 
   const [changes, changeToggle] = useState(state);
@@ -22,12 +22,8 @@ const ChatUser = ({ idValue, state, stateFunc }) => {
   return (
     <div className={styles.usercard} ref={Card} onClick={handleCard}>
       <img className={styles.userProfile} src={iguanaImg} alt="userprofile" />
-      <div className={styles.username}>
-        크리스마스에는눈이내릴까요?왔음좋겠어
-      </div>
-      <div className={styles.userbreed}>
-        모두가행복한나늘들을보낼수있길바랍니다20자넘는다
-      </div>
+      <div className={styles.username}>{roomTitle}</div>
+      <div className={styles.userbreed}>{roomPeople}</div>
       <div className={styles.status}>안 읽은 메시지가 있습니다.</div>
     </div>
   );
