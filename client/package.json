@@ -21,6 +21,8 @@
     "react-image-file-resizer": "^0.3.8",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "socket.io": "^3.0.4",
+    "socket.io-client": "^3.0.4",
     "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4"
   },
@@ -57,9 +59,10 @@
       "import/no-unresolved": 0,
       "react/jsx-no-bind": 0,
       "no-restricted-syntax": 0,
-      "no-unused-vars":0,
-      "no-else-return":0,
-      "no-useless-catch":0
+      "no-unused-vars": 0,
+      "no-else-return": 0,
+      "no-useless-catch": 0,
+      "no-underscore-dangle": 0
     }
   },
   "browserslist": {

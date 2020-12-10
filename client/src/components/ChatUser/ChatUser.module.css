@@ -52,6 +52,15 @@
   font-size: 0.6rem;
 }
 
+.outButton {
+  position: static;
+  display: flex;
+  margin-left: 70%;
+  width: 2.6rem;
+  height: 2.6rem;
+  bottom: 2rem;
+}
+
 @media (max-width: 600px) {
   .username {
     left: 5rem;
