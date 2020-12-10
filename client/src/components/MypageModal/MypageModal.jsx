@@ -1,4 +1,4 @@
-import { createRef, React, useState } from 'react';
+import { createRef, React, useRef, useState } from 'react';
 import axios from 'axios';
 
 import styles from './MypageModal.module.css';
@@ -8,14 +8,14 @@ import logoImg from '../../images/logo.png';
 import DeleteModal from '../DeleteModal/DeleteModal';
 import CropModal from '../CropModal/CropModal';
 
-const MypageModal = ({ isModalOn, handleClose }) => {
+const MypageModal = ({ profile, isModalOn, handleClose }) => {
   // img 변경관련 로직
   const [cropModalOn, setCropModalOn] = useState(false);
   const handleCropModalOn = () => {
     setCropModalOn(!cropModalOn);
   };
   const [imgSrc, setImgSrc] = useState(null);
-  const [nowImg, setNowImg] = useState(defaultProfile);
+  const [nowImg, setNowImg] = useState(profile.thumbnail);
   // const handleNowImg = (newImg) => {
   //   setNowImg(newImg);
   // };
@@ -34,13 +34,13 @@ const MypageModal = ({ isModalOn, handleClose }) => {
 
   // 서버에서 보내준 정보를 렌더링(초기)할 때 useState 디폴트 값으로 받기
   // + 유효성 검사 로직
-  const [nowPetName, setNowPetName] = useState('스눕독');
-  const [nowBreed, setNowBreed] = useState('시바견');
-  const petnameRef = createRef();
-  const breedRef = createRef();
+  const [nowPetName, setNowPetName] = useState(profile.petName);
+  const [nowBreed, setNowBreed] = useState(profile.petName);
+  const petnameRef = useRef(null);
+  const breedRef = useRef(null);
 
-  const [petName, setPetname] = useState(nowPetName);
-  const [breed, setBreed] = useState(nowBreed);
+  const [petName, setPetname] = useState(profile.petName);
+  const [breed, setBreed] = useState(profile.breed);
   const [checked, setChecked] = useState({ petname: true, breed: true });
 
   // 유효성 검사 로직
@@ -74,6 +74,7 @@ const MypageModal = ({ isModalOn, handleClose }) => {
         if (response.status === 201) {
           setNowPetName(petName);
           setPetname(petName);
+
           petnameRef.current.blur(); // 해결하기
         }
       } catch (err) {

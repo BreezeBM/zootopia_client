@@ -1,17 +1,17 @@
-import { createRef, React, useState } from 'react';
+import { createRef, React, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-// import axios from 'axios';
+import axios from 'axios';
 import styles from './PostNewFormModal.module.css';
 import close from '../../images/close.png';
 import PostCropModal from '../PostCropModal/PostCropModal';
-import FAKEIMG from '../../thumbnails/post_a.png';
+// import FAKEIMG from '../../thumbnails/post_a.png';
 
 const PostNewFormModal = ({ postsKind, setPosts, isModalOn, handleClose }) => {
   const history = useHistory();
   const imgInput1 = createRef();
   const imgInput2 = createRef();
   const imgInput3 = createRef();
-  const textAreaRef = createRef();
+  const textAreaRef = useRef(null);
   const [isCropModalOn, setIsCropModalOn] = useState(false);
   const [inputNum, setInputNum] = useState(null);
   const [checked, setChecked] = useState(false);
@@ -104,38 +104,38 @@ const PostNewFormModal = ({ postsKind, setPosts, isModalOn, handleClose }) => {
       if (image2) formData.append('image2', image2, fileName);
       if (image3) formData.append('image3', image3, fileName);
       formData.append('text', textAreaRef.current.value);
-      // try {
-      // const response = await axios({
-      //   method: 'post',
-      //   url: 'https://server.codestates-project.tk/post',
-      //   data: formData,
-      //   headers: {
-      //     'Content-Type': `multipart/form-data`,
-      //   },
-      // });
+      try {
+        const response = await axios({
+          method: 'post',
+          url: 'https://server.codestates-project.tk/post',
+          data: formData,
+          headers: {
+            'Content-Type': `multipart/form-data`,
+          },
+        });
+        if (postsKind === 'latest' || postsKind === 'user') {
+          setPosts((prev) => {
+            const copyArr = prev.postData.slice();
+            copyArr.unshift(response.data);
+            return { ...prev, postData: copyArr };
+          });
+        }
+        resetAndCloseModal();
+      } catch (err) {
+        if (err.response.status === 401) {
+          history.push('/');
+        } else {
+          alert('sorry, server got an error. please try again');
+        }
+      }
       // if (postsKind === 'latest' || postsKind === 'user') {
       //   setPosts((prev) => {
       //     const copyArr = prev.postData.slice();
-      //     copyArr.unshift(response.data);
+      //     copyArr.unshift({ postId: 7, thumbnail: FAKEIMG });
       //     return { ...prev, postData: copyArr };
       //   });
       // }
       // resetAndCloseModal();
-      // } catch (err) {
-      //   if (err.response.status === 401) {
-      //     // history.push('/');
-      //   } else {
-      //     alert('sorry, server got an error. please try again');
-      //   }
-      // }
-      if (postsKind === 'latest' || postsKind === 'user') {
-        setPosts((prev) => {
-          const copyArr = prev.postData.slice();
-          copyArr.unshift({ postId: 7, thumbnail: FAKEIMG });
-          return { ...prev, postData: copyArr };
-        });
-      }
-      resetAndCloseModal();
     }
   };
 

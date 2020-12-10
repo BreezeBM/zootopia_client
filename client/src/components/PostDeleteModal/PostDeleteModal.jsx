@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import styles from './PostDeleteModal.module.css';
 import deleteMotionImg from '../../images/trashcan.png';
@@ -7,18 +7,22 @@ import SimpleModal from '../SimpleModal/SimpleModal';
 
 const PostDeleteModal = ({ postId, deletePost, isModalOn, handleClose }) => {
   const [deleted, setDeleted] = useState(false);
+
+  // 포스트 삭제
   const deletePostFunc = async () => {
     try {
-      // await axios.delete(`https://server.codestates-project.tk/post`, {
-      //   withCredentials: true,
-      // });
-      console.log('fff');
+      await axios.delete(
+        `https://server.codestates-project.tk/post`,
+        { data: { postId } },
+        {
+          withCredentials: true,
+        },
+      );
       deletePost(postId);
-      setDeleted(true);
-      handleClose();
+      await setDeleted(true);
     } catch (err) {
       if (err.response.status === 401) {
-        // history.push('/');
+        history.push('/');
       } else {
         console.log(err);
       }
@@ -58,7 +62,7 @@ const PostDeleteModal = ({ postId, deletePost, isModalOn, handleClose }) => {
               className={styles.noButton}
               type="button"
               onClick={() => {
-                handleClose(deleted);
+                handleClose();
               }}
             >
               No

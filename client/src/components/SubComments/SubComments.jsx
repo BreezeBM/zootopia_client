@@ -2,12 +2,38 @@ import React from 'react';
 import styles from './SubComments.module.css';
 import SubComment from '../SubComment/SubComment';
 
-const SubComments = ({ handleCommentBtn }) => {
+const SubComments = ({
+  setCommentToWhom,
+  getSpecificUser,
+  postId,
+  commentId,
+  refreshPost,
+  setCommentId,
+  replies,
+  handleCommentBtn,
+}) => {
   return (
     <div className={styles.subComments}>
-      <SubComment handleCommentBtn={handleCommentBtn} />
-      <SubComment handleCommentBtn={handleCommentBtn} />
-      <SubComment handleCommentBtn={handleCommentBtn} />
+      {replies.map((reply) => {
+        return (
+          <SubComment
+            getSpecificUser={getSpecificUser}
+            commentId={commentId}
+            setCommentId={setCommentId}
+            setCommentToWhom={setCommentToWhom}
+            postId={postId}
+            refreshPost={refreshPost}
+            key={reply.replyId}
+            replyId={reply.replyId}
+            userId={reply.userId}
+            thumbnail={reply.thumbnail}
+            petName={reply.petName}
+            text={reply.text}
+            time={reply.time}
+            handleCommentBtn={handleCommentBtn}
+          />
+        );
+      })}
     </div>
   );
 };

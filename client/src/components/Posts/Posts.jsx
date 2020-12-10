@@ -4,29 +4,41 @@ import Post from '../Post/Post';
 import useIntersectionObserver from '../useIntersectionObserver/useIntersectionObserver';
 
 const Posts = ({
-  // userId
-  postsCount,
+  userProfile,
+  isDone,
+  setIsLoading,
+  userId,
   isLoading,
+  postsCount,
   posts,
-  // addPosts,
+  addPosts,
+  kind,
   viewPost,
 }) => {
-  //   infinite scroll logic with IntersectionObserver API
+  // infinite scroll logic with IntersectionObserver API
   const rootRef = useRef(null);
   const targetRef = useRef(null);
-  console.log(posts);
   const [renderCount, setRenderCount] = useState(0);
+
   useIntersectionObserver({
     root: rootRef.current,
     target: targetRef.current,
-    onIntersect: ([{ isIntersecting }]) => {
-      if (isIntersecting && !isLoading && postsCount >= 13) {
+    onIntersect: async ([{ isIntersecting }]) => {
+      setIsLoading(false);
+      if (isIntersecting && !isDone && postsCount >= 13 && !isLoading) {
+        setIsLoading(true);
         if (renderCount === 0) {
           setRenderCount(renderCount + 1);
           return;
         }
-        console.log('hello');
-        // addPosts(userId, posts[0].postId, postsCount, 15);
+        if (kind === 'latest') {
+          await addPosts(0, posts[0].postId, postsCount, 15);
+        } else if (kind === 'user') {
+          await addPosts(userProfile.userId, posts[0].postId, postsCount, 15);
+        } else {
+          await addPosts(userId, posts[0].postId, postsCount, 15);
+        }
+        // setIsLoading(false);
       }
     },
   });
@@ -47,7 +59,7 @@ const Posts = ({
       </div>
       <div
         ref={targetRef}
-        className={`${styles.target} ${postsCount >= 13 && styles.isOn}`}
+        className={`${styles.target} ${postsCount >= 15 && styles.isOn}`}
       >
         Loading..
         {/* <div className={styles.spinner}>
