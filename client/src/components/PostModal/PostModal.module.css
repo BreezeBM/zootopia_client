@@ -7,6 +7,16 @@
   margin-top: 3rem;
 }
 
+/* 대댓글 남길 때 띄워주는 메시지 */
+.subCommentMessage {
+  display: inline-block;
+  position: absolute;
+  top: -1rem;
+  color: red;
+  font-family: bazzi;
+  cursor: pointer;
+}
+
 /* 재활용 Modal 과는 다른 형태로 만들어야하기에 그대로 복붙해서 가져옴 */
 .modal {
   position: fixed;

@@ -2,6 +2,8 @@
   margin-top: 0.5rem;
   height: 6.4rem;
   overflow-y: scroll;
+  overflow-x: unset;
+  white-space: wrap;
 }
 
 .comments::-webkit-scrollbar {

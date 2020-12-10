@@ -6,6 +6,7 @@ import styles from './CropModal.module.css';
 import close from '../../images/close(white).png';
 
 const CropModal = ({
+  setUserProfile,
   setImgSrc,
   setNowImg,
   imgSrc,
@@ -91,6 +92,9 @@ const CropModal = ({
     });
     setNowImg(response.data.thumbnail);
     setImgSrc(null);
+    setUserProfile((prev) => {
+      return { ...prev, thumbnail: response.data.thumbnail };
+    });
     handleClose();
   };
 

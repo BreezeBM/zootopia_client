@@ -1,25 +1,98 @@
-import { React, useState, useRef } from 'react';
+/* eslint-disable no-nested-ternary */
+import { React, useState, useRef, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 import styles from './Comment.module.css';
-import dummyImg from '../../thumbnails/post_c.png';
 import SubComments from '../SubComments/SubComments';
 import updateBtn from '../../images/commentUpdateBtn.jpg';
 
-const Comment = ({ handleCommentBtn }) => {
+const Comment = ({
+  userProfileId,
+  userId,
+  getSpecificUser,
+  setCommentId,
+  setCommentToWhom,
+  refreshPost,
+  postId,
+  replies,
+  deleteComment,
+  commentId,
+  thumbnail,
+  petName,
+  text,
+  time,
+  handleCommentBtn,
+}) => {
+  // 수정권한이 있는지에 관한 처리
+  const [hasRights, setHasRights] = useState(false);
   const textRef = useRef(null);
   const [updateToggled, setUpdateToggled] = useState(false);
   const [textUpdateToggled, setTextUpdateToggled] = useState(false);
-  const [textInput, setTextInput] = useState('  정신못차리네;');
+  const [textInput, setTextInput] = useState(null);
+
+  // 댓글 수정
+  const updateComment = async () => {
+    console.log(commentId);
+    if (textUpdateToggled === true) {
+      try {
+        const response = await axios.patch(
+          'https://server.codestates-project.tk/post/comment',
+          {
+            postId,
+            commentId,
+            text: textInput,
+          },
+          {
+            withCredentials: true,
+          },
+        );
+        refreshPost(response.data.comments);
+        setTextUpdateToggled(false);
+        setUpdateToggled(false);
+      } catch (err) {
+        if (err.response.status === 401) {
+          history.push('/');
+        } else {
+          console.log(err);
+        }
+      }
+    } else {
+      setTextInput(text);
+      await setTextUpdateToggled(true);
+      textRef.current.focus();
+    }
+  };
+
+  const checkEnterPress = (e) => {
+    if (e.keyCode === 13) {
+      e.target.blur();
+    }
+  };
+
+  // 수정권한이 있는지에 관한 처리
+  useEffect(() => {
+    if (userProfileId === userId) {
+      setHasRights(true);
+    }
+  }, [userProfileId, userId]);
 
   return (
     <>
       <div className={styles.eachComment}>
         <div className={styles.subComment}>
-          <div className={styles.contentsPart}>
-            <img className={styles.profile} src={dummyImg} alt="profile" />
+          <div
+            className={styles.contentsPart}
+            onClick={() => {
+              getSpecificUser(userId);
+            }}
+          >
+            <img className={styles.profile} src={thumbnail} alt="profile" />
             <div className={styles.commentPart}>
-              <span className={styles.nickname}>핏불이삼촌</span>
+              <span className={styles.nickname}>{petName}</span>
               {textUpdateToggled ? (
                 <input
+                  onBlur={updateComment}
+                  onKeyDown={checkEnterPress}
                   spellCheck={false}
                   ref={textRef}
                   className={styles.textInput}
@@ -30,61 +103,73 @@ const Comment = ({ handleCommentBtn }) => {
                   }}
                 />
               ) : (
-                <span className={styles.textPart}>정신못차리네;</span>
+                <span className={styles.textPart}>{text}</span>
               )}
             </div>
           </div>
           <div className={styles.dateAndBtnPart}>
-            <span className={styles.date}>지금</span>
-            <span className={styles.commentBtn} onClick={handleCommentBtn}>
+            <span className={styles.date}>{time}</span>
+            <span
+              className={styles.commentBtn}
+              onClick={async () => {
+                await setCommentId(commentId);
+                await setCommentToWhom(petName);
+                handleCommentBtn();
+              }}
+            >
               답글 달기
             </span>
-            {updateToggled ? (
-              <div className={styles.updateBtns}>
+            {hasRights ? (
+              updateToggled ? (
+                <div className={styles.updateBtns}>
+                  <img
+                    className={styles.closeUpdateBtn}
+                    src={updateBtn}
+                    alt="updateBtn"
+                    onClick={() => {
+                      setTextUpdateToggled(false);
+                      setTextInput(text);
+                      setUpdateToggled(false);
+                    }}
+                  />
+                  <i
+                    id={styles.goToInputBtn}
+                    className="far fa-edit"
+                    onClick={updateComment}
+                  />
+                  <i
+                    id={styles.commentDeleteBtn}
+                    className="fas fa-trash-alt"
+                    onClick={() => {
+                      deleteComment(commentId);
+                      setUpdateToggled(false);
+                    }}
+                  />
+                </div>
+              ) : (
                 <img
-                  className={styles.closeUpdateBtn}
+                  className={styles.updateBtn}
                   src={updateBtn}
                   alt="updateBtn"
                   onClick={() => {
-                    setUpdateToggled(false);
+                    setUpdateToggled(true);
                   }}
                 />
-                <i
-                  id={styles.goToInputBtn}
-                  className="far fa-edit"
-                  onClick={async () => {
-                    if (textUpdateToggled === true) {
-                      textRef.current.blur();
-                      setTextUpdateToggled(false);
-                      setUpdateToggled(false);
-                    } else {
-                      await setTextUpdateToggled(true);
-                      textRef.current.focus();
-                    }
-                  }}
-                />
-                <i
-                  id={styles.commentDeleteBtn}
-                  className="fas fa-trash-alt"
-                  onClick={() => {
-                    console.log('제거 로직');
-                    setUpdateToggled(false);
-                  }}
-                />
-              </div>
-            ) : (
-              <img
-                className={styles.updateBtn}
-                src={updateBtn}
-                alt="updateBtn"
-                onClick={() => {
-                  setUpdateToggled(true);
-                }}
-              />
-            )}
+              )
+            ) : null}
           </div>
         </div>
-        <SubComments handleCommentBtn={handleCommentBtn} />
+        <SubComments
+          userProfileId={userProfileId}
+          getSpecificUser={getSpecificUser}
+          commentId={commentId}
+          setCommentId={setCommentId}
+          setCommentToWhom={setCommentToWhom}
+          postId={postId}
+          refreshPost={refreshPost}
+          replies={replies}
+          handleCommentBtn={handleCommentBtn}
+        />
       </div>
     </>
   );

@@ -46,4 +46,6 @@ input::placeholder {
 
 body {
   margin: 0;
+  background-image: url('./images/Background_main.png');
+  overflow-x: hidden;
 }
