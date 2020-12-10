@@ -116,6 +116,16 @@
   display: none;
 }
 
+.send {
+  position: relative;
+  display: flex;
+  border: 2px solid red;
+  width: 20%;
+  height: 10%;
+  margin-left: 80%;
+  text-align: center;
+}
+
 @media (max-width: 1200px) {
   .flexBox {
     width: 80%;
@@ -333,5 +343,13 @@
     border-bottom: 2px solid #e1e1e1;
     transition: all 250ms ease-in-out;
     outline: none;
+  }
+  .send {
+    position: absolute;
+    display: flex;
+    width: 12%;
+    top: 90%;
+    left: 41%;
+    margin-left: 0%;
   }
 }

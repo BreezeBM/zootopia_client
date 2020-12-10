@@ -1,22 +1,29 @@
-import React, { createRef, useEffect, useState } from 'react';
+import React, { createRef, useEffect } from 'react';
 import styles from './ChatUser.module.css';
 import iguanaImg from '../../images/iguana.jpeg';
+import OutImg from '../../images/roomOut.png';
 
-const ChatUser = ({ idValue, state, stateFunc, roomTitle, roomPeople }) => {
+const ChatUser = ({
+  idValue,
+  targetId,
+  targetToggle,
+  roomTitle,
+  roomPeople,
+  dataFunc,
+}) => {
   const Card = createRef();
 
-  const [changes, changeToggle] = useState(state);
-
   useEffect(() => {
-    if (state !== idValue && changeToggle) {
+    if (targetId !== idValue) {
       Card.current.style.backgroundColor = 'white';
     }
   });
 
-  const handleCard = function () {
-    stateFunc(idValue);
-    console.log(changes);
+  const handleCard = async function () {
     Card.current.style.backgroundColor = 'rgba(255,198,0)';
+    await targetToggle(idValue);
+    console.log(idValue);
+    dataFunc(idValue);
   };
 
   return (
@@ -25,6 +32,7 @@ const ChatUser = ({ idValue, state, stateFunc, roomTitle, roomPeople }) => {
       <div className={styles.username}>{roomTitle}</div>
       <div className={styles.userbreed}>{roomPeople}</div>
       <div className={styles.status}>안 읽은 메시지가 있습니다.</div>
+      <div className={styles.outButton} src={OutImg} alt="roomOut" />
     </div>
   );
 };
