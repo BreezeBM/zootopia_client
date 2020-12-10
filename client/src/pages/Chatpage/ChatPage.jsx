@@ -7,14 +7,14 @@ import ChatUser from '../../components/ChatUser/ChatUser';
 import MyChat from '../../components/MyChat/MyChat';
 import UserChat from '../../components/UserChat/UserChat';
 
-const socket = io('http://e77f8aa1364b.ngrok.io', { withCredentials: true });
+const socket = io('http://5b7116e297db.ngrok.io', { withCredentials: true });
 let roomLists = '';
 // let chatLists = '';
 const username = '내 이름이 나오는 곳';
 const breedname = '품종명을 쓰거나 상태메시지처럼 활용';
 
 const ChatPage = () => {
-  const targetUser = createRef();
+  const chatScroll = createRef();
   const targetList = createRef();
   const [targetId, targetToggle] = useState('');
   const [testState, setTest] = useState([]);
@@ -26,12 +26,12 @@ const ChatPage = () => {
     },
   ]);
 
-  const [onLine, setonLine] = useState(0);
+  const [onLine, setonLine] = useState(5);
   const [messageMap, setMap] = useState('');
 
   const testFunc = async function () {
     try {
-      const res = await axios.get('http://e77f8aa1364b.ngrok.io/room');
+      const res = await axios.get('http://5b7116e297db.ngrok.io/room');
       setTest(res.data);
       targetToggle(res.data[0]._id);
     } catch (err) {
@@ -47,9 +47,6 @@ const ChatPage = () => {
       socket.on('renderChat', function (chat) {
         setMessages(chat);
       });
-      socket.on('newMessage', function (chat) {
-        setMessages(chat);
-      });
     } catch (err) {
       throw err;
     } finally {
@@ -62,7 +59,6 @@ const ChatPage = () => {
 
   if (testState.length > 0) {
     roomLists = testState.map((el) => {
-      console.log(el._id);
       return (
         <ChatUser
           idValue={el._id}
@@ -78,11 +74,14 @@ const ChatPage = () => {
 
   const myFunction = function (e) {
     if (e.keyCode === 13) {
-      const message = `{"user":"5", "text":${e.target.value}}`;
+      const message = JSON.stringify({
+        user: onLine,
+        text: `${e.target.value}`,
+      });
       const config = {
         method: 'post',
-        url: `http://e77f8aa1364b.ngrok.io/chat/${targetId}`,
-        headers: {},
+        url: `http://5b7116e297db.ngrok.io/chat/${targetId}`,
+        headers: { 'Content-Type': 'application/json' },
         data: message,
       };
       axios(config)
@@ -92,16 +91,29 @@ const ChatPage = () => {
         .catch(function (error) {
           console.log(error);
         });
+      socket.on('newMessage', function (chat) {
+        console.log(chat);
+        setMessages([...messageState, chat]);
+      });
     }
   };
 
+  const userChange = function () {
+    setonLine(6);
+    console.log(onLine);
+  };
   useEffect(() => {
     testFunc();
   }, []);
 
-  useEffect(() => {}, [messageState]);
+  useEffect(() => {
+    console.log(targetId);
+  }, [messageState]);
 
   useEffect(() => {
+    if (targetId === -1) {
+      console.log('스테이트 올리기 작동합니다.');
+    }
     const arr = ['Win16', 'Win32', 'Win64', 'Mac', 'MacIntel'];
     if (!arr.includes(navigator.platform)) {
       if (targetId.length > 5) {
@@ -126,7 +138,7 @@ const ChatPage = () => {
           </div>
         </div>
         <div className={styles.chatBox}>
-          <div className={styles.chatonBoard}>
+          <div className={styles.chatonBoard} ref={chatScroll}>
             <div className={styles.block}> </div>
             {messageState.map((el) => {
               return <UserChat textData={el.text} dateData={el.createdAt} />;
@@ -138,9 +150,7 @@ const ChatPage = () => {
             placeholder="메시지 입력..."
             onKeyDown={myFunction}
           />
-          <button className={styles.send} type="button">
-            전송
-          </button>
+          <div className={styles.send} onClick={userChange} />
         </div>
       </div>
     </div>
