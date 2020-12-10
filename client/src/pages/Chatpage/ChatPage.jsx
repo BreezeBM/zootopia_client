@@ -7,7 +7,7 @@ import ChatUser from '../../components/ChatUser/ChatUser';
 import MyChat from '../../components/MyChat/MyChat';
 import UserChat from '../../components/UserChat/UserChat';
 
-const socket = io('http://e77f8aa1364b.ngrok.io', { withCredentials: true });
+const socket = io('http://5b7116e297db.ngrok.io', { withCredentials: true });
 let roomLists = '';
 // let chatLists = '';
 const username = '내 이름이 나오는 곳';
@@ -31,7 +31,7 @@ const ChatPage = () => {
 
   const testFunc = async function () {
     try {
-      const res = await axios.get('http://e77f8aa1364b.ngrok.io/room');
+      const res = await axios.get('http://5b7116e297db.ngrok.io/room');
       setTest(res.data);
       targetToggle(res.data[0]._id);
     } catch (err) {
@@ -78,11 +78,11 @@ const ChatPage = () => {
 
   const myFunction = function (e) {
     if (e.keyCode === 13) {
-      const message = `{"user":"5", "text":${e.target.value}}`;
+      const message = JSON.stringify({ user: 5, text: `${e.target.value}` });
       const config = {
         method: 'post',
-        url: `http://e77f8aa1364b.ngrok.io/chat/${targetId}`,
-        headers: {},
+        url: `http://5b7116e297db.ngrok.io/chat/${targetId}`,
+        headers: { 'Content-Type': 'application/json' },
         data: message,
       };
       axios(config)
