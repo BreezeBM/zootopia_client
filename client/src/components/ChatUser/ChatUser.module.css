@@ -53,12 +53,12 @@
 }
 
 .outButton {
-  position: absolute;
+  position: static;
   display: flex;
   margin-left: 70%;
   width: 2.6rem;
   height: 2.6rem;
-  border: 2px solid;
+  bottom: 2rem;
 }
 
 @media (max-width: 600px) {
