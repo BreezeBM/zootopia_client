@@ -25,6 +25,7 @@ const ChatUser = ({ idValue, state, stateFunc, roomTitle, roomPeople }) => {
       <div className={styles.username}>{roomTitle}</div>
       <div className={styles.userbreed}>{roomPeople}</div>
       <div className={styles.status}>안 읽은 메시지가 있습니다.</div>
+      <div className={styles.outButton}>챗나가기</div>
     </div>
   );
 };

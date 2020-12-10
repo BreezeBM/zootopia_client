@@ -18,11 +18,13 @@ const ChatPage = () => {
   const [testState, setTest] = useState([]);
   const [messageState, setMessages] = useState([]);
   const [targetId, targetToggle] = useState(-1);
+  const [onLine, setonLine] = useState(false);
 
   const testFunc = async function () {
     try {
-      const res = await axios.get('http://52.78.206.149:3000/messages');
-      setTest(res.data.results);
+      const res = await axios.get('http://e77f8aa1364b.ngrok.io/room');
+      console.log(res.data);
+      setTest(res.data);
     } catch (err) {
       throw err;
     } finally {
@@ -32,6 +34,8 @@ const ChatPage = () => {
 
   const messageFunc = async function () {
     try {
+      socket.emit('joinRoom', '5fd056a52d621b1b044454a5');
+      const res2 = '';
       const res = await axios.get('http://52.78.206.149:3000/messages');
       setMessages(res.data.results);
     } catch (err) {
@@ -45,11 +49,11 @@ const ChatPage = () => {
     roomLists = testState.map((el) => {
       return (
         <ChatUser
-          idValue={3}
+          idValue={el._id}
           state={targetId}
           stateFunc={targetToggle}
-          roomTitle={el.roomname}
-          roomPeople={10}
+          roomTitle={el.title}
+          roomPeople={el.people}
         />
       );
     });
@@ -67,7 +71,8 @@ const ChatPage = () => {
 
   const myFunction = function (e) {
     if (e.keyCode === 13) {
-      console.log(testState);
+      setonLine(true);
+      console.log(onLine);
     }
   };
 
@@ -75,6 +80,12 @@ const ChatPage = () => {
     testFunc();
     messageFunc();
   }, []);
+
+  useEffect(() => {
+    testFunc();
+    messageFunc();
+    console.log('온라인 이펙트 실행!');
+  }, [onLine]);
 
   useEffect(() => {
     const arr = ['Win16', 'Win32', 'Win64', 'Mac', 'MacIntel'];

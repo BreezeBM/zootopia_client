@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import styles from './MyChat.module.css';
 
 const MyChat = ({ textData, dateData }) => {
-  let sizes = '20%';
+  let sizes = '15%';
   if (textData.length > 10) {
     sizes = '35%';
   }
@@ -15,10 +15,11 @@ const MyChat = ({ textData, dateData }) => {
     border: 2px solid #e7e7e7;
     border-radius: 1rem;
     width: ${(props) => props.size};
-    margin-left: 60%;
+    margin-left: 84%;
     margin-right: 2%;
     font-family: MaplestoryOTFLight;
     font-size: 0.8rem;
+    text-align: center;
     transition: all 180ms ease-in-out;
     word-break: break-all;
     flex-direction: column;
