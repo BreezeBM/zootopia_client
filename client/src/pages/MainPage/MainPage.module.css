@@ -1,32 +1,26 @@
-/* 배경화면 적용을 위한 main 부분 css */
-
-.main {
-  background-image: url('../../images/Background_main.png');
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-/* profile, grid 를 묶어놓은 flexbox */
-
-.flexBox {
-  position: absolute;
-  display: flex;
-  width: 80%;
-  height: 100%;
-}
-
 /* profile 부분 css */
+.gridFrame {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 20rem;
+  width: 50.7vw;
+  height: 100vh;
+  border-right: 3px solid #e1e1e1;
+  border-left: 3px solid #e1e1e1;
+}
 
 .profile {
   border-bottom: 3px solid #e1e1e1;
+  z-index: 2;
+  position: fixed;
   display: flex;
   flex-direction: column;
   height: 21rem;
   min-width: 20rem;
   max-width: 20rem;
   align-items: center;
-  margin-top: 4.125rem;
+  top: 4.125rem;
   padding-top: 2rem;
   padding-bottom: 2rem;
   cursor: pointer;
@@ -77,6 +71,7 @@
 /* add button css */
 
 .addButton {
+  z-index: 2;
   position: fixed;
   right: 2rem;
   bottom: 2rem;
@@ -102,9 +97,11 @@
 /* 모바일 버전 대응 */
 
 @media screen and (max-width: 65rem) {
-  .main {
-    background-image: unset;
+  .gridFrame {
+    all: unset;
+    display: none;
   }
+
   .image {
     width: 5.5rem;
     height: 5.5rem;
@@ -136,13 +133,17 @@
   }
 
   .profile {
+    z-index: unset;
     border-bottom: 4px solid #e1e1e1;
-    margin-top: 0;
     width: 100%;
     text-align: center;
     flex-direction: row;
     min-width: unset;
     max-width: unset;
+    top: 7rem;
+    height: 10rem;
+    padding-top: unset;
+    padding-bottom: unset;
   }
 
   .userInform {

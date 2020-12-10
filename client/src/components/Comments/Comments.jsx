@@ -3,6 +3,7 @@ import styles from './Comments.module.css';
 import Comment from '../Comment/Comment';
 
 const Comments = ({
+  userProfileId,
   getSpecificUser,
   setWhichComment,
   setCommentToWhom,
@@ -19,6 +20,7 @@ const Comments = ({
       {commentsInform.map((comment) => {
         return (
           <Comment
+            userProfileId={userProfileId}
             getSpecificUser={getSpecificUser}
             setCommentId={setCommentId}
             setCommentToWhom={setCommentToWhom}

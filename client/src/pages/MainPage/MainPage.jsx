@@ -8,13 +8,16 @@ import PostModal from '../../components/PostModal/PostModal';
 import PostNewFormModal from '../../components/PostNewFormModal/PostNewFormModal';
 
 // test용 fakedata
-// import fakedata from '../../fakeData';
+import fakedata from '../../fakeData';
 
 const MainPage = ({
+  kind,
+  setProfileForDeleteAndAdd,
   userProfile,
   isDone,
   setUserProfile,
   setPosts,
+  isLoading,
   posts,
   getPosts,
   setProfile,
@@ -22,7 +25,6 @@ const MainPage = ({
   deletePost,
 }) => {
   const history = useHistory();
-  const [isLoading, setIsLoading] = useState(true);
   // #######################################################
   // 새로운 포스트를 만드는 모달창을 끄고, 켜는 state& functions
   const [isAddPostOn, setIsAddPostOn] = useState(false);
@@ -75,30 +77,30 @@ const MainPage = ({
   // #######################################################
   // 다른 유저의 프로필 정보를 가져오는 func(click시에 해당 유저의 정보를 main에 출력)
   const acceptUserData = async (userId) => {
-    try {
-      const response = await axios.get(
-        `https://server.codestates-project.tk/user/${userId}`,
-        { withCredentials: true },
-      );
-      if (userId === 0) {
-        setUserProfile(response.data);
-      }
-      setProfile(response.data);
-    } catch (err) {
-      if (err.response.status === 401) {
-        history.push('/');
-      } else {
-        console.log(err);
-      }
-    }
+    // try {
+    //   const response = await axios.get(
+    //     `https://server.codestates-project.tk/user/${userId}`,
+    //     { withCredentials: true },
+    //   );
+    //   if (userId === 0) {
+    //     setUserProfile(response.data);
+    //   }
+    //   setProfile(response.data);
+    // } catch (err) {
+    //   if (err.response.status === 401) {
+    //     history.push('/');
+    //   } else {
+    //     console.log(err);
+    //   }
+    // }
 
     // text용
-    // if (userId === 0) {
-    //   setUserProfile(fakedata.user);
-    //   setProfile(fakedata.user);
-    // } else {
-    //   setProfile(fakedata.post.user);
-    // }
+    if (userId === 0) {
+      setUserProfile(fakedata.user);
+      setProfile(fakedata.user);
+    } else {
+      setProfile(fakedata.post.user);
+    }
   };
   // #######################################################
 
@@ -119,13 +121,14 @@ const MainPage = ({
     // 처음에 Loading자체가 true로 디폴트해놨기에, 여기까지
     // latest grid 및 유저 정보 렌더링 끝나면 로딩 false로 풀기
     // 결론적으로 들어오면 바로 스피너 돌고, 스피너 끝날 쯤에 다 렌더링 된 상태
-    setIsLoading(false);
   }, []);
   // #######################################################
 
   return (
     <>
       <PostNewFormModal
+        setProfileForDeleteAndAdd={setProfileForDeleteAndAdd}
+        setUserProfile={setUserProfile}
         postsKind={posts.kind}
         setPosts={setPosts}
         isModalOn={isAddPostOn}
@@ -133,6 +136,10 @@ const MainPage = ({
       />
       {isPostOn ? (
         <PostModal
+          kind={kind}
+          setProfileForDeleteAndAdd={setProfileForDeleteAndAdd}
+          setUserProfile={setUserProfile}
+          userProfileId={userProfile.userId}
           setPostModalData={setPostModalData}
           refreshPost={refreshPost}
           setPosts={setPosts}
@@ -144,42 +151,35 @@ const MainPage = ({
           deletePost={deletePost}
         />
       ) : null}
-
-      <div className={styles.main}>
-        <div className={styles.flexBox}>
-          <div className={styles.profile} onClick={viewProfile}>
-            <img
-              src={profile.thumbnail}
-              className={styles.image}
-              alt="profile_img"
-            />
-            <div className={styles.userInform}>
-              <div className={styles.petName}>{profile.petName}</div>
-              <div className={styles.breed}>{profile.breed}</div>
-              <div className={styles.postCountPart}>
-                <div className={styles.postsCount}>Posts</div>
-                <div className={styles.postsCountNumber}>
-                  {profile.postCount}
-                </div>
-              </div>
-            </div>
+      <div className={styles.gridFrame} />
+      <div className={styles.profile} onClick={viewProfile}>
+        <img
+          src={profile.thumbnail}
+          className={styles.image}
+          alt="profile_img"
+        />
+        <div className={styles.userInform}>
+          <div className={styles.petName}>{profile.petName}</div>
+          <div className={styles.breed}>{profile.breed}</div>
+          <div className={styles.postCountPart}>
+            <div className={styles.postsCount}>Posts</div>
+            <div className={styles.postsCountNumber}>{profile.postCount}</div>
           </div>
-          <Posts
-            userProfile={userProfile}
-            setIsLoading={setIsLoading}
-            isLoading={isLoading}
-            isDone={isDone}
-            userId={profile.userId}
-            addPosts={getPosts}
-            kind={posts.kind}
-            posts={posts.postData}
-            postsCount={posts.postsCount}
-            viewPost={viewPost}
-          />
         </div>
-        <div className={styles.addButton} onClick={viewAddPost}>
-          <img className={styles.addPostImg} src={addPostImg} alt="addPost" />
-        </div>
+      </div>
+      <Posts
+        userProfile={userProfile}
+        isLoading={isLoading}
+        isDone={isDone}
+        userId={profile.userId}
+        addPosts={getPosts}
+        kind={posts.kind}
+        posts={posts.postData}
+        postsCount={posts.postsCount}
+        viewPost={viewPost}
+      />
+      <div className={styles.addButton} onClick={viewAddPost}>
+        <img className={styles.addPostImg} src={addPostImg} alt="addPost" />
       </div>
     </>
   );

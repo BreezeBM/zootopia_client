@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Nav from './components/Nav/Nav';
@@ -7,7 +7,7 @@ import ChatPage from './pages/Chatpage/ChatPage';
 import MainPage from './pages/MainPage/MainPage';
 
 // test용도 fakeData
-// import fakedata from './fakeData';
+import fakedata from './fakeData';
 
 function App() {
   const history = useHistory();
@@ -39,75 +39,81 @@ function App() {
   // infinite scroll을 막기 위해 만약 요청 자료 숫자보다 적은 숫자의 자료가 response로 오면 isDone을 true로 해서 더이상
   // 작동하지 않도록 하기 위한 state
   const [isDone, setIsDone] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
   // grid자료(latest, 특정 유저(자신, 다른 유저 포함))를 받아와서 이전의 grid에 더해주는 기능 func
   const acceptPosts = async (userId, from, offset, count) => {
-    if (posts.postsCount > 0 && offset === 0) {
-      setPosts((prev) => {
-        return { ...prev, postData: [] };
-      });
-    }
-    try {
-      const response = await axios.post(
-        'https://server.codestates-project.tk/post/grid',
-        { userId, from, offset, count },
-        { withCredentials: true },
-      );
-
-      let acceptedPosts = response.data;
-      // #############################################
-      // infinite scroll을 막기 위해 만약 요청 자료 숫자보다 적은 숫자의 자료가 response로 오면 isDone을 true로 해서 더이상
-      // 작동하지 않도록 하기 위한 logic
-      if (acceptedPosts.length < count) setIsDone(true);
-      // #############################################
-
-      setPosts((prev) => {
-        acceptedPosts = acceptedPosts.concat(prev.postData);
-        return { postData: acceptedPosts, postsCount: acceptedPosts.length };
-      });
-
-      // #############################################
-      // latest 자료인지, 로그인 유저 자료인지, 다른 유저 자료인지를 분기해놓는 logic
-      if (userId === 0) {
-        setPosts((prev) => {
-          return { ...prev, kind: 'latest' };
-        });
-      } else if (userId === userProfile.userId) {
-        setPosts((prev) => {
-          return { ...prev, kind: 'user' };
-        });
-      } else {
-        setPosts((prev) => {
-          return { ...prev, kind: 'other' };
-        });
-      }
-      // #############################################
-    } catch (err) {
-      if (err.response.status === 401) {
-        history.push('/');
-      } else {
-        console.log(err);
-      }
-    }
-
-    // test 용
-    // setPosts((prev) => {
-    //   const acceptedPosts = fakedata.posts.concat(prev.postData);
-    //   return { postData: acceptedPosts, postsCount: acceptedPosts.length };
-    // });
-    // if (userId === 0) {
+    // setIsLoading(true);
+    // if (posts.postsCount > 0 && offset === 0) {
+    //   setIsDone(false);
     //   setPosts((prev) => {
-    //     return { ...prev, kind: 'latest' };
-    //   });
-    // } else if (userId === profile.userId) {
-    //   setPosts((prev) => {
-    //     return { ...prev, kind: 'user' };
-    //   });
-    // } else {
-    //   setPosts((prev) => {
-    //     return { ...prev, kind: 'other' };
+    //     return { ...prev, postData: [] };
     //   });
     // }
+    // try {
+    //   const response = await axios.post(
+    //     'https://server.codestates-project.tk/post/grid',
+    //     { userId, from, offset, count },
+    //     { withCredentials: true },
+    //   );
+
+    //   let acceptedPosts = response.data;
+    //   // #############################################
+    //   // infinite scroll을 막기 위해 만약 요청 자료 숫자보다 적은 숫자의 자료가 response로 오면 isDone을 true로 해서 더이상
+    //   // 작동하지 않도록 하기 위한 logic
+    //   if (acceptedPosts.length < count) setIsDone(true);
+    //   // #############################################
+
+    //   setPosts((prev) => {
+    //     acceptedPosts = acceptedPosts.concat(prev.postData);
+    //     return { postData: acceptedPosts, postsCount: acceptedPosts.length };
+    //   });
+
+    //   // #############################################
+    //   // latest 자료인지, 로그인 유저 자료인지, 다른 유저 자료인지를 분기해놓는 logic
+    //   if (userId === 0) {
+    //     setPosts((prev) => {
+    //       return { ...prev, kind: 'latest' };
+    //     });
+    //   } else if (userId === userProfile.userId) {
+    //     setPosts((prev) => {
+    //       return { ...prev, kind: 'user' };
+    //     });
+    //   } else {
+    //     setPosts((prev) => {
+    //       return { ...prev, kind: 'other' };
+    //     });
+    //   }
+    //   // #############################################
+    // } catch (err) {
+    //   if (err.response.status === 401) {
+    //     history.push('/');
+    //   } else {
+    //     console.log(err);
+    //   }
+    // } finally {
+    //   setIsLoading(false);
+    // }
+
+    // test 용
+    setPosts((prev) => {
+      const acceptedPosts = fakedata.posts.concat(prev.postData);
+      console.log(acceptPosts.length);
+      return { postData: acceptedPosts, postsCount: acceptedPosts.length };
+    });
+
+    if (userId === 0) {
+      setPosts((prev) => {
+        return { ...prev, kind: 'latest' };
+      });
+    } else if (userId === profile.userId) {
+      setPosts((prev) => {
+        return { ...prev, kind: 'user' };
+      });
+    } else {
+      setPosts((prev) => {
+        return { ...prev, kind: 'other' };
+      });
+    }
   };
 
   // #############################################
@@ -126,6 +132,12 @@ function App() {
   };
   // #############################################
 
+  useEffect(() => {
+    if (posts.postsCount > 50) {
+      setIsDone(true);
+    }
+  }, [posts]);
+
   return (
     <>
       <Switch>
@@ -133,8 +145,13 @@ function App() {
           <LandingPage />
         </Route>
         <Route path="/main">
-          <Nav profile={userProfile} acceptPosts={acceptPosts} />
+          <Nav
+            setUserProfile={setUserProfile}
+            profile={userProfile}
+            acceptPosts={acceptPosts}
+          />
           <MainPage
+            kind={posts.kind}
             userProfile={userProfile}
             isDone={isDone}
             setUserProfile={setUserProfile}
@@ -142,12 +159,18 @@ function App() {
             posts={posts}
             getPosts={acceptPosts}
             setProfile={setProfileInform}
+            setProfileForDeleteAndAdd={setProfile}
             profile={profile}
             deletePost={deletePost}
+            isLoading={isLoading}
           />
         </Route>
         <Route path="/chat">
-          <Nav profile={userProfile} acceptPosts={acceptPosts} />
+          <Nav
+            setUserProfile={setUserProfile}
+            profile={userProfile}
+            acceptPosts={acceptPosts}
+          />
           <ChatPage />
         </Route>
       </Switch>

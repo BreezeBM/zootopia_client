@@ -8,7 +8,7 @@ import logoImg from '../../images/logo.png';
 import DeleteModal from '../DeleteModal/DeleteModal';
 import CropModal from '../CropModal/CropModal';
 
-const MypageModal = ({ profile, isModalOn, handleClose }) => {
+const MypageModal = ({ setUserProfile, profile, isModalOn, handleClose }) => {
   // img 변경관련 로직
   const [cropModalOn, setCropModalOn] = useState(false);
   const handleCropModalOn = () => {
@@ -74,8 +74,10 @@ const MypageModal = ({ profile, isModalOn, handleClose }) => {
         if (response.status === 201) {
           setNowPetName(petName);
           setPetname(petName);
-
-          petnameRef.current.blur(); // 해결하기
+          setUserProfile((prev) => {
+            return { ...prev, petName };
+          });
+          petnameRef.current.blur();
         }
       } catch (err) {
         // 중복 펫네임 409
@@ -104,6 +106,9 @@ const MypageModal = ({ profile, isModalOn, handleClose }) => {
         if (response.status === 201) {
           setNowBreed(breed);
           setBreed(breed);
+          setUserProfile((prev) => {
+            return { ...prev, breed };
+          });
           breedRef.current.blur();
         }
       } catch (err) {
@@ -230,6 +235,7 @@ const MypageModal = ({ profile, isModalOn, handleClose }) => {
         </div>
       </Modal>
       <CropModal
+        setUserProfile={setUserProfile}
         setNowImg={setNowImg}
         imgSrc={imgSrc}
         setImgSrc={setImgSrc}

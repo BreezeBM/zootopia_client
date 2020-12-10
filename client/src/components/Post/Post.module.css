@@ -1,10 +1,10 @@
 .grid_item {
-  padding-right: 0.3rem;
+  height: 31.2vh;
 }
 
 .thumbnail {
-  border-radius: 0.5rem;
-  width: 15.1vw;
+  /* border-radius: 0.5rem; */
+  width: 16.5vw;
   height: 31vh;
   cursor: pointer;
   opacity: 1;
@@ -17,12 +17,15 @@
 @media screen and (max-width: 65rem) {
   .thumbnail {
     width: 33vw;
-    height: 16vh;
+    height: 18vh;
     border-radius: 0;
-    padding-right: 0.3rem;
+    background-color: white;
+    /* padding-right: 0.3rem; */
   }
   .grid_item {
-    padding: 0;
+    /* padding: 0; */
+    height: 18.2vh;
+    background-color: white;
   }
   .thumbnail:hover {
     opacity: 1;

@@ -1,4 +1,5 @@
-import { React, useState, useRef } from 'react';
+/* eslint-disable no-nested-ternary */
+import { React, useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import styles from './Comment.module.css';
@@ -6,6 +7,7 @@ import SubComments from '../SubComments/SubComments';
 import updateBtn from '../../images/commentUpdateBtn.jpg';
 
 const Comment = ({
+  userProfileId,
   userId,
   getSpecificUser,
   setCommentId,
@@ -21,6 +23,8 @@ const Comment = ({
   time,
   handleCommentBtn,
 }) => {
+  // 수정권한이 있는지에 관한 처리
+  const [hasRights, setHasRights] = useState(false);
   const textRef = useRef(null);
   const [updateToggled, setUpdateToggled] = useState(false);
   const [textUpdateToggled, setTextUpdateToggled] = useState(false);
@@ -65,6 +69,13 @@ const Comment = ({
     }
   };
 
+  // 수정권한이 있는지에 관한 처리
+  useEffect(() => {
+    if (userProfileId === userId) {
+      setHasRights(true);
+    }
+  }, [userProfileId, userId]);
+
   return (
     <>
       <div className={styles.eachComment}>
@@ -108,45 +119,48 @@ const Comment = ({
             >
               답글 달기
             </span>
-            {updateToggled ? (
-              <div className={styles.updateBtns}>
+            {hasRights ? (
+              updateToggled ? (
+                <div className={styles.updateBtns}>
+                  <img
+                    className={styles.closeUpdateBtn}
+                    src={updateBtn}
+                    alt="updateBtn"
+                    onClick={() => {
+                      setTextUpdateToggled(false);
+                      setTextInput(text);
+                      setUpdateToggled(false);
+                    }}
+                  />
+                  <i
+                    id={styles.goToInputBtn}
+                    className="far fa-edit"
+                    onClick={updateComment}
+                  />
+                  <i
+                    id={styles.commentDeleteBtn}
+                    className="fas fa-trash-alt"
+                    onClick={() => {
+                      deleteComment(commentId);
+                      setUpdateToggled(false);
+                    }}
+                  />
+                </div>
+              ) : (
                 <img
-                  className={styles.closeUpdateBtn}
+                  className={styles.updateBtn}
                   src={updateBtn}
                   alt="updateBtn"
                   onClick={() => {
-                    setTextUpdateToggled(false);
-                    setTextInput(text);
-                    setUpdateToggled(false);
+                    setUpdateToggled(true);
                   }}
                 />
-                <i
-                  id={styles.goToInputBtn}
-                  className="far fa-edit"
-                  onClick={updateComment}
-                />
-                <i
-                  id={styles.commentDeleteBtn}
-                  className="fas fa-trash-alt"
-                  onClick={() => {
-                    deleteComment(commentId);
-                    setUpdateToggled(false);
-                  }}
-                />
-              </div>
-            ) : (
-              <img
-                className={styles.updateBtn}
-                src={updateBtn}
-                alt="updateBtn"
-                onClick={() => {
-                  setUpdateToggled(true);
-                }}
-              />
-            )}
+              )
+            ) : null}
           </div>
         </div>
         <SubComments
+          userProfileId={userProfileId}
           getSpecificUser={getSpecificUser}
           commentId={commentId}
           setCommentId={setCommentId}

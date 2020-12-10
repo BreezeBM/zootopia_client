@@ -5,7 +5,15 @@ import styles from './PostDeleteModal.module.css';
 import deleteMotionImg from '../../images/trashcan.png';
 import SimpleModal from '../SimpleModal/SimpleModal';
 
-const PostDeleteModal = ({ postId, deletePost, isModalOn, handleClose }) => {
+const PostDeleteModal = ({
+  setProfileForDeleteAndAdd,
+  setUserProfile,
+  postId,
+  deletePost,
+  isModalOn,
+  handleClose,
+  kind,
+}) => {
   const [deleted, setDeleted] = useState(false);
 
   // 포스트 삭제
@@ -18,6 +26,14 @@ const PostDeleteModal = ({ postId, deletePost, isModalOn, handleClose }) => {
           withCredentials: true,
         },
       );
+      setUserProfile((prev) => {
+        return { ...prev, postCount: prev.postCount - 1 };
+      });
+      if (kind === 'user' || kind === 'latest') {
+        setProfileForDeleteAndAdd((prev) => {
+          return { ...prev, postCount: prev.postCount - 1 };
+        });
+      }
       deletePost(postId);
       await setDeleted(true);
     } catch (err) {

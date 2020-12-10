@@ -7,7 +7,7 @@ import img5 from './thumbnails/post_c.png';
 import img6 from './thumbnails/post_d.png';
 
 export default {
-    posts: [{ postId: 0, thumbnail: img }, { postId: 1, thumbnail: img1 }, { postId: 2, thumbnail: img2 }, { postId: 3, thumbnail: img3 }, { postId: 4, thumbnail: img4 }, { postId: 5, thumbnail: img5 }, { postId: 6, thumbnail: img6 },],
+    posts: [{ postId: 0, thumbnail: img }, { postId: 1, thumbnail: img1 }, { postId: 2, thumbnail: img2 }, { postId: 3, thumbnail: img3 }, { postId: 4, thumbnail: img4 }, { postId: 5, thumbnail: img5 }, { postId: 6, thumbnail: img6 }, { postId: 7, thumbnail: img6 }, { postId: 8, thumbnail: img6 }, { postId: 9, thumbnail: img6 }, { postId: 10, thumbnail: img6 }, { postId: 11, thumbnail: img6 }, { postId: 12, thumbnail: img6 }, { postId: 13, thumbnail: img6 }, { postId: 14, thumbnail: img6 }, { postId: 15, thumbnail: img6 }],
     user: { userId: 2, thumbnail: img6, petName: '곤잘로 이구아인', breed: '이구아나', postCount: 22 },
     post: {
         user: {

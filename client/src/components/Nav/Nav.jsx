@@ -4,7 +4,7 @@ import styles from './Nav.module.css';
 import logoImg from '../../images/zootopiaLogo.png';
 import MypageModal from '../MypageModal/MypageModal';
 
-const Nav = ({ profile, acceptPosts }) => {
+const Nav = ({ setUserProfile, profile, acceptPosts }) => {
   const [isMypageOn, setIsMypageOn] = useState(false);
   const history = useHistory();
   const viewMypage = () => {
@@ -14,6 +14,7 @@ const Nav = ({ profile, acceptPosts }) => {
     <>
       {Object.keys(profile).length !== 0 && (
         <MypageModal
+          setUserProfile={setUserProfile}
           profile={profile}
           isModalOn={isMypageOn}
           handleClose={viewMypage}

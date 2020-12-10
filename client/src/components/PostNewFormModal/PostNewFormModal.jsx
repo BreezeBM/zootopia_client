@@ -6,7 +6,14 @@ import close from '../../images/close.png';
 import PostCropModal from '../PostCropModal/PostCropModal';
 // import FAKEIMG from '../../thumbnails/post_a.png';
 
-const PostNewFormModal = ({ postsKind, setPosts, isModalOn, handleClose }) => {
+const PostNewFormModal = ({
+  setProfileForDeleteAndAdd,
+  setUserProfile,
+  postsKind,
+  setPosts,
+  isModalOn,
+  handleClose,
+}) => {
   const history = useHistory();
   const imgInput1 = createRef();
   const imgInput2 = createRef();
@@ -113,11 +120,18 @@ const PostNewFormModal = ({ postsKind, setPosts, isModalOn, handleClose }) => {
             'Content-Type': `multipart/form-data`,
           },
         });
+        setUserProfile((prev) => {
+          return { ...prev, postCount: prev.postCount + 1 };
+        });
+
         if (postsKind === 'latest' || postsKind === 'user') {
           setPosts((prev) => {
             const copyArr = prev.postData.slice();
             copyArr.unshift(response.data);
             return { ...prev, postData: copyArr };
+          });
+          setProfileForDeleteAndAdd((prev) => {
+            return { ...prev, postCount: prev.postCount + 1 };
           });
         }
         resetAndCloseModal();

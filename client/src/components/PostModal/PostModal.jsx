@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -11,6 +12,10 @@ import updateBtn from '../../images/updateBtn.png';
 import PostDeleteModal from '../PostDeleteModal/PostDeleteModal';
 
 const PostModal = ({
+  kind,
+  setProfileForDeleteAndAdd,
+  setUserProfile,
+  userProfileId,
   setPostModalData,
   refreshPost,
   getPosts,
@@ -20,6 +25,8 @@ const PostModal = ({
   handleClose,
   deletePost,
 }) => {
+  // 포스팅에 대한 수정권한이 있는지에 대한 설정
+  const [hasRights, setHasRights] = useState(false);
   const history = useHistory();
   // rerender 될 때마다 바뀔 수 있도록 변수로 post와 user정보는 const 변수로 선언
   const userInform = postData.user;
@@ -242,9 +249,19 @@ const PostModal = ({
     }
   }, []);
 
+  // 포스팅에 대한 수정권한이 있는지에 대한 설정
+  useEffect(() => {
+    if (userInform.userId === userProfileId) {
+      setHasRights(true);
+    }
+  }, [userProfileId, userInform]);
+
   return (
     <>
       <PostDeleteModal
+        kind={kind}
+        setProfileForDeleteAndAdd={setProfileForDeleteAndAdd}
+        setUserProfile={setUserProfile}
         postId={postDatas.postId}
         deletePost={deletePost}
         isModalOn={isDeleteOn}
@@ -287,35 +304,37 @@ const PostModal = ({
                   <div className={styles.nickname}>{userInform.petName}</div>
                   <div className={styles.breed}>{userInform.breed}</div>
                 </div>
-                {updateBtnToggle ? (
-                  <div className={styles.updateBtns}>
+                {hasRights ? (
+                  updateBtnToggle ? (
+                    <div className={styles.updateBtns}>
+                      <img
+                        className={styles.closeUpdateBtn}
+                        src={updateBtn}
+                        alt="updateBtn"
+                        onClick={() => {
+                          setTextUpdateToggled(false);
+                          setTextVal(postDatas.text);
+                          setUpdateBtnToggle(false);
+                        }}
+                      />
+                      <i className="far fa-edit" onClick={updatePost} />
+                      <i
+                        className="fas fa-trash-alt"
+                        id={styles.deleteBtn}
+                        onClick={closeDeleteModal}
+                      />
+                    </div>
+                  ) : (
                     <img
-                      className={styles.closeUpdateBtn}
+                      className={styles.updateBtn}
                       src={updateBtn}
                       alt="updateBtn"
                       onClick={() => {
-                        setTextUpdateToggled(false);
-                        setTextVal(postDatas.text);
-                        setUpdateBtnToggle(false);
+                        setUpdateBtnToggle(true);
                       }}
                     />
-                    <i className="far fa-edit" onClick={updatePost} />
-                    <i
-                      className="fas fa-trash-alt"
-                      id={styles.deleteBtn}
-                      onClick={closeDeleteModal}
-                    />
-                  </div>
-                ) : (
-                  <img
-                    className={styles.updateBtn}
-                    src={updateBtn}
-                    alt="updateBtn"
-                    onClick={() => {
-                      setUpdateBtnToggle(true);
-                    }}
-                  />
-                )}
+                  )
+                ) : null}
               </div>
               {textUpdateToggled ? (
                 <textarea
@@ -365,6 +384,7 @@ const PostModal = ({
                     댓글 접기
                   </div>
                   <Comments
+                    userProfileId={userProfileId}
                     getSpecificUser={getSpecificUser}
                     setCommentId={setCommentId}
                     setCommentToWhom={setCommentToWhom}

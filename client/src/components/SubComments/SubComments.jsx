@@ -3,6 +3,7 @@ import styles from './SubComments.module.css';
 import SubComment from '../SubComment/SubComment';
 
 const SubComments = ({
+  userProfileId,
   setCommentToWhom,
   getSpecificUser,
   postId,
@@ -17,6 +18,7 @@ const SubComments = ({
       {replies.map((reply) => {
         return (
           <SubComment
+            userProfileId={userProfileId}
             getSpecificUser={getSpecificUser}
             commentId={commentId}
             setCommentId={setCommentId}

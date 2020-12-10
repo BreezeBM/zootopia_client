@@ -1,56 +1,30 @@
-/* grid 부분 css */
-
-.grid_border {
-  margin-top: 4rem;
-  width: 40rem;
-  background-color: white;
-  padding-left: 1rem;
-  padding-right: 0.7rem;
-  border-left: 3px solid #e1e1e1;
-  border-right: 3px solid #e1e1e1;
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  /* scroll bar 없애기 */
-  /* IE and Edge */
-  /* -ms-overflow-style: none;  */
-  /* Firefox */
-  /* scrollbar-width: none;  */
-}
-
-/* scroll bar 없애기 (chrome, safari version) */
-
-/* .flex_border::-webkit-scrollbar {
-  display: none;
-} */
-
 .grid_container {
+  width: 50vw;
+  z-index: 2;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  margin-top: 1rem;
+  position: relative;
+  left: 20.3rem;
+  text-align: center;
 }
-
-/* .spinner {
-  animation: spin 1s linear infinite;
-  font-size: 4rem !important;
+.emptySpace {
+  content: '';
+  height: 4.225rem;
 }
-
-@keyframes spin {
-  from {
-    transform: rotate(0);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
 
 .target {
   display: none;
 }
 
 .target.isOn {
-  font-size: 1.5rem;
+  display: inline-block;
+  position: relative;
+  width: 100vw;
+  text-align: center;
+  font-size: 2rem;
+  height: 10vh;
+  padding-top: 2.5vh;
+  margin: 0 auto;
   color: grey;
   font-family: MaplestoryOTFBold;
   font-weight: bold;
@@ -58,15 +32,29 @@
 }
 
 @media screen and (max-width: 65rem) {
-  .grid_border {
-    border: 0;
-    padding: 0;
-    margin-top: 0rem;
-    width: 100%;
-    height: 200vh;
-  }
   .grid_container {
-    padding-left: 0.3rem;
-    margin-top: 0rem;
+    all: unset;
+    text-align: center;
+    position: relative;
+    width: 100vw;
+    top: 17rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .emptySpace {
+    all: unset;
+    display: none;
+  }
+
+  .target.isOn {
+    position: relative;
+    width: 100vw;
+    text-align: center;
+    font-size: 1.5rem;
+    color: grey;
+    font-family: MaplestoryOTFBold;
+    font-weight: bold;
+    text-align: center;
   }
 }
