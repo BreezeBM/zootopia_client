@@ -3,6 +3,7 @@
 }
 .contentsPart {
   display: flex;
+  cursor: pointer;
 }
 
 .profile {
@@ -27,6 +28,7 @@
 }
 
 .textInput {
+  margin-left: 0.36rem;
   font-size: 1rem;
   font-family: Bazzi;
   border: none;
@@ -37,6 +39,7 @@
   margin-left: 0.48rem;
   font-size: 1rem;
   font-family: Bazzi;
+  border: none;
 }
 
 .dateAndBtnPart {

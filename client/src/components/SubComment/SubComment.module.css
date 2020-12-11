@@ -4,6 +4,7 @@
 }
 .contentsPart {
   display: flex;
+  cursor: pointer;
 }
 
 .profile {
