@@ -1,0 +1,84 @@
+.modal {
+  position: fixed;
+  z-index: 0;
+  opacity: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  transition: all 20ms ease-in-out;
+}
+
+.backGround {
+  position: fixed;
+  width: 36rem;
+  height: 25rem;
+}
+
+.modal.isOn {
+  z-index: 3;
+  opacity: 1;
+}
+
+.box {
+  position: relative;
+
+  width: 45rem;
+  height: 28rem;
+  background: white;
+  border-radius: 25px;
+  box-shadow: 2px 4px 9px 0 rgba(0, 0, 0, 0.5);
+  padding-top: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.close {
+  position: absolute;
+  width: 1.2rem;
+  right: 1.2rem;
+  top: 1.2rem;
+  cursor: pointer;
+}
+
+.roomInput {
+  display: flex;
+  position: relative;
+  background-color: white;
+  border: 2px solid black;
+  width: 15rem;
+  top: -5rem;
+}
+
+.submit {
+  position: relative;
+  display: flex;
+  width: 3.2rem;
+  height: 3.2rem;
+  border: 2px solid red;
+  top: -4.3rem;
+  background-color: white;
+  border-radius: 20%;
+  padding-top: 0.5%;
+}
+
+@media (max-width: 500px) {
+  .box {
+    position: relative;
+    width: 22rem;
+    height: 28rem;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 2px 4px 9px 0 rgba(0, 0, 0, 0.5);
+    padding-top: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+  }
+}

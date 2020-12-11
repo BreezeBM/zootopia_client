@@ -1,7 +1,10 @@
 import React, { createRef, useEffect } from 'react';
+import io from 'socket.io-client';
 import styles from './ChatUser.module.css';
 import iguanaImg from '../../images/iguana.jpeg';
 import OutImg from '../../images/roomOut.png';
+
+const socket = io('http://36e9d320985c.ngrok.io', { withCredentials: true });
 
 const ChatUser = ({
   idValue,
@@ -10,6 +13,7 @@ const ChatUser = ({
   roomTitle,
   roomPeople,
   dataFunc,
+  clearFunc,
 }) => {
   const Card = createRef();
 
@@ -27,8 +31,9 @@ const ChatUser = ({
   };
 
   const roomBye = async function () {
-    targetToggle(-1);
-    console.log(targetId);
+    socket.emit('leaveRoom', idValue, '5');
+    clearFunc();
+    console.log('방삭제');
     Card.current.style.display = 'none';
   };
 
@@ -39,13 +44,13 @@ const ChatUser = ({
         <div className={styles.username}>{roomTitle}</div>
         <div className={styles.userbreed}>{roomPeople}</div>
         <div className={styles.status}>안 읽은 메시지가 있습니다.</div>
+        <img
+          className={styles.outButton}
+          src={OutImg}
+          alt="roomOut"
+          onClick={roomBye}
+        />
       </div>
-      <img
-        className={styles.outButton}
-        src={OutImg}
-        alt="roomOut"
-        onClick={roomBye}
-      />
     </>
   );
 };
