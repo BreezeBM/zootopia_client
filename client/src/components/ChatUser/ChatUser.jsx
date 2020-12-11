@@ -4,7 +4,7 @@ import styles from './ChatUser.module.css';
 import iguanaImg from '../../images/iguana.jpeg';
 import OutImg from '../../images/roomOut.png';
 
-const socket = io('http://d608b4f1a2ae.ngrok.io', { withCredentials: true });
+const socket = io('http://36e9d320985c.ngrok.io', { withCredentials: true });
 
 const ChatUser = ({
   idValue,
@@ -13,6 +13,7 @@ const ChatUser = ({
   roomTitle,
   roomPeople,
   dataFunc,
+  clearFunc,
 }) => {
   const Card = createRef();
 
@@ -31,7 +32,7 @@ const ChatUser = ({
 
   const roomBye = async function () {
     socket.emit('leaveRoom', idValue, '5');
-    targetToggle(-1);
+    clearFunc();
     console.log('방삭제');
     Card.current.style.display = 'none';
   };

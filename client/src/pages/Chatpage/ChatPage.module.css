@@ -364,18 +364,12 @@
     transition: all 250ms ease-in-out;
     outline: none;
   }
-  .send {
-    position: absolute;
-    display: flex;
-    width: 4.5rem;
-    height: 2.3rem;
-    top: 88.5%;
-    left: 40.5%;
-    margin-left: 0%;
-    padding-top: 1.7%;
-    padding-left: 3.7%;
-  }
   .backList {
-    display: flex;
+    top: 12%;
+    left: 1%;
+    display: block;
+  }
+  .backList:hover {
+    transform: scale(1.02);
   }
 }

@@ -4,8 +4,9 @@ import io from 'socket.io-client';
 import styles from './AddroomModal.module.css';
 import close from '../../images/close.png';
 import submitImg from '../../images/logo.png';
+import backImg from '../../images/cloud.gif';
 
-const socket = io('http://d608b4f1a2ae.ngrok.io', { withCredentials: true });
+const socket = io('http://36e9d320985c.ngrok.io', { withCredentials: true });
 
 const AddroomModal = ({
   isModalOn,
@@ -34,7 +35,7 @@ const AddroomModal = ({
       });
       const config = {
         method: 'post',
-        url: `http://d608b4f1a2ae.ngrok.io/room/5`,
+        url: `http://36e9d320985c.ngrok.io/room/5`,
         headers: { 'Content-Type': 'application/json' },
         data: titleData,
       };
@@ -64,6 +65,7 @@ const AddroomModal = ({
           />
           {/* ** */}
           {children}
+          <img className={styles.backGround} src={backImg} alt="movingBack" />
           <input
             className={styles.roomInput}
             type="text"

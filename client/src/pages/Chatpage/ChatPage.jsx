@@ -13,7 +13,7 @@ import AddroomModal from '../../components/AddroomModal/AddroomModal';
 
 const username = '내 이름이 나오는 곳';
 const breedname = '품종명을 쓰거나 상태메시지처럼 활용';
-const socket = io('http://d608b4f1a2ae.ngrok.io', { withCredentials: true });
+const socket = io('http://36e9d320985c.ngrok.io', { withCredentials: true });
 
 const ChatPage = () => {
   let roomLists = '';
@@ -39,20 +39,24 @@ const ChatPage = () => {
     if (el.user === '5') {
       return <MyChat textData={el.text} dateData={el.createdAt} />;
     } else {
-      console.log(el.user);
       return <UserChat textData={el.text} dateData={el.createdAt} />;
     }
   };
 
   const getRooms = async function () {
     try {
-      const res = await axios.get('http://d608b4f1a2ae.ngrok.io/room');
+      const res = await axios.get('http://36e9d320985c.ngrok.io/room');
       setTest(res.data);
     } catch (err) {
       throw err;
     } finally {
       console.log('룸 정보 GET 함수 실행');
     }
+  };
+
+  const chatroomClear = () => {
+    setMessages([]);
+    targetToggle(-1);
   };
 
   const getMessages = function (id) {
@@ -64,7 +68,7 @@ const ChatPage = () => {
     } catch (err) {
       throw err;
     } finally {
-      console.log(messageState);
+      console.log('메시지 GET 실행');
     }
     // chatLists = messageState.map((el) => {
     //   return <UserChat textData={el.title} dateData={el.createdAt} />;
@@ -79,8 +83,9 @@ const ChatPage = () => {
           targetId={targetId}
           targetToggle={targetToggle}
           roomTitle={el.title}
-          roomPeople={el.people}
+          roomPeople={1}
           dataFunc={getMessages}
+          clearFunc={chatroomClear}
         />
       );
     });
@@ -102,7 +107,7 @@ const ChatPage = () => {
       });
       const config = {
         method: 'post',
-        url: `http://d608b4f1a2ae.ngrok.io/chat/${targetId}`,
+        url: `http://36e9d320985c.ngrok.io/chat/${targetId}`,
         headers: { 'Content-Type': 'application/json' },
         data: message,
       };
@@ -127,10 +132,6 @@ const ChatPage = () => {
   useEffect(() => {
     getRooms();
   }, []);
-
-  useEffect(() => {
-    console.log(targetId);
-  }, [messageState]);
 
   // 모바일 기종에선 전용 UI로 나올 수 있도록
   useEffect(() => {
@@ -173,19 +174,21 @@ const ChatPage = () => {
             </div>
           </div>
           <div className={styles.chatBox} ref={targetChat}>
+            <div className={styles.chatonBoard} ref={chatScroll}>
+              <div className={styles.block}> </div>
+              {targetId.length < 5
+                ? ''
+                : messageState.map((el) => mapFunction(el))}
+            </div>
             <img
               className={styles.backList}
               src={backListImg}
               ref={backList}
               alt="backList"
               onClick={() => {
-                history.push('/chat');
+                history.go();
               }}
             />
-            <div className={styles.chatonBoard} ref={chatScroll}>
-              <div className={styles.block}> </div>
-              {messageState.map((el) => mapFunction(el))}
-            </div>
             <input
               className={styles.chatPost}
               type="text"

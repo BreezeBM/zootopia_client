@@ -13,6 +13,12 @@
   transition: all 20ms ease-in-out;
 }
 
+.backGround {
+  position: fixed;
+  width: 36rem;
+  height: 25rem;
+}
+
 .modal.isOn {
   z-index: 3;
   opacity: 1;
@@ -41,9 +47,25 @@
   cursor: pointer;
 }
 
+.roomInput {
+  display: flex;
+  position: relative;
+  background-color: white;
+  border: 2px solid black;
+  width: 15rem;
+  top: -5rem;
+}
+
 .submit {
-  width: 2rem;
-  height: 2rem;
+  position: relative;
+  display: flex;
+  width: 3.2rem;
+  height: 3.2rem;
+  border: 2px solid red;
+  top: -4.3rem;
+  background-color: white;
+  border-radius: 20%;
+  padding-top: 0.5%;
 }
 
 @media (max-width: 500px) {
