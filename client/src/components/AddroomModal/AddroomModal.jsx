@@ -32,15 +32,16 @@ const AddroomModal = ({
   const sendRoom = () => {
     console.log('보내기 실행!');
     if (checked.title) {
-      const titleData = JSON.stringify({
+      const titleData = {
         title: `${titleInfo}`,
-      });
+      };
       const config = {
         method: 'post',
-        url: `https://zootopia-chat.herokuapp.com/room/public/:5`,
-        headers: { 'Content-Type': 'application/json' },
+        url: `https://zootopia-chat.herokuapp.com/room/public/5`,
         data: titleData,
       };
+
+      console.log(config);
       axios(config)
         .then(function (response) {
           console.log(JSON.stringify(response.data));
@@ -48,9 +49,14 @@ const AddroomModal = ({
         .catch(function (error) {
           console.log(error);
         });
-      socket.on('newRoom', function (room) {
+      socket.on('newPublic', function (room) {
         console.log(room);
         setRoom([...roomState, room]);
+      });
+      socket.on('newPrivate', function (room, myid, id) {
+        if (myid === 5 || id === 5) {
+          setRoom([...roomState, room]);
+        }
       });
     }
   };
