@@ -11,6 +11,7 @@ const socket = io('https://zootopia-chat.herokuapp.com/', {
 
 const ChatUser = ({
   idValue,
+  unread,
   targetId,
   targetToggle,
   roomTitle,
@@ -25,8 +26,9 @@ const ChatUser = ({
   useEffect(() => {
     if (targetId !== idValue) {
       Card.current.style.backgroundColor = 'white';
+      // socket.emit('leaveRoom', idValue);
     }
-  });
+  }, [targetId]);
 
   const handleCard = function () {
     Card.current.style.backgroundColor = 'rgba(255,198,0)';
@@ -36,25 +38,21 @@ const ChatUser = ({
   };
 
   const roomBye = function () {
-    const goobyeData = JSON.stringify({
-      id: `${Myid}`,
-    });
+    const goobyeData = { id: 5 };
     const config = {
       method: 'post',
-      url: `https://zootopia-chat.herokuapp.com/room/:${idValue}`,
+      url: `https://zootopia-chat.herokuapp.com/room/${idValue}`,
       headers: { 'Content-Type': 'application/json' },
       data: goobyeData,
     };
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        clearFunc();
       })
       .catch(function (error) {
         console.log(error);
       });
-    clearFunc();
-    console.log('방삭제');
-    Card.current.style.display = 'none';
   };
 
   return (
@@ -63,7 +61,9 @@ const ChatUser = ({
         <img className={styles.userProfile} src={iguanaImg} alt="userprofile" />
         <div className={styles.username}>{roomTitle + userImg}</div>
         <div className={styles.userbreed}>{roomPeople}</div>
-        <div className={styles.status}>안 읽은 메시지가 있습니다.</div>
+        <div className={styles.status}>
+          {!unread ? '안 읽은 메시지가 있습니다.' : ''}
+        </div>
         <img
           className={styles.outButton}
           src={OutImg}
