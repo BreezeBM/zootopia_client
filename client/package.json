@@ -62,7 +62,8 @@
       "no-unused-vars": 0,
       "no-else-return": 0,
       "no-useless-catch": 0,
-      "no-underscore-dangle": 0
+      "no-underscore-dangle": 0,
+      "array-callback-return": 0
     }
   },
   "browserslist": {

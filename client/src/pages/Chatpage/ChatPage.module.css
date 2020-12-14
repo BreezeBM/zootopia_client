@@ -83,6 +83,11 @@
   position: relative;
   width: 5rem;
   height: 5rem;
+  transition: all 250ms ease-in-out;
+}
+
+.addRoom:hover {
+  transform: translateX(7px);
 }
 
 .chatBox {
@@ -124,6 +129,7 @@
 
 .send {
   position: relative;
+  display: flex;
   border: 1px solid lightgray;
   border-radius: 10%;
   background-color: #f8f8f8;
@@ -135,7 +141,7 @@
   font-size: 0.9rem;
   color: lightgray;
   align-items: center;
-  padding-top: 3%;
+  padding-left: 3.5vw;
   transition: all 200ms ease-in-out;
 }
 

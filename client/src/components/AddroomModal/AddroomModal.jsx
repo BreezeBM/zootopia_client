@@ -3,10 +3,12 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import styles from './AddroomModal.module.css';
 import close from '../../images/close.png';
-import submitImg from '../../images/logo.png';
+import submitImg from '../../images/create.png';
 import backImg from '../../images/cloud.gif';
 
-const socket = io('http://36e9d320985c.ngrok.io', { withCredentials: true });
+const socket = io('https://zootopia-chat.herokuapp.com/', {
+  withCredentials: true,
+});
 
 const AddroomModal = ({
   isModalOn,
@@ -35,7 +37,7 @@ const AddroomModal = ({
       });
       const config = {
         method: 'post',
-        url: `http://36e9d320985c.ngrok.io/room/5`,
+        url: `https://zootopia-chat.herokuapp.com/room/public/:5`,
         headers: { 'Content-Type': 'application/json' },
         data: titleData,
       };

@@ -171,7 +171,12 @@ function App() {
             profile={userProfile}
             acceptPosts={acceptPosts}
           />
-          <ChatPage />
+          <ChatPage
+            myPicture="나의 프로필 이미지"
+            myId="나의 아이디"
+            myNickname="나의 닉네임"
+            myBreed="나의 품종"
+          />
         </Route>
       </Switch>
     </>
