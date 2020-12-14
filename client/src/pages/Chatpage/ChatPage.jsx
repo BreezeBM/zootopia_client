@@ -11,12 +11,16 @@ import MyChat from '../../components/MyChat/MyChat';
 import UserChat from '../../components/UserChat/UserChat';
 import AddroomModal from '../../components/AddroomModal/AddroomModal';
 
-const username = '내 이름이 나오는 곳';
-const breedname = '품종명을 쓰거나 상태메시지처럼 활용';
-const socket = io('http://36e9d320985c.ngrok.io', { withCredentials: true });
+const socket = io('https://zootopia-chat.herokuapp.com/', {
+  withCredentials: true,
+});
 
-const ChatPage = () => {
+const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
   let roomLists = '';
+  const pictureData = myPicture;
+  const myIdData = `여기서 id로 ${Myid}를 가져온 다음에 채팅서버에 활용할 예정입니다.`;
+  const username = myNickname;
+  const breedname = myBreed;
 
   const chatScroll = createRef();
   const targetList = createRef();
@@ -25,7 +29,7 @@ const ChatPage = () => {
   const backList = createRef();
 
   const [targetId, targetToggle] = useState('');
-  const [testState, setTest] = useState([]);
+  const [roomState, setRooms] = useState([]);
   const [messageState, setMessages] = useState([]);
   const [onLine, setonLine] = useState(5);
   const [addRoomOn, setaddRoomOn] = useState(false);
@@ -45,8 +49,9 @@ const ChatPage = () => {
 
   const getRooms = async function () {
     try {
-      const res = await axios.get('http://36e9d320985c.ngrok.io/room');
-      setTest(res.data);
+      const res = await axios.get('https://zootopia-chat.herokuapp.com/room');
+      console.log(res.data);
+      setRooms(res.data);
     } catch (err) {
       throw err;
     } finally {
@@ -70,24 +75,42 @@ const ChatPage = () => {
     } finally {
       console.log('메시지 GET 실행');
     }
-    // chatLists = messageState.map((el) => {
-    //   return <UserChat textData={el.title} dateData={el.createdAt} />;
-    // });
   };
 
-  if (testState.length > 0) {
-    roomLists = testState.map((el) => {
-      return (
-        <ChatUser
-          idValue={el._id}
-          targetId={targetId}
-          targetToggle={targetToggle}
-          roomTitle={el.title}
-          roomPeople={1}
-          dataFunc={getMessages}
-          clearFunc={chatroomClear}
-        />
-      );
+  if (roomState.length > 0) {
+    console.log(roomState);
+    roomLists = roomState.map((el) => {
+      if (el.type === '공개 채팅방' && !el.left.includes(5)) {
+        return (
+          <ChatUser
+            idValue={el.users._id}
+            unread={el.users.unread}
+            targetId={targetId}
+            targetToggle={targetToggle}
+            roomTitle={el.title}
+            userImg="사진파일"
+            roomPeople={el.users.length}
+            dataFunc={getMessages}
+            clearFunc={chatroomClear}
+            Myid={5}
+          />
+        );
+      } else if (!el.left.includes(5)) {
+        const you = el.users.filter((data) => data !== 5);
+        return (
+          <ChatUser
+            idValue={el._id}
+            targetId={targetId}
+            targetToggle={targetToggle}
+            roomTitle={you}
+            userImg="사진파일"
+            roomPeople={el.users.length}
+            dataFunc={getMessages}
+            clearFunc={chatroomClear}
+            Myid={5}
+          />
+        );
+      }
     });
   }
 
@@ -107,7 +130,7 @@ const ChatPage = () => {
       });
       const config = {
         method: 'post',
-        url: `http://36e9d320985c.ngrok.io/chat/${targetId}`,
+        url: `https://zootopia-chat.herokuapp.com/chat/${targetId}`,
         headers: { 'Content-Type': 'application/json' },
         data: message,
       };
@@ -150,8 +173,8 @@ const ChatPage = () => {
       <AddroomModal
         isModalOn={addRoomOn}
         handleClose={viewAddRoompage}
-        roomState={testState}
-        setRoom={setTest}
+        roomState={roomState}
+        setRoom={setRooms}
       />
       <div className={styles.main}>
         <div className={styles.main}> </div>
