@@ -6,17 +6,14 @@ import LandingPage from './pages/LandingPage/LandingPage';
 import ChatPage from './pages/Chatpage/ChatPage';
 import MainPage from './pages/MainPage/MainPage';
 
-// test용도 fakeData
-import fakedata from './fakeData';
-
 function App() {
   const history = useHistory();
   const [userProfile, setUserProfile] = useState({});
   const [profile, setProfile] = useState({});
   const [posts, setPosts] = useState({
     postData: [],
-    postsCount: 0,
     kind: 'latest',
+    postsCount: 0,
   });
   const setProfileInform = ({
     userId,
@@ -36,90 +33,104 @@ function App() {
       postCount,
     });
   };
-  // infinite scroll을 막기 위해 만약 요청 자료 숫자보다 적은 숫자의 자료가 response로 오면 isDone을 true로 해서 더이상
-  // 작동하지 않도록 하기 위한 state
+  const [spinnerIsOn, setSpinnerIsOn] = useState(false);
   const [isDone, setIsDone] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  // grid자료(latest, 특정 유저(자신, 다른 유저 포함))를 받아와서 이전의 grid에 더해주는 기능 func
-  const acceptPosts = async (userId, from, offset, count) => {
-    // setIsLoading(true);
-    // if (posts.postsCount > 0 && offset === 0) {
-    //   setIsDone(false);
-    //   setPosts((prev) => {
-    //     return { ...prev, postData: [] };
-    //   });
-    // }
-    // try {
-    //   const response = await axios.post(
-    //     'https://server.codestates-project.tk/post/grid',
-    //     { userId, from, offset, count },
-    //     { withCredentials: true },
-    //   );
 
-    //   let acceptedPosts = response.data;
-    //   // #############################################
-    //   // infinite scroll을 막기 위해 만약 요청 자료 숫자보다 적은 숫자의 자료가 response로 오면 isDone을 true로 해서 더이상
-    //   // 작동하지 않도록 하기 위한 logic
-    //   if (acceptedPosts.length < count) setIsDone(true);
-    //   // #############################################
+  let fromId = 0;
+  let offsetCount = 0;
+  let nowId = null;
+  let postsDatas = [];
 
-    //   setPosts((prev) => {
-    //     acceptedPosts = acceptedPosts.concat(prev.postData);
-    //     return { postData: acceptedPosts, postsCount: acceptedPosts.length };
-    //   });
+  const getMorePosts = async () => {
+    console.log(posts.postData);
+    try {
+      const response = await axios.post(
+        'https://server.codestates-project.tk/post/grid',
+        {
+          userId: nowId,
+          from: fromId,
+          offset: offsetCount,
+          count: 15,
+        },
+        { withCredentials: true },
+      );
 
-    //   // #############################################
-    //   // latest 자료인지, 로그인 유저 자료인지, 다른 유저 자료인지를 분기해놓는 logic
-    //   if (userId === 0) {
-    //     setPosts((prev) => {
-    //       return { ...prev, kind: 'latest' };
-    //     });
-    //   } else if (userId === userProfile.userId) {
-    //     setPosts((prev) => {
-    //       return { ...prev, kind: 'user' };
-    //     });
-    //   } else {
-    //     setPosts((prev) => {
-    //       return { ...prev, kind: 'other' };
-    //     });
-    //   }
-    //   // #############################################
-    // } catch (err) {
-    //   if (err.response.status === 401) {
-    //     history.push('/');
-    //   } else {
-    //     console.log(err);
-    //   }
-    // } finally {
-    //   setIsLoading(false);
-    // }
+      const acceptedPosts = response.data.postData;
+      if (acceptedPosts.length < 15) {
+        setIsDone(true);
+      }
 
-    // test 용
-    setPosts((prev) => {
-      const acceptedPosts = fakedata.posts.concat(prev.postData);
-      console.log(acceptPosts.length);
-      return { postData: acceptedPosts, postsCount: acceptedPosts.length };
-    });
-
-    if (userId === 0) {
-      setPosts((prev) => {
-        return { ...prev, kind: 'latest' };
+      setPosts({
+        postData: postsDatas.concat(acceptedPosts),
+        postsCount: offsetCount + acceptedPosts.length,
       });
-    } else if (userId === profile.userId) {
-      setPosts((prev) => {
-        return { ...prev, kind: 'user' };
-      });
-    } else {
-      setPosts((prev) => {
-        return { ...prev, kind: 'other' };
-      });
+      postsDatas = postsDatas.concat(acceptedPosts);
+      offsetCount += acceptedPosts.length;
+    } catch (err) {
+      if (err.response.status === 401) {
+        history.push('/');
+      } else {
+        console.log(err);
+      }
     }
   };
 
-  // #############################################
-  // 포스트 제거 logic
-  // PostDeleteModal에서 서버로 delete요청 보낸 뒤에 최신 화면 grid에서 해당 포스트가 제거되어야하기 때문에
-  // 만들어놓은 로직(제거할 때마다 새로고침을 하면 좋겠지만 그럼 만약에 인피니트 스크롤로 자료를 많이 받아놓은 사람이 포스트를 제거하면 다시 인피니트 스크롤 해야하는 문제가 있음)
+  const acceptPosts = async (id) => {
+    window.scrollTo(0, 0);
+    try {
+      const response = await axios.post(
+        // 'https://71f44c60960a.ngrok.io/post/grid',
+        'https://server.codestates-project.tk/post/grid',
+        {
+          userId: id,
+          from: 0,
+          offset: 0,
+          count: 15,
+        },
+        { withCredentials: true },
+      );
+
+      const acceptedPosts = response.data.postData;
+      if (acceptedPosts.length < 15) {
+        setIsDone(true);
+      }
+      fromId = acceptedPosts[0].postId;
+      offsetCount = acceptedPosts.length;
+      nowId = id;
+      setPosts({
+        postData: acceptedPosts,
+        postsCount: acceptedPosts.length,
+      });
+      postsDatas = acceptedPosts;
+    } catch (err) {
+      if (err.response.status === 401) {
+        history.push('/');
+      } else {
+        console.log(err);
+      }
+    }
+  };
+
+  const acceptUserData = async (userId) => {
+    try {
+      const response = await axios.get(
+        // `https://71f44c60960a.ngrok.io/user/${userId}`,
+        `https://server.codestates-project.tk/user/${userId}`,
+        { withCredentials: true },
+      );
+      if (userId === 0) {
+        setUserProfile(response.data);
+      }
+      setProfile(response.data);
+    } catch (err) {
+      if (err.response.status === 401) {
+        history.push('/');
+      } else {
+        console.log(err);
+      }
+    }
+  };
+
   const deletePost = (id) => {
     const copyArr = posts.postData.slice();
     for (let idx = 0; idx < copyArr.length; idx += 1) {
@@ -130,13 +141,6 @@ function App() {
     }
     setPosts({ ...posts, postData: copyArr, postsCount: posts.postsCount - 1 });
   };
-  // #############################################
-
-  useEffect(() => {
-    if (posts.postsCount > 50) {
-      setIsDone(true);
-    }
-  }, [posts]);
 
   return (
     <>
@@ -146,11 +150,18 @@ function App() {
         </Route>
         <Route path="/main">
           <Nav
+            kind={posts.kind}
+            setProfile={setProfile}
+            userProfile={userProfile}
+            acceptUserData={acceptUserData}
             setUserProfile={setUserProfile}
             profile={userProfile}
             acceptPosts={acceptPosts}
           />
           <MainPage
+            // from={from}
+            getMorePosts={getMorePosts}
+            acceptUserData={acceptUserData}
             kind={posts.kind}
             userProfile={userProfile}
             isDone={isDone}
@@ -162,11 +173,15 @@ function App() {
             setProfileForDeleteAndAdd={setProfile}
             profile={profile}
             deletePost={deletePost}
-            isLoading={isLoading}
+            spinnerIsOn={spinnerIsOn}
           />
         </Route>
         <Route path="/chat">
           <Nav
+            kind={posts.kind}
+            setProfile={setProfile}
+            userProfile={userProfile}
+            acceptUserData={acceptUserData}
             setUserProfile={setUserProfile}
             profile={userProfile}
             acceptPosts={acceptPosts}

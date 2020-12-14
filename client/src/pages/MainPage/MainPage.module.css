@@ -120,14 +120,14 @@
 
   .petName {
     all: unset;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-family: MaplestoryOTFBold;
   }
 
   .breed {
     all: unset;
     margin-top: 0.1rem;
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-family: MaplestoryOTFLight;
     color: #8f8f8f;
   }

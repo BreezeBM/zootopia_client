@@ -4,16 +4,35 @@ import styles from './Nav.module.css';
 import logoImg from '../../images/zootopiaLogo.png';
 import MypageModal from '../MypageModal/MypageModal';
 
-const Nav = ({ setUserProfile, profile, acceptPosts }) => {
+const Nav = ({
+  kind,
+  userProfile,
+  acceptUserData,
+  setUserProfile,
+  profile,
+  acceptPosts,
+  setProfile,
+}) => {
   const [isMypageOn, setIsMypageOn] = useState(false);
   const history = useHistory();
   const viewMypage = () => {
     setIsMypageOn(!isMypageOn);
   };
+
+  const clickLogoFunc = () => {
+    if (window.location.href === 'http://localhost:3001/main') {
+      acceptPosts(0);
+      acceptUserData(0);
+    }
+    history.push('/main');
+  };
   return (
     <>
       {Object.keys(profile).length !== 0 && (
         <MypageModal
+          kind={kind}
+          setProfile={setProfile}
+          userProfile={userProfile}
           setUserProfile={setUserProfile}
           profile={profile}
           isModalOn={isMypageOn}
@@ -26,10 +45,7 @@ const Nav = ({ setUserProfile, profile, acceptPosts }) => {
           className={styles.logoImg}
           src={logoImg}
           alt="logo"
-          onClick={() => {
-            acceptPosts(0, 0, 0, 15);
-            history.push('/main');
-          }}
+          onClick={clickLogoFunc}
         />
         <div className={styles.menu}>
           <div

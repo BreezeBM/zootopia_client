@@ -1,50 +1,23 @@
 import { React, useRef, useState, useEffect } from 'react';
+import axios from 'axios';
 import styles from './Posts.module.css';
 import Post from '../Post/Post';
 
-const Posts = ({
-  userProfile,
-  isDone,
-  userId,
-  isLoading,
-  postsCount,
-  posts,
-  addPosts,
-  kind,
-  viewPost,
-}) => {
+const Posts = ({ isDone, postsCount, posts, getMorePosts, viewPost }) => {
   // infinite scroll logic with IntersectionObserver API
   const targetRef = useRef(null);
-
-  const infiniteScroll = async () => {
-    // if (kind === 'latest') {
-    //   await addPosts(0, posts[0].postId, postsCount, 15);
-    // } else if (kind === 'user') {
-    //   await addPosts(userProfile.userId, posts[0].postId, postsCount, 15);
-    // } else {
-    //   await addPosts(userId, posts[0].postId, postsCount, 15);
-    // }
-    if (kind === 'latest') {
-      await addPosts(0);
-    } else if (kind === 'user') {
-      await addPosts(0);
-    } else {
-      await addPosts(0);
-    }
-  };
-
   const onIntersect = async ([entry], observer) => {
     if (entry.isIntersecting) {
       observer.unobserve(entry.target);
-      if (!isLoading) {
-        infiniteScroll();
-      }
-      observer.observe(entry.target);
+      getMorePosts();
     }
+
+    setTimeout(() => {
+      observer.observe(entry.target);
+    }, 4000);
   };
 
   const observer = new IntersectionObserver(onIntersect, { threshold: 0.5 });
-
   useEffect(() => {
     observer.observe(targetRef.current);
   }, []);
@@ -53,11 +26,12 @@ const Posts = ({
     <>
       <div className={styles.emptySpace} />
       <div className={styles.grid_container}>
-        {posts.map((post) => {
+        {posts.map((post, idx) => {
           return (
             <Post
               thumbnail={post.thumbnail}
-              key={post.postId}
+              // key={post.postId}
+              key={idx}
               postId={post.postId}
               viewPost={viewPost}
             />

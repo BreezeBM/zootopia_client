@@ -17,15 +17,18 @@ const PostModal = ({
   setUserProfile,
   userProfileId,
   setPostModalData,
+  setPosts,
   refreshPost,
   getPosts,
   getUserData,
   postData,
   isModalOn,
   handleClose,
+  posts,
   deletePost,
 }) => {
   // 포스팅에 대한 수정권한이 있는지에 대한 설정
+  const [today, setToday] = useState(null);
   const [hasRights, setHasRights] = useState(false);
   const history = useHistory();
   // rerender 될 때마다 바뀔 수 있도록 변수로 post와 user정보는 const 변수로 선언
@@ -50,7 +53,7 @@ const PostModal = ({
   // ################################################ <+------여기 좀 더 고쳐야함
   // postModal 창 닫을 때 전부다 디폴트로 돌리는고 꺼주는 세팅
   const makePostDefaultSetting = () => {
-    commentInputRef.current.value = null;
+    setIsDeleteOn(false);
     handleClose();
   };
   // ################################################
@@ -77,16 +80,24 @@ const PostModal = ({
       // } else {
       //   response = -1;
       // }
-      setPostModalData((prev) => {
-        return {
-          ...prev,
-          post: {
-            ...prev.post,
-            likeChecked: !prev.post.likeChecked,
-            likeCount: prev.post.likeCount + Number(response.data),
-          },
-        };
+      setPostModalData({
+        ...postData,
+        post: {
+          ...postData.post,
+          likeChecked: !postData.post.likeChecked,
+          likeCount: postData.post.likeCount + Number(response.data),
+        },
       });
+      // setPostModalData((prev) => {
+      //   return {
+      //     ...prev,
+      //     post: {
+      //       ...prev.post,
+      //       likeChecked: !prev.post.likeChecked,
+      //       likeCount: prev.post.likeCount + Number(response.data),
+      //     },
+      //   };
+      // });
     } catch (err) {
       if (err.response.status === 401) {
         history.push('/');
@@ -123,21 +134,28 @@ const PostModal = ({
   // ################################################
   // 특정 유저 프로필 + 그에 따른 grid 데이터 불러오기(댓글 및 대댓글 창의 프로필을 클릭했을 때에도 이 function을 씀)
   const getSpecificUser = async (id) => {
-    getPosts(id, 0, 0, 15);
+    getPosts(id);
     getUserData(id);
+    // if (userInform.userId === userProfileId) {
+    //   setPosts({ postData: posts.postData, kind: 'user' });
+    // } else {
+    //   setPosts({ postData: posts.postData, kind: 'other' });
+    // }
     handleClose();
   };
   // ################################################
 
   const checkEnterPress = (e) => {
     if (e.keyCode === 13) {
-      e.target.blur();
+      updatePost();
     }
   };
 
   // 포스트 수정
   const updatePost = async () => {
     if (textUpdateToggled === true) {
+      setTextUpdateToggled(false);
+      setUpdateBtnToggle(false);
       try {
         await axios.patch(
           `https://server.codestates-project.tk/post`,
@@ -206,6 +224,8 @@ const PostModal = ({
             withCredentials: true,
           },
         );
+        commentInputRef.current.value = null;
+        setWhichComment('comment');
         refreshPost(response.data.comments);
       } catch (err) {
         if (err.response.status === 401) {
@@ -223,8 +243,10 @@ const PostModal = ({
       const response = await axios.delete(
         'https://server.codestates-project.tk/post/comment',
         {
-          postId: postDatas.postId,
-          commentId: id,
+          data: {
+            postId: postDatas.postId,
+            commentId: id,
+          },
         },
         {
           withCredentials: true,
@@ -240,6 +262,23 @@ const PostModal = ({
     }
   };
 
+  const getDateType = () => {
+    const date = new Date(postDatas.time);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const dates = date.getDate();
+    let day = date.getDay();
+    if (day === 1) day = '월';
+    if (day === 2) day = '화';
+    if (day === 3) day = '수';
+    if (day === 4) day = '목';
+    if (day === 5) day = '금';
+    if (day === 6) day = '토';
+    if (day === 0) day = '일';
+    const dateForm = `${year}/${month}/${dates} (${day})`;
+    return dateForm;
+  };
+
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 65rem)');
     if (mediaQuery.matches) {
@@ -247,6 +286,7 @@ const PostModal = ({
     } else {
       setCommentToggle(true);
     }
+    setToday(getDateType());
   }, []);
 
   // 포스팅에 대한 수정권한이 있는지에 대한 설정
@@ -255,6 +295,13 @@ const PostModal = ({
       setHasRights(true);
     }
   }, [userProfileId, userInform]);
+
+  useEffect(() => {
+    const body = document.querySelector('body');
+    body.setAttribute('overflow-y', 'hidden');
+    body.setAttribute('height', '100vh');
+    body.setAttribute('padding-right', '15px');
+  }, [isModalOn]);
 
   return (
     <>
@@ -311,17 +358,26 @@ const PostModal = ({
                         className={styles.closeUpdateBtn}
                         src={updateBtn}
                         alt="updateBtn"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setTextUpdateToggled(false);
-                          setTextVal(postDatas.text);
                           setUpdateBtnToggle(false);
                         }}
                       />
-                      <i className="far fa-edit" onClick={updatePost} />
+                      <i
+                        className="far fa-edit"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          updatePost();
+                        }}
+                      />
                       <i
                         className="fas fa-trash-alt"
                         id={styles.deleteBtn}
-                        onClick={closeDeleteModal}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          closeDeleteModal();
+                        }}
                       />
                     </div>
                   ) : (
@@ -329,7 +385,8 @@ const PostModal = ({
                       className={styles.updateBtn}
                       src={updateBtn}
                       alt="updateBtn"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         setUpdateBtnToggle(true);
                       }}
                     />
@@ -338,7 +395,6 @@ const PostModal = ({
               </div>
               {textUpdateToggled ? (
                 <textarea
-                  onBlur={updatePost}
                   onKeyDown={checkEnterPress}
                   ref={textRef}
                   spellCheck={false}
@@ -352,7 +408,7 @@ const PostModal = ({
                 <div className={styles.textArea}>{postDatas.text}</div>
               )}
 
-              <div className={styles.date}>{postDatas.time}</div>
+              <div className={styles.date}>{today}</div>
               <div className={styles.buttonArea}>
                 {postDatas.likeChecked ? (
                   <img
@@ -425,7 +481,16 @@ const PostModal = ({
                       setWhichComment('comment');
                     }}
                   >
-                    {`${commentToWhom}님께 답글 달기 취소`}
+                    <span
+                      style={{
+                        fontWeight: 'bold',
+                        fontFamily: 'bazzi',
+                        fontSize: '1.2rem',
+                      }}
+                    >
+                      {commentToWhom}
+                    </span>
+                    님께 답글 달기 취소 x
                   </div>
                 ) : null}
                 <span onClick={postComment} className={styles.commentBtn}>

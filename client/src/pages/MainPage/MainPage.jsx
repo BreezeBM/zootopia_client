@@ -6,27 +6,41 @@ import Posts from '../../components/Posts/Posts';
 import addPostImg from '../../images/bark.png';
 import PostModal from '../../components/PostModal/PostModal';
 import PostNewFormModal from '../../components/PostNewFormModal/PostNewFormModal';
+import Spinner from '../../components/Spinner/Spinner';
 
 // test용 fakedata
-import fakedata from '../../fakeData';
+// import fakedata from '../../fakeData';
 
 const MainPage = ({
+  spinnerIsOn,
+  from,
+  offsetCount,
+  acceptUserData,
   kind,
   setProfileForDeleteAndAdd,
   userProfile,
   isDone,
   setUserProfile,
   setPosts,
-  isLoading,
   posts,
   getPosts,
-  setProfile,
   profile,
   deletePost,
+  getMorePosts,
 }) => {
+  // 1) ComponentDidMount(첫 렌더링시에)로 유저 정보와 latest posts 정보를 받아오고 re render
+  const firstOptionFunc = () => {
+    getPosts(0);
+    acceptUserData(0);
+  };
+
+  useEffect(() => {
+    firstOptionFunc();
+  }, []);
+
   const history = useHistory();
-  // #######################################################
-  // 새로운 포스트를 만드는 모달창을 끄고, 켜는 state& functions
+
+  // 새로운 포스트를 만드는 모달창을 끄고, 켜는 state & functions
   const [isAddPostOn, setIsAddPostOn] = useState(false);
   const viewAddPost = () => {
     setIsAddPostOn(!isAddPostOn);
@@ -54,11 +68,11 @@ const MainPage = ({
     } else {
       try {
         const response = await axios.get(
+          // `https://71f44c60960a.ngrok.io/post/${postId}`,
           `https://server.codestates-project.tk/post/${postId}`,
           { withCredentials: true },
         );
         setPostModalData(response.data);
-        // setIsPostOn(true);
       } catch (err) {
         if (err.response.status === 401) {
           history.push('/');
@@ -75,57 +89,15 @@ const MainPage = ({
   // #######################################################
 
   // #######################################################
-  // 다른 유저의 프로필 정보를 가져오는 func(click시에 해당 유저의 정보를 main에 출력)
-  const acceptUserData = async (userId) => {
-    // try {
-    //   const response = await axios.get(
-    //     `https://server.codestates-project.tk/user/${userId}`,
-    //     { withCredentials: true },
-    //   );
-    //   if (userId === 0) {
-    //     setUserProfile(response.data);
-    //   }
-    //   setProfile(response.data);
-    // } catch (err) {
-    //   if (err.response.status === 401) {
-    //     history.push('/');
-    //   } else {
-    //     console.log(err);
-    //   }
-    // }
-
-    // text용
-    if (userId === 0) {
-      setUserProfile(fakedata.user);
-      setProfile(fakedata.user);
-    } else {
-      setProfile(fakedata.post.user);
-    }
-  };
-  // #######################################################
-
-  // #######################################################
   // 프로필 div를 눌렀을 때 해당 프로필 grid data를 불러오는 logic
   const viewProfile = () => {
-    getPosts(profile.userId, 0, 0, 15);
+    getPosts(profile.userId);
   };
-  // #######################################################
-
-  // #######################################################
-  // ComponentDidMount(첫 렌더링시에)
-  useEffect(() => {
-    // 처음 렌더링될 때 getPosts로 latest 그리드를 받아서 posts에 업데이트해주고, 렌더링하도록
-    getPosts(0, 0, 0, 15);
-    // 처음 유저 데이터(자신)를 받아서 profile에 업데이트한 뒤에 렌더링
-    acceptUserData(0);
-    // 처음에 Loading자체가 true로 디폴트해놨기에, 여기까지
-    // latest grid 및 유저 정보 렌더링 끝나면 로딩 false로 풀기
-    // 결론적으로 들어오면 바로 스피너 돌고, 스피너 끝날 쯤에 다 렌더링 된 상태
-  }, []);
   // #######################################################
 
   return (
     <>
+      <Spinner spinIsOn={spinnerIsOn} />
       <PostNewFormModal
         setProfileForDeleteAndAdd={setProfileForDeleteAndAdd}
         setUserProfile={setUserProfile}
@@ -136,6 +108,7 @@ const MainPage = ({
       />
       {isPostOn ? (
         <PostModal
+          posts={posts}
           kind={kind}
           setProfileForDeleteAndAdd={setProfileForDeleteAndAdd}
           setUserProfile={setUserProfile}
@@ -168,8 +141,11 @@ const MainPage = ({
         </div>
       </div>
       <Posts
+        getMorePosts={getMorePosts}
+        from={from}
+        offsetCount={offsetCount}
+        setPosts={setPosts}
         userProfile={userProfile}
-        isLoading={isLoading}
         isDone={isDone}
         userId={profile.userId}
         addPosts={getPosts}
