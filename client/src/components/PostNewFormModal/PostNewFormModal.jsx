@@ -123,7 +123,6 @@ const PostNewFormModal = ({
         setUserProfile((prev) => {
           return { ...prev, postCount: prev.postCount + 1 };
         });
-
         if (postsKind === 'latest' || postsKind === 'user') {
           setPosts((prev) => {
             const copyArr = prev.postData.slice();
@@ -142,14 +141,6 @@ const PostNewFormModal = ({
           alert('sorry, server got an error. please try again');
         }
       }
-      // if (postsKind === 'latest' || postsKind === 'user') {
-      //   setPosts((prev) => {
-      //     const copyArr = prev.postData.slice();
-      //     copyArr.unshift({ postId: 7, thumbnail: FAKEIMG });
-      //     return { ...prev, postData: copyArr };
-      //   });
-      // }
-      // resetAndCloseModal();
     }
   };
 

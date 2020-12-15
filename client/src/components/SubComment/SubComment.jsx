@@ -21,6 +21,7 @@ const SubComment = ({
   time,
   handleCommentBtn,
 }) => {
+  const [today, setToday] = useState(null);
   const [hasRights, setHasRights] = useState(false);
   const textRef = useRef(null);
   const [updateToggled, setUpdateToggled] = useState(false);
@@ -33,8 +34,10 @@ const SubComment = ({
       const response = await axios.delete(
         `https://server.codestates-project.tk/post/reply`,
         {
-          postId,
-          replyId,
+          data: {
+            postId,
+            replyId,
+          },
         },
         { withCredentials: true },
       );
@@ -81,10 +84,29 @@ const SubComment = ({
 
   const checkEnterPress = (e) => {
     if (e.keyCode === 13) {
-      e.target.blur();
+      updateSubComment();
     }
   };
 
+  const getDateType = () => {
+    const date = new Date(time);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const dates = date.getDate();
+    let day = date.getDay();
+    if (day === 1) day = '월';
+    if (day === 2) day = '화';
+    if (day === 3) day = '수';
+    if (day === 4) day = '목';
+    if (day === 5) day = '금';
+    if (day === 6) day = '토';
+    if (day === 0) day = '일';
+    const dateForm = `${year}/${month}/${dates} (${day})`;
+    return dateForm;
+  };
+  useEffect(() => {
+    setToday(getDateType());
+  });
   useEffect(() => {
     if (userId === userProfileId) {
       setHasRights(true);
@@ -93,18 +115,26 @@ const SubComment = ({
 
   return (
     <div className={styles.subComment}>
-      <div
-        className={styles.contentsPart}
-        onClick={() => {
-          getSpecificUser(userId);
-        }}
-      >
-        <img className={styles.profile} src={thumbnail} alt="profile" />
+      <div className={styles.contentsPart}>
+        <img
+          onClick={() => {
+            getSpecificUser(userId);
+          }}
+          className={styles.profile}
+          src={thumbnail}
+          alt="profile"
+        />
         <div className={styles.commentPart}>
-          <span className={styles.nickname}>{petName}</span>
+          <span
+            className={styles.nickname}
+            onClick={() => {
+              getSpecificUser(userId);
+            }}
+          >
+            {petName}
+          </span>
           {textUpdateToggled ? (
             <input
-              onBlur={updateSubComment}
               onKeyDown={checkEnterPress}
               spellCheck={false}
               ref={textRef}
@@ -121,7 +151,7 @@ const SubComment = ({
         </div>
       </div>
       <div className={styles.dateAndBtnPart}>
-        <span className={styles.date}>{time}</span>
+        <span className={styles.date}>{today}</span>
         <span
           className={styles.commentBtn}
           onClick={async () => {
