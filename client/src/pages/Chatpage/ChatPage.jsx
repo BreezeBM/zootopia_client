@@ -160,9 +160,19 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
     setonLine(6);
     console.log(onLine);
   };
+
   useEffect(() => {
     getRooms();
     mapingFunc();
+    socket.on('roomUpdate', function (room) {
+      const arr = roomState.filter((el) => el._id === room._id);
+      const num = roomState.indexOf(arr);
+      const result = roomState.splice(num, 1, room);
+      console.log(room);
+      console.log('roomState=====', roomState);
+      console.log('result=====', result);
+      setRooms(result);
+    });
   }, []);
 
   // 모바일 기종에선 전용 UI로 나올 수 있도록
