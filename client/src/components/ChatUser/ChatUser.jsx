@@ -26,7 +26,7 @@ const ChatUser = ({
   useEffect(() => {
     if (targetId !== idValue) {
       Card.current.style.backgroundColor = 'white';
-      // socket.emit('leaveRoom', idValue);
+      socket.emit('leaveChat', idValue);
     }
   }, [targetId]);
 
@@ -38,7 +38,7 @@ const ChatUser = ({
   };
 
   const roomBye = function () {
-    const goobyeData = { id: 5 };
+    const goobyeData = { id: Myid };
     const config = {
       method: 'post',
       url: `https://zootopia-chat.herokuapp.com/room/${idValue}`,
@@ -62,7 +62,7 @@ const ChatUser = ({
         <div className={styles.username}>{roomTitle + userImg}</div>
         <div className={styles.userbreed}>{roomPeople}</div>
         <div className={styles.status}>
-          {!unread ? '안 읽은 메시지가 있습니다.' : ''}
+          {unread ? '안 읽은 메시지가 있습니다.' : ''}
         </div>
         <img
           className={styles.outButton}

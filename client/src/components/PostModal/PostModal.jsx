@@ -242,6 +242,31 @@ const PostModal = ({
     }
   };
 
+  const DMchat = () => {
+    console.log('DM 보내기');
+    console.log(userProfileId.userId);
+    console.log(userInform.userId);
+
+    const idData = {
+      myId: 1,
+    };
+    const config = {
+      method: 'post',
+      url: `https://zootopia-chat.herokuapp.com/room/private/2`,
+      data: idData,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(response);
+        history.push('/chat');
+        console.log('야호~~~');
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const getDateType = () => {
     const date = new Date(postDatas.time);
     const year = date.getFullYear();
@@ -409,9 +434,7 @@ const PostModal = ({
                   className={styles.chatBtn}
                   src={chatBtn}
                   alt="chat button"
-                  onClick={() => {
-                    console.log(userInform.userId);
-                  }}
+                  onClick={DMchat}
                 />
                 <div className={styles.likeCount}>
                   {`좋아요 ${postDatas.likeCount}개`}

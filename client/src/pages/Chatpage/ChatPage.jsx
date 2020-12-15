@@ -27,12 +27,14 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
   const targetChat = createRef();
   const targetButton = createRef();
   const backList = createRef();
+  const inputData = createRef();
 
   const [targetId, targetToggle] = useState('');
   const [roomState, setRooms] = useState([]);
   const [messageState, setMessages] = useState([]);
   const [onLine, setonLine] = useState(5);
   const [addRoomOn, setaddRoomOn] = useState(false);
+  const [inputState, setInput] = useState('');
 
   const history = useHistory();
   const viewAddRoompage = () => {
@@ -40,7 +42,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
   };
 
   const mapFunction = function (el) {
-    if (el.user === '5') {
+    if (el.user === 1) {
       return <MyChat textData={el.text} dateData={el.createdAt} />;
     } else {
       return <UserChat textData={el.text} dateData={el.createdAt} />;
@@ -49,9 +51,10 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
 
   const getRooms = async function () {
     try {
-      const res = await axios.get('https://zootopia-chat.herokuapp.com/room/5');
+      const res = await axios.get(`https://zootopia-chat.herokuapp.com/room/1`);
       console.log(res.data);
       setRooms(res.data);
+      console.log(roomState);
     } catch (err) {
       throw err;
     } finally {
@@ -71,7 +74,6 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
       const res = await axios.get(
         `https://zootopia-chat.herokuapp.com/chat/${id}`,
       );
-      console.log(res.data);
       setMessages(res.data);
     } catch (err) {
       throw err;
@@ -82,13 +84,13 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
   const mapingFunc = () => {
     if (roomState.length > 0) {
       roomLists = roomState.map((el) => {
-        const readCheck = el.users.filter((dl) => dl.id === 5)[0];
+        const readCheck = el.users.filter((dl) => dl.id === 1)[0];
         if (el.type === '공개 채팅방') {
           const userNum = `${el.users.length}명`;
           return (
             <ChatUser
               idValue={el._id}
-              unread={readCheck.unRead}
+              unread=""
               targetId={targetId}
               targetToggle={targetToggle}
               roomTitle={el.title}
@@ -96,23 +98,24 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
               roomPeople={userNum}
               dataFunc={getMessages}
               clearFunc={chatroomClear}
-              Myid={5}
+              Myid={1}
             />
           );
         } else {
-          const you = el.users.filter((dl) => dl.id !== 5)[0];
+          const you = el.users.filter((dl) => dl.id !== 1)[0];
+          const me = el.users.filter((dl) => dl.id === 1)[0];
           return (
             <ChatUser
               idValue={el._id}
-              unread={readCheck.unRead}
+              unread={me.unRead}
               targetId={targetId}
               targetToggle={targetToggle}
-              roomTitle={you.id}
+              roomTitle="임시제목"
               userImg="<사진파일>"
-              roomPeople={readCheck.inRoom ? 'online' : 'offline'}
+              roomPeople={readCheck.isOnline ? 'online' : 'offline'}
               dataFunc={getMessages}
               clearFunc={chatroomClear}
-              Myid={5}
+              Myid={1}
             />
           );
         }
@@ -121,6 +124,23 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
   };
 
   mapingFunc();
+  socket.on('roomUpdate', function (room) {
+    console.log(roomState);
+    const arr = roomState.filter((el) => {
+      console.log(el._id);
+      console.log(room._id);
+      return el._id === room._id;
+    });
+    console.log(arr);
+    const num = roomState.indexOf(arr[0]);
+    console.log(num);
+    const result = roomState.slice(undefined);
+    console.log(result);
+    result.splice(num, 1, room);
+    console.log(result);
+    setRooms(result);
+    console.log(roomState);
+  });
 
   const sendMessage = function (e) {
     if (e.target.value.length > 1) {
@@ -130,10 +150,11 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
       targetButton.current.style.backgroundColor = 'rgba(248,248,248)';
       targetButton.current.style.color = '';
     }
+    setInput(e.target.value);
 
     if (e.keyCode === 13) {
       const message = JSON.stringify({
-        user: onLine,
+        user: 1,
         text: `${e.target.value}`,
       });
       const config = {
@@ -156,23 +177,33 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
     }
   };
 
-  const userChange = function () {
-    setonLine(6);
-    console.log(onLine);
+  const sendClick = function () {
+    const message = JSON.stringify({
+      user: 1,
+      text: inputData.target.value,
+    });
+    const config = {
+      method: 'post',
+      url: `https://zootopia-chat.herokuapp.com/chat/${targetId}`,
+      headers: { 'Content-Type': 'application/json' },
+      data: message,
+    };
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    socket.on('newMessage', function (chat) {
+      console.log(chat);
+      setMessages([...messageState, chat]);
+    });
   };
 
   useEffect(() => {
     getRooms();
     mapingFunc();
-    socket.on('roomUpdate', function (room) {
-      const arr = roomState.filter((el) => el._id === room._id);
-      const num = roomState.indexOf(arr);
-      const result = roomState.splice(num, 1, room);
-      console.log(room);
-      console.log('roomState=====', roomState);
-      console.log('result=====', result);
-      setRooms(result);
-    });
   }, []);
 
   // 모바일 기종에선 전용 UI로 나올 수 있도록
@@ -237,12 +268,9 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
               type="text"
               placeholder="메시지 입력..."
               onKeyDown={sendMessage}
+              ref={inputData}
             />
-            <div
-              className={styles.send}
-              onClick={userChange}
-              ref={targetButton}
-            >
+            <div className={styles.send} onClick={sendClick} ref={targetButton}>
               전송
             </div>
           </div>
