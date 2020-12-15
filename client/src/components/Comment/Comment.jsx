@@ -5,6 +5,7 @@ import axios from 'axios';
 import styles from './Comment.module.css';
 import SubComments from '../SubComments/SubComments';
 import updateBtn from '../../images/commentUpdateBtn.jpg';
+import chatBtn from '../../images/chat.png';
 
 const Comment = ({
   userProfileId,
@@ -37,7 +38,7 @@ const Comment = ({
     if (textUpdateToggled === true) {
       try {
         const response = await axios.patch(
-          'https://71f44c60960a.ngrok.io/post/comment',
+          'https://server.codestates-project.tk/post/comment',
           {
             postId,
             commentId,
@@ -138,6 +139,14 @@ const Comment = ({
           </div>
           <div className={styles.dateAndBtnPart}>
             <span className={styles.date}>{today}</span>
+            <img
+              className={styles.chatBtn}
+              src={chatBtn}
+              alt="chat button"
+              onClick={() => {
+                console.log(userId);
+              }}
+            />
             <span
               className={styles.commentBtn}
               onClick={async () => {

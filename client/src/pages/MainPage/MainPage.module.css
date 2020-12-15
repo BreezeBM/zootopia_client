@@ -94,6 +94,17 @@
   height: 6rem;
 }
 
+.profile .chatBtn {
+  visibility: hidden;
+  position: absolute;
+  top: 0.6rem;
+  right: 2rem;
+  width: 3rem;
+  height: 3rem;
+}
+.profile:hover .chatBtn {
+  visibility: visible;
+}
 /* 모바일 버전 대응 */
 
 @media screen and (max-width: 65rem) {

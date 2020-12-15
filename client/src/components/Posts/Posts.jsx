@@ -5,21 +5,19 @@ import Post from '../Post/Post';
 
 const Posts = ({ isDone, postsCount, posts, getMorePosts, viewPost }) => {
   // infinite scroll logic with IntersectionObserver API
-  let num = 2;
   const targetRef = useRef(null);
   const onIntersect = async ([entry], observer) => {
     if (entry.isIntersecting) {
       observer.unobserve(entry.target);
-      getMorePosts(num);
-      num += 1;
+      getMorePosts('fuck');
     }
-
     setTimeout(() => {
       observer.observe(entry.target);
     }, 4000);
   };
 
   const observer = new IntersectionObserver(onIntersect, { threshold: 0.5 });
+
   useEffect(() => {
     observer.observe(targetRef.current);
   }, []);

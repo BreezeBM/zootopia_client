@@ -76,7 +76,7 @@
 .commentBtn {
   font-family: Bazzi;
   color: gray;
-  margin-left: 0.8rem;
+  margin-left: 0.6rem;
   cursor: pointer;
 }
 
@@ -104,7 +104,12 @@
 .subComment:hover .updateBtn {
   visibility: visible;
 }
-
+.chatBtn {
+  margin-left: 0.5rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  cursor: pointer;
+}
 @media screen and (max-width: 65rem) {
   .dateAndBtnPart .updateBtn {
     visibility: visible;

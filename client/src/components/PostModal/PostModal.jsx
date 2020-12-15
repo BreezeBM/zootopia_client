@@ -10,6 +10,7 @@ import likeImg from '../../images/fulfilledHeart.png';
 import unLikeImg from '../../images/unfulfilledHeart.png';
 import updateBtn from '../../images/updateBtn.png';
 import PostDeleteModal from '../PostDeleteModal/PostDeleteModal';
+import chatBtn from '../../images/chat.png';
 
 const PostModal = ({
   kind,
@@ -17,14 +18,12 @@ const PostModal = ({
   setUserProfile,
   userProfileId,
   setPostModalData,
-  setPosts,
   refreshPost,
   getPosts,
   getUserData,
   postData,
   isModalOn,
   handleClose,
-  posts,
   deletePost,
 }) => {
   // 포스팅에 대한 수정권한이 있는지에 대한 설정
@@ -50,7 +49,6 @@ const PostModal = ({
   const [comment, setComment] = useState(null);
   const [commentId, setCommentId] = useState(null);
 
-  // ################################################ <+------여기 좀 더 고쳐야함
   // postModal 창 닫을 때 전부다 디폴트로 돌리는고 꺼주는 세팅
   const makePostDefaultSetting = () => {
     setIsDeleteOn(false);
@@ -73,13 +71,6 @@ const PostModal = ({
         },
       );
 
-      // test용도
-      // let response = 0;
-      // if (like === false) {
-      //   response = 1;
-      // } else {
-      //   response = -1;
-      // }
       setPostModalData({
         ...postData,
         post: {
@@ -88,16 +79,6 @@ const PostModal = ({
           likeCount: postData.post.likeCount + Number(response.data),
         },
       });
-      // setPostModalData((prev) => {
-      //   return {
-      //     ...prev,
-      //     post: {
-      //       ...prev.post,
-      //       likeChecked: !prev.post.likeChecked,
-      //       likeCount: prev.post.likeCount + Number(response.data),
-      //     },
-      //   };
-      // });
     } catch (err) {
       if (err.response.status === 401) {
         history.push('/');
@@ -136,11 +117,6 @@ const PostModal = ({
   const getSpecificUser = async (id) => {
     getPosts(id);
     getUserData(id);
-    // if (userInform.userId === userProfileId) {
-    //   setPosts({ postData: posts.postData, kind: 'user' });
-    // } else {
-    //   setPosts({ postData: posts.postData, kind: 'other' });
-    // }
     handleClose();
   };
   // ################################################
@@ -150,7 +126,11 @@ const PostModal = ({
       updatePost();
     }
   };
-
+  const sendComment = (e) => {
+    if (e.keyCode === 13) {
+      commentInputRef.current.blur();
+    }
+  };
   // 포스트 수정
   const updatePost = async () => {
     if (textUpdateToggled === true) {
@@ -425,6 +405,14 @@ const PostModal = ({
                     onClick={handleLike}
                   />
                 )}
+                <img
+                  className={styles.chatBtn}
+                  src={chatBtn}
+                  alt="chat button"
+                  onClick={() => {
+                    console.log(userInform.userId);
+                  }}
+                />
                 <div className={styles.likeCount}>
                   {`좋아요 ${postDatas.likeCount}개`}
                 </div>
@@ -465,6 +453,8 @@ const PostModal = ({
               )}
               <div className={styles.inputPart}>
                 <input
+                  onBlur={postComment}
+                  onKeyDown={sendComment}
                   onChange={(e) => {
                     setComment(e.target.value);
                   }}
