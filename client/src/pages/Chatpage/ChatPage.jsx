@@ -112,7 +112,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
               targetToggle={targetToggle}
               roomTitle="임시제목"
               userImg="<사진파일>"
-              roomPeople={readCheck.isOnline ? 'online' : 'offline'}
+              roomPeople={you.isOnline ? 'online' : 'offline'}
               dataFunc={getMessages}
               clearFunc={chatroomClear}
               Myid={1}
@@ -124,23 +124,6 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
   };
 
   mapingFunc();
-  socket.on('roomUpdate', function (room) {
-    console.log(roomState);
-    const arr = roomState.filter((el) => {
-      console.log(el._id);
-      console.log(room._id);
-      return el._id === room._id;
-    });
-    console.log(arr);
-    const num = roomState.indexOf(arr[0]);
-    console.log(num);
-    const result = roomState.slice(undefined);
-    console.log(result);
-    result.splice(num, 1, room);
-    console.log(result);
-    setRooms(result);
-    console.log(roomState);
-  });
 
   const sendMessage = function (e) {
     if (e.target.value.length > 1) {
@@ -217,8 +200,21 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
       }
     }
     mapingFunc();
-  }, [targetId]);
 
+    socket.on('roomUpdate', function (room) {
+      const arry = roomState.filter((el) => {
+        return el._id === room._id;
+      });
+      if (arry.length > 0) {
+        console.log('@@@@@@@잘됩니다@@@@@@@@');
+        const num = roomState.indexOf(arry[0]);
+        const result = roomState.slice(undefined);
+        result.splice(num, 1, room);
+        // setRooms(result);
+      }
+    });
+  }, [targetId]);
+  console.log('랜더링');
   return (
     <>
       <AddroomModal

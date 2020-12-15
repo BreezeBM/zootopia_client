@@ -1,4 +1,4 @@
-import React, { createRef, useEffect } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import axios from 'axios';
 import styles from './ChatUser.module.css';
@@ -26,7 +26,6 @@ const ChatUser = ({
   useEffect(() => {
     if (targetId !== idValue) {
       Card.current.style.backgroundColor = 'white';
-      socket.emit('leaveChat', idValue);
     }
   }, [targetId]);
 
@@ -44,6 +43,24 @@ const ChatUser = ({
       url: `https://zootopia-chat.herokuapp.com/room/${idValue}`,
       headers: { 'Content-Type': 'application/json' },
       data: goobyeData,
+    };
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        clearFunc();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const disconnect = function () {
+    const connectData = { id: Myid };
+    const config = {
+      method: 'post',
+      url: `https://zootopia-chat.herokuapp.com/chat/leave/${idValue}`,
+      headers: { 'Content-Type': 'application/json' },
+      data: connectData,
     };
     axios(config)
       .then(function (response) {
