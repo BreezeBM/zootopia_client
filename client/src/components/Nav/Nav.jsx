@@ -12,6 +12,7 @@ const Nav = ({
   profile,
   acceptPosts,
   setProfile,
+  setOnOff,
 }) => {
   const [isMypageOn, setIsMypageOn] = useState(false);
   const history = useHistory();
@@ -21,11 +22,13 @@ const Nav = ({
 
   const clickLogoFunc = () => {
     if (window.location.href === 'http://localhost:3001/main') {
+      setOnOff(true);
       acceptPosts(0);
       acceptUserData(0);
     }
     history.push('/main');
   };
+
   return (
     <>
       {Object.keys(profile).length !== 0 && (

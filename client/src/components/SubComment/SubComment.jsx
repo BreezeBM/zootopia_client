@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import styles from './SubComment.module.css';
 import updateBtn from '../../images/commentUpdateBtn.jpg';
+import chatBtn from '../../images/chat.png';
 
 const SubComment = ({
   userProfileId,
@@ -152,6 +153,14 @@ const SubComment = ({
       </div>
       <div className={styles.dateAndBtnPart}>
         <span className={styles.date}>{today}</span>
+        <img
+          className={styles.chatBtn}
+          src={chatBtn}
+          alt="chat button"
+          onClick={() => {
+            console.log(userId);
+          }}
+        />
         <span
           className={styles.commentBtn}
           onClick={async () => {

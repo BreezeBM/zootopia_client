@@ -14,11 +14,12 @@
 }
 
 .modal.isOn {
-  z-index: 3;
+  z-index: 4;
   opacity: 1;
 }
 
 .box {
+  z-index: 4;
   position: relative;
   width: 45rem;
   height: 28rem;

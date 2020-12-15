@@ -6,12 +6,13 @@ import Posts from '../../components/Posts/Posts';
 import addPostImg from '../../images/bark.png';
 import PostModal from '../../components/PostModal/PostModal';
 import PostNewFormModal from '../../components/PostNewFormModal/PostNewFormModal';
-
+import chatBtn from '../../images/chat.png';
 // test용 fakedata
 // import fakedata from '../../fakeData';
 
 const MainPage = ({
   from,
+  onOff,
   offsetCount,
   acceptUserData,
   kind,
@@ -66,7 +67,6 @@ const MainPage = ({
     } else {
       try {
         const response = await axios.get(
-          // `https://71f44c60960a.ngrok.io/post/${postId}`,
           `https://server.codestates-project.tk/post/${postId}`,
           { withCredentials: true },
         );
@@ -123,6 +123,7 @@ const MainPage = ({
       ) : null}
       <div className={styles.gridFrame} />
       <div className={styles.profile} onClick={viewProfile}>
+        <img className={styles.chatBtn} src={chatBtn} alt="chat button" />
         <img
           src={profile.thumbnail}
           className={styles.image}

@@ -11,6 +11,7 @@ function App() {
   // user: { userId: 2, thumbnail: img6, petName: '곤잘로 이구아인', breed: '이구아나', postCount: 22 },
   const [userProfile, setUserProfile] = useState({});
   const [profile, setProfile] = useState({});
+  const [onOff, setOnOff] = useState(false);
   const [posts, setPosts] = useState({
     postData: [],
     kind: 'latest',
@@ -43,9 +44,6 @@ function App() {
 
   const getMorePosts = async () => {
     try {
-      // const response = await axios.get(
-      //   `https://yts.mx/api/v2/list_movies.json?page=${num}&limit=15`,
-      // );
       const response = await axios.post(
         'https://server.codestates-project.tk/post/grid',
         {
@@ -56,9 +54,7 @@ function App() {
         },
         { withCredentials: true },
       );
-
       const acceptedPosts = response.data.postData;
-      // const acceptedPosts = response.data.data.movies;
       if (acceptedPosts.length < 15) {
         setIsDone(true);
       }
@@ -81,9 +77,6 @@ function App() {
   const acceptPosts = async (id) => {
     window.scrollTo(0, 0);
     try {
-      // const response = await axios.get(
-      //   'https://yts.mx/api/v2/list_movies.json?page=1&limit=15',
-      // );
       const response = await axios.post(
         // 'https://71f44c60960a.ngrok.io/post/grid',
         'https://server.codestates-project.tk/post/grid',
@@ -97,8 +90,6 @@ function App() {
         { withCredentials: true },
       );
 
-      // const acceptedPosts = response.data.data.movies;
-
       const acceptedPosts = response.data.postData;
       if (acceptedPosts.length < 15) {
         setIsDone(true);
@@ -107,7 +98,6 @@ function App() {
       fromId = acceptedPosts[0].postId;
       offsetCount = acceptedPosts.length;
       nowId = id;
-
       setPosts({
         postData: acceptedPosts,
         postsCount: acceptedPosts.length,
@@ -160,6 +150,7 @@ function App() {
         </Route>
         <Route path="/main">
           <Nav
+            setOnOff={setOnOff}
             kind={posts.kind}
             setProfile={setProfile}
             userProfile={userProfile}
@@ -169,7 +160,6 @@ function App() {
             acceptPosts={acceptPosts}
           />
           <MainPage
-            // from={from}
             getMorePosts={getMorePosts}
             acceptUserData={acceptUserData}
             kind={posts.kind}

@@ -291,6 +291,12 @@
   -webkit-user-drag: none;
 }
 
+.chatBtn {
+  cursor: pointer;
+  margin-left: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+}
 @media screen and (max-width: 65rem) {
   .userArea .updateBtn {
     visibility: visible;
