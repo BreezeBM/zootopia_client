@@ -4,16 +4,17 @@
 }
 .contentsPart {
   display: flex;
-  cursor: pointer;
 }
 
 .profile {
+  cursor: pointer;
   border-radius: 50%;
   width: 1.5rem;
   height: 1.5rem;
 }
 
 .nickname {
+  cursor: pointer;
   font-family: Bazzi;
   font-size: 1.1rem;
 }
@@ -30,15 +31,20 @@
 
 .textInput {
   font-size: 1rem;
+  margin-left: 0.35rem;
   font-family: Bazzi;
   border: none;
   outline: none;
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 
 .textPart {
   margin-left: 0.48rem;
   font-size: 1rem;
   font-family: Bazzi;
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 
 .dateAndBtnPart {
@@ -96,6 +102,13 @@
 
 .subComment:hover .updateBtn {
   visibility: visible;
+}
+
+.chatBtn {
+  cursor: pointer;
+  margin-left: 0.5rem;
+  width: 1.3rem;
+  height: 1.3rem;
 }
 
 @media screen and (max-width: 65rem) {

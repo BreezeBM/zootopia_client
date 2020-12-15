@@ -7,6 +7,10 @@ import close from '../../images/close(white).png';
 
 const CropModal = ({
   setUserProfile,
+  setProfile,
+  profile,
+  userProfile,
+  kind,
   setImgSrc,
   setNowImg,
   imgSrc,
@@ -84,7 +88,7 @@ const CropModal = ({
 
     const response = await axios({
       method: 'post',
-      url: 'https://server.codestates-project.tk/user/photo',
+      url: 'https://97ea7eec4cdf.ngrok.io/user/photo',
       data: formData,
       headers: {
         'Content-Type': `multipart/form-data`,
@@ -92,9 +96,11 @@ const CropModal = ({
     });
     setNowImg(response.data.thumbnail);
     setImgSrc(null);
-    setUserProfile((prev) => {
-      return { ...prev, thumbnail: response.data.thumbnail };
-    });
+    if (kind === 'user' || kind === 'latest') {
+      setProfile({ ...profile, thumbnail: response.data.thumbnail });
+    }
+
+    setUserProfile({ ...userProfile, thumbnail: response.data.thumbnail });
     handleClose();
   };
 

@@ -1,4 +1,4 @@
-import { createRef, React, useRef, useState } from 'react';
+import { useEffect, React, useRef, useState } from 'react';
 import axios from 'axios';
 
 import styles from './MypageModal.module.css';
@@ -8,8 +8,18 @@ import logoImg from '../../images/logo.png';
 import DeleteModal from '../DeleteModal/DeleteModal';
 import CropModal from '../CropModal/CropModal';
 
-const MypageModal = ({ setUserProfile, profile, isModalOn, handleClose }) => {
+const MypageModal = ({
+  setProfile,
+  kind,
+  userProfile,
+  setUserProfile,
+  profile,
+  isModalOn,
+  handleClose,
+}) => {
   // img 변경관련 로직
+  const [petnameCaution, setPetnameCaution] = useState(null);
+  const [breedCaution, setBreedCaution] = useState(null);
   const [cropModalOn, setCropModalOn] = useState(false);
   const handleCropModalOn = () => {
     setCropModalOn(!cropModalOn);
@@ -49,12 +59,16 @@ const MypageModal = ({ setUserProfile, profile, isModalOn, handleClose }) => {
       setChecked({ ...checked, petname: true });
       if (e.target.value.length > 18 || e.target.value.length === 0) {
         setChecked({ ...checked, petname: false });
+        setPetnameCaution(
+          '펫네임은 최소 1글자 이상 18글자 이하로 작성해주세요',
+        );
       }
       setPetname(e.target.value);
     } else if (e.target.name === 'breed') {
       setChecked({ ...checked, breed: true });
       if (e.target.value.length > 18 || e.target.value.length === 0) {
         setChecked({ ...checked, breed: false });
+        setBreedCaution('품종은 최소 1글자 이상 18글자 이하로 작성해주세요');
       }
       setBreed(e.target.value);
     }
@@ -74,17 +88,20 @@ const MypageModal = ({ setUserProfile, profile, isModalOn, handleClose }) => {
         if (response.status === 201) {
           setNowPetName(petName);
           setPetname(petName);
-          setUserProfile((prev) => {
-            return { ...prev, petName };
-          });
+          if (kind === 'latest' || kind === 'user') {
+            setProfile({ ...profile, petName });
+          }
+          setUserProfile({ ...userProfile, petName });
           petnameRef.current.blur();
         }
       } catch (err) {
         // 중복 펫네임 409
+        console.log('hre');
         if (err.response.status === 501) {
           alert('some errors occur at server, please try again');
-        } else if (err.response.status === 404) {
+        } else if (err.response.status === 409) {
           setChecked({ ...checked, petname: false });
+          setPetnameCaution('동일한 닉네임으로의 변경은 불가능합니다');
         } else {
           console.log(err);
         }
@@ -106,16 +123,18 @@ const MypageModal = ({ setUserProfile, profile, isModalOn, handleClose }) => {
         if (response.status === 201) {
           setNowBreed(breed);
           setBreed(breed);
-          setUserProfile((prev) => {
-            return { ...prev, breed };
-          });
+          if (kind === 'latest' || kind === 'user') {
+            setProfile({ ...profile, breed });
+          }
+          setUserProfile({ ...userProfile, breed });
           breedRef.current.blur();
         }
       } catch (err) {
         if (err.response.status === 501) {
           alert('some errors occur at server, please try again');
-        } else if (err.response.status === 404) {
+        } else if (err.response.status === 409) {
           setChecked({ ...checked, breed: false });
+          setPetnameCaution('동일한 품종으로의 변경은 불가능합니다');
         }
       }
     }
@@ -133,6 +152,14 @@ const MypageModal = ({ setUserProfile, profile, isModalOn, handleClose }) => {
   const viewDeleteModal = () => {
     setDeleteModalOn(!deleteModalOn);
   };
+
+  useEffect(() => {
+    if (isModalOn === false) {
+      setPetname(nowPetName);
+      setBreed(nowBreed);
+      setChecked({ petname: true, breed: true });
+    }
+  }, [isModalOn]);
 
   return (
     <>
@@ -182,9 +209,7 @@ const MypageModal = ({ setUserProfile, profile, isModalOn, handleClose }) => {
                 </button>
               </div>
               {checked.petname ? null : (
-                <div className={styles.caution}>
-                  펫네임은 최소 1글자 이상 18글자 이하로 작성해주세요
-                </div>
+                <div className={styles.caution}>{petnameCaution}</div>
               )}
             </div>
             <div className={styles.breedEdit}>
@@ -212,9 +237,7 @@ const MypageModal = ({ setUserProfile, profile, isModalOn, handleClose }) => {
                 </button>
               </div>
               {checked.breed ? null : (
-                <div className={styles.caution}>
-                  품종은 최소 1글자 이상 18글자 이하로 작성해주세요
-                </div>
+                <div className={styles.caution}>{breedCaution}</div>
               )}
             </div>
             <div className={styles.deleteEdit}>
@@ -235,6 +258,10 @@ const MypageModal = ({ setUserProfile, profile, isModalOn, handleClose }) => {
         </div>
       </Modal>
       <CropModal
+        setProfile={setProfile}
+        profile={profile}
+        userProfile={userProfile}
+        kind={kind}
         setUserProfile={setUserProfile}
         setNowImg={setNowImg}
         imgSrc={imgSrc}

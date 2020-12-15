@@ -5,6 +5,7 @@ import axios from 'axios';
 import styles from './Comment.module.css';
 import SubComments from '../SubComments/SubComments';
 import updateBtn from '../../images/commentUpdateBtn.jpg';
+import chatBtn from '../../images/chat.png';
 
 const Comment = ({
   userProfileId,
@@ -24,6 +25,7 @@ const Comment = ({
   handleCommentBtn,
 }) => {
   // 수정권한이 있는지에 관한 처리
+  const [today, setToday] = useState(null);
   const [hasRights, setHasRights] = useState(false);
   const textRef = useRef(null);
   const [updateToggled, setUpdateToggled] = useState(false);
@@ -65,7 +67,7 @@ const Comment = ({
 
   const checkEnterPress = (e) => {
     if (e.keyCode === 13) {
-      e.target.blur();
+      updateComment();
     }
   };
 
@@ -76,22 +78,50 @@ const Comment = ({
     }
   }, [userProfileId, userId]);
 
+  const getDateType = () => {
+    const date = new Date(time);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const dates = date.getDate();
+    let day = date.getDay();
+    if (day === 1) day = '월';
+    if (day === 2) day = '화';
+    if (day === 3) day = '수';
+    if (day === 4) day = '목';
+    if (day === 5) day = '금';
+    if (day === 6) day = '토';
+    if (day === 0) day = '일';
+    const dateForm = `${year}/${month}/${dates} (${day})`;
+    return dateForm;
+  };
+
+  useEffect(() => {
+    setToday(getDateType());
+  }, []);
   return (
     <>
       <div className={styles.eachComment}>
         <div className={styles.subComment}>
-          <div
-            className={styles.contentsPart}
-            onClick={() => {
-              getSpecificUser(userId);
-            }}
-          >
-            <img className={styles.profile} src={thumbnail} alt="profile" />
+          <div className={styles.contentsPart}>
+            <img
+              className={styles.profile}
+              onClick={() => {
+                getSpecificUser(userId);
+              }}
+              src={thumbnail}
+              alt="profile"
+            />
             <div className={styles.commentPart}>
-              <span className={styles.nickname}>{petName}</span>
+              <span
+                className={styles.nickname}
+                onClick={() => {
+                  getSpecificUser(userId);
+                }}
+              >
+                {petName}
+              </span>
               {textUpdateToggled ? (
                 <input
-                  onBlur={updateComment}
                   onKeyDown={checkEnterPress}
                   spellCheck={false}
                   ref={textRef}
@@ -108,7 +138,15 @@ const Comment = ({
             </div>
           </div>
           <div className={styles.dateAndBtnPart}>
-            <span className={styles.date}>{time}</span>
+            <span className={styles.date}>{today}</span>
+            <img
+              className={styles.chatBtn}
+              src={chatBtn}
+              alt="chat button"
+              onClick={() => {
+                console.log(userId);
+              }}
+            />
             <span
               className={styles.commentBtn}
               onClick={async () => {

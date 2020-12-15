@@ -11,10 +11,11 @@
 .subCommentMessage {
   display: inline-block;
   position: absolute;
-  top: -1rem;
+  top: -0.7rem;
   color: red;
   font-family: bazzi;
   cursor: pointer;
+  font-size: 0.8rem;
 }
 
 /* 재활용 Modal 과는 다른 형태로 만들어야하기에 그대로 복붙해서 가져옴 */
@@ -100,11 +101,10 @@
 
 .updateBtns {
   position: relative;
-  /* top: 1rem; */
   right: 1.3rem;
   display: flex;
   align-items: center;
-  width: 4rem;
+  /* width: 4rem; */
 }
 
 .closeUpdateBtn {
@@ -118,6 +118,7 @@
 }
 
 .userArea .updateBtn {
+  z-index: 99;
   visibility: hidden;
   /* box-shadow: 2px 4px 9px 0 rgba(0, 0, 0, 0.5); */
   position: relative;
@@ -129,7 +130,10 @@
 }
 
 .userArea:hover .updateBtn {
+  display: inline-block;
+  z-index: 99;
   visibility: visible;
+  cursor: pointer;
 }
 
 .nickname {
@@ -146,10 +150,14 @@
 /* 유저가 쓴 포스팅 text 영역 */
 
 .textArea {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
   margin-top: 0.5rem;
   font-family: 'bazzi';
   font-size: 1.2rem;
-  height: 6rem;
+  height: 5.5rem;
+  width: 18rem;
+  border: none;
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -161,8 +169,8 @@
 }
 
 .updateText {
-  height: 6rem;
-  width: 100%;
+  height: 5.5rem;
+  width: 18rem;
   outline: none;
   border: none;
   resize: none;
@@ -170,6 +178,8 @@
   font-family: 'bazzi';
   font-size: 1.2rem;
   overflow-y: scroll;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -253,11 +263,11 @@
 
 .commentInput {
   border: lightgray 1px solid;
+  margin-top: 0.5rem;
   padding: 0.2rem;
   outline: none;
   width: 100%;
   height: 100%;
-
   font-family: MaplestoryOTFLight;
   font-size: 1.2rem;
 }
@@ -265,6 +275,7 @@
 .commentBtn {
   position: absolute;
   right: 0.2rem;
+  top: 0.7rem;
   font-family: MaplestoryOTFLight;
   color: #ffd426;
   padding: 0.2rem;
@@ -280,6 +291,12 @@
   -webkit-user-drag: none;
 }
 
+.chatBtn {
+  cursor: pointer;
+  margin-left: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+}
 @media screen and (max-width: 65rem) {
   .userArea .updateBtn {
     visibility: visible;

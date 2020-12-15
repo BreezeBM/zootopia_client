@@ -14,13 +14,13 @@
 }
 
 .modal.isOn {
-  z-index: 3;
+  z-index: 4;
   opacity: 1;
 }
 
 .box {
+  z-index: 4;
   position: relative;
-
   width: 45rem;
   height: 28rem;
   background: white;
@@ -45,7 +45,7 @@
   .box {
     position: relative;
     width: 22rem;
-    height: 28rem;
+    height: 34rem;
     background: white;
     border-radius: 25px;
     box-shadow: 2px 4px 9px 0 rgba(0, 0, 0, 0.5);
