@@ -6,13 +6,11 @@ import Posts from '../../components/Posts/Posts';
 import addPostImg from '../../images/bark.png';
 import PostModal from '../../components/PostModal/PostModal';
 import PostNewFormModal from '../../components/PostNewFormModal/PostNewFormModal';
-import Spinner from '../../components/Spinner/Spinner';
 
 // test용 fakedata
 // import fakedata from '../../fakeData';
 
 const MainPage = ({
-  spinnerIsOn,
   from,
   offsetCount,
   acceptUserData,
@@ -97,7 +95,6 @@ const MainPage = ({
 
   return (
     <>
-      <Spinner spinIsOn={spinnerIsOn} />
       <PostNewFormModal
         setProfileForDeleteAndAdd={setProfileForDeleteAndAdd}
         setUserProfile={setUserProfile}

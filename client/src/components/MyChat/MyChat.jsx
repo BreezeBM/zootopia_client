@@ -5,7 +5,7 @@ import styles from './MyChat.module.css';
 const MyChat = ({ textData, dateData }) => {
   let sizes = '15%';
   if (textData.length > 10) {
-    sizes = '35%';
+    sizes = '15%';
   }
   const messageContent = textData;
   const Message = styled.div`

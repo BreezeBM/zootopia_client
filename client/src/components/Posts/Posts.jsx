@@ -5,11 +5,13 @@ import Post from '../Post/Post';
 
 const Posts = ({ isDone, postsCount, posts, getMorePosts, viewPost }) => {
   // infinite scroll logic with IntersectionObserver API
+  let num = 2;
   const targetRef = useRef(null);
   const onIntersect = async ([entry], observer) => {
     if (entry.isIntersecting) {
       observer.unobserve(entry.target);
-      getMorePosts();
+      getMorePosts(num);
+      num += 1;
     }
 
     setTimeout(() => {
@@ -26,12 +28,11 @@ const Posts = ({ isDone, postsCount, posts, getMorePosts, viewPost }) => {
     <>
       <div className={styles.emptySpace} />
       <div className={styles.grid_container}>
-        {posts.map((post, idx) => {
+        {posts.map((post) => {
           return (
             <Post
               thumbnail={post.thumbnail}
-              // key={post.postId}
-              key={idx}
+              key={post.postId}
               postId={post.postId}
               viewPost={viewPost}
             />

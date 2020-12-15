@@ -8,6 +8,7 @@ import MainPage from './pages/MainPage/MainPage';
 
 function App() {
   const history = useHistory();
+  // user: { userId: 2, thumbnail: img6, petName: '곤잘로 이구아인', breed: '이구아나', postCount: 22 },
   const [userProfile, setUserProfile] = useState({});
   const [profile, setProfile] = useState({});
   const [posts, setPosts] = useState({
@@ -33,7 +34,6 @@ function App() {
       postCount,
     });
   };
-  const [spinnerIsOn, setSpinnerIsOn] = useState(false);
   const [isDone, setIsDone] = useState(false);
 
   let fromId = 0;
@@ -42,8 +42,10 @@ function App() {
   let postsDatas = [];
 
   const getMorePosts = async () => {
-    console.log(posts.postData);
     try {
+      // const response = await axios.get(
+      //   `https://yts.mx/api/v2/list_movies.json?page=${num}&limit=15`,
+      // );
       const response = await axios.post(
         'https://server.codestates-project.tk/post/grid',
         {
@@ -56,6 +58,7 @@ function App() {
       );
 
       const acceptedPosts = response.data.postData;
+      // const acceptedPosts = response.data.data.movies;
       if (acceptedPosts.length < 15) {
         setIsDone(true);
       }
@@ -78,9 +81,13 @@ function App() {
   const acceptPosts = async (id) => {
     window.scrollTo(0, 0);
     try {
+      // const response = await axios.get(
+      //   'https://yts.mx/api/v2/list_movies.json?page=1&limit=15',
+      // );
       const response = await axios.post(
         // 'https://71f44c60960a.ngrok.io/post/grid',
         'https://server.codestates-project.tk/post/grid',
+
         {
           userId: id,
           from: 0,
@@ -90,18 +97,21 @@ function App() {
         { withCredentials: true },
       );
 
+      // const acceptedPosts = response.data.data.movies;
+
       const acceptedPosts = response.data.postData;
       if (acceptedPosts.length < 15) {
         setIsDone(true);
       }
+      postsDatas = acceptedPosts;
       fromId = acceptedPosts[0].postId;
       offsetCount = acceptedPosts.length;
       nowId = id;
+
       setPosts({
         postData: acceptedPosts,
         postsCount: acceptedPosts.length,
       });
-      postsDatas = acceptedPosts;
     } catch (err) {
       if (err.response.status === 401) {
         history.push('/');
@@ -173,7 +183,6 @@ function App() {
             setProfileForDeleteAndAdd={setProfile}
             profile={profile}
             deletePost={deletePost}
-            spinnerIsOn={spinnerIsOn}
           />
         </Route>
         <Route path="/chat">
@@ -186,7 +195,12 @@ function App() {
             profile={userProfile}
             acceptPosts={acceptPosts}
           />
-          <ChatPage />
+          <ChatPage
+            myPicture={userProfile.thumbnail} // = img src
+            myId={userProfile.userId}
+            myNickname={userProfile.petName}
+            myBreed={userProfile.breed}
+          />
         </Route>
       </Switch>
     </>

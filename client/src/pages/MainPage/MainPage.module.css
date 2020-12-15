@@ -134,6 +134,7 @@
 
   .profile {
     z-index: unset;
+    z-index: 1;
     border-bottom: 4px solid #e1e1e1;
     width: 100%;
     text-align: center;
