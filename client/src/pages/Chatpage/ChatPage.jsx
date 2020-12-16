@@ -10,14 +10,13 @@ import MyChat from '../../components/MyChat/MyChat';
 import UserChat from '../../components/UserChat/UserChat';
 import AddroomModal from '../../components/AddroomModal/AddroomModal';
 
-const socket = io('https://zootopia-chat.herokuapp.com/', {
+const socket = io('https://chat.codestates-project.tk', {
   withCredentials: true,
 });
 
 const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
   let roomLists = '';
-  const pictureData = myPicture;
-  const myIdData = 1;
+  const myIdData = myId;
   const username = myNickname;
   const breedname = myBreed;
 
@@ -31,7 +30,6 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
   const [targetId, targetToggle] = useState('');
   const [roomState, setRooms] = useState([]);
   const [messageState, setMessages] = useState([]);
-  const [onLine, setonLine] = useState(5);
   const [addRoomOn, setaddRoomOn] = useState(false);
   const [inputState, setInput] = useState('');
 
@@ -57,7 +55,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
   const getRooms = async function () {
     try {
       const res = await axios.get(
-        `https://zootopia-chat.herokuapp.com/room/${myIdData}`,
+        `https://chat.codestates-project.tk/room/${myIdData}`,
       );
       console.log(res.data);
       setRooms(res.data);
@@ -72,7 +70,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
   const getMessages = async function (id) {
     try {
       const res = await axios.get(
-        `https://zootopia-chat.herokuapp.com/chat/${id}`,
+        `https://chat.codestates-project.tk/chat/${id}`,
       );
       setMessages(res.data);
     } catch (err) {
@@ -114,7 +112,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
               unread={me.unRead}
               targetId={targetId}
               targetToggle={targetToggle}
-              roomTitle="임시제목"
+              roomTitle="DM채팅,사람이름 들어갈 공간"
               userImg="<사진파일>"
               roomPeople={you.isOnline ? 'online' : 'offline'}
               dataFunc={getMessages}
@@ -149,7 +147,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
       });
       const config = {
         method: 'post',
-        url: `https://zootopia-chat.herokuapp.com/chat/${targetId}`,
+        url: `https://chat.codestates-project.tk/chat/${targetId}`,
         headers: { 'Content-Type': 'application/json' },
         data: message,
       };
@@ -170,7 +168,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
     });
     const config = {
       method: 'post',
-      url: `https://zootopia-chat.herokuapp.com/chat/${targetId}`,
+      url: `https://chat.codestates-project.tk/chat/${targetId}`,
       headers: { 'Content-Type': 'application/json' },
       data: message,
     };
@@ -218,7 +216,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
         return el._id === room._id;
       });
       if (arry.length > 0) {
-        console.log('@@@@@@@잘됩니다@@@@@@@@');
+        console.log('@@@@@@@룸업데이트 실행@@@@@@@@');
         const num = roomState.indexOf(arry[0]);
         const result = roomState.slice(undefined);
         result.splice(num, 1, room);

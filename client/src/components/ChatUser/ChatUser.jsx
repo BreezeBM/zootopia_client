@@ -6,7 +6,7 @@ import styles from './ChatUser.module.css';
 import iguanaImg from '../../images/iguana.jpeg';
 import OutImg from '../../images/roomOut.png';
 
-const socket = io('https://zootopia-chat.herokuapp.com/', {
+const socket = io('https://chat.codestates-project.tk/', {
   withCredentials: true,
 });
 
@@ -42,7 +42,7 @@ const ChatUser = ({
     const goobyeData = { id: Myid };
     const config = {
       method: 'post',
-      url: `https://zootopia-chat.herokuapp.com/room/${idValue}`,
+      url: `https://chat.codestates-project.tk/room/${idValue}`,
       headers: { 'Content-Type': 'application/json' },
       data: goobyeData,
     };
@@ -60,7 +60,7 @@ const ChatUser = ({
     const connectData = { id: Myid };
     const config = {
       method: 'post',
-      url: `https://zootopia-chat.herokuapp.com/chat/leave/${idValue}`,
+      url: `https://chat.codestates-project.tk/chat/leave/${idValue}`,
       headers: { 'Content-Type': 'application/json' },
       data: connectData,
     };

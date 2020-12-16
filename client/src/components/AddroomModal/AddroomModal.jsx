@@ -6,7 +6,7 @@ import close from '../../images/close.png';
 import submitImg from '../../images/create.png';
 import backImg from '../../images/cloud.gif';
 
-const socket = io('https://zootopia-chat.herokuapp.com/', {
+const socket = io('https://chat.codestates-project.tk/', {
   withCredentials: true,
 });
 
@@ -37,7 +37,7 @@ const AddroomModal = ({
       };
       const config = {
         method: 'post',
-        url: `https://zootopia-chat.herokuapp.com/room/public/5`,
+        url: `https://chat.codestates-project.tk/room/public/5`,
         data: titleData,
       };
 

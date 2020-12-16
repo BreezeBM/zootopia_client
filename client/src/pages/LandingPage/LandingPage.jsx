@@ -22,7 +22,7 @@ const LandingPage = () => {
     } else if (e.target.name === 'guest') {
       const config = {
         method: 'get',
-        url: 'https://www.codestates-project.tk/auth/guest',
+        url: 'https://server.codestates-project.tk/auth/guest',
       };
 
       axios(config)
