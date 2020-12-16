@@ -1,4 +1,5 @@
-import React, { createRef, useEffect } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import io from 'socket.io-client';
 import axios from 'axios';
 import styles from './ChatUser.module.css';
@@ -18,15 +19,15 @@ const ChatUser = ({
   userImg,
   roomPeople,
   dataFunc,
-  clearFunc,
   Myid,
 }) => {
   const Card = createRef();
+  const history = useHistory();
 
   useEffect(() => {
     if (targetId !== idValue) {
       Card.current.style.backgroundColor = 'white';
-      // socket.emit('leaveRoom', idValue);
+      disconnect();
     }
   }, [targetId]);
 
@@ -38,7 +39,7 @@ const ChatUser = ({
   };
 
   const roomBye = function () {
-    const goobyeData = { id: 5 };
+    const goobyeData = { id: Myid };
     const config = {
       method: 'post',
       url: `https://zootopia-chat.herokuapp.com/room/${idValue}`,
@@ -48,7 +49,24 @@ const ChatUser = ({
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        clearFunc();
+        history.go();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const disconnect = function () {
+    const connectData = { id: Myid };
+    const config = {
+      method: 'post',
+      url: `https://zootopia-chat.herokuapp.com/chat/leave/${idValue}`,
+      headers: { 'Content-Type': 'application/json' },
+      data: connectData,
+    };
+    axios(config, { withCredentials: true })
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
       })
       .catch(function (error) {
         console.log(error);
@@ -62,7 +80,7 @@ const ChatUser = ({
         <div className={styles.username}>{roomTitle + userImg}</div>
         <div className={styles.userbreed}>{roomPeople}</div>
         <div className={styles.status}>
-          {!unread ? '안 읽은 메시지가 있습니다.' : ''}
+          {unread ? '안 읽은 메시지가 있습니다.' : ''}
         </div>
         <img
           className={styles.outButton}
