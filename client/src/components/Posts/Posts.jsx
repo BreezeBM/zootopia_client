@@ -9,7 +9,7 @@ const Posts = ({ isDone, postsCount, posts, getMorePosts, viewPost }) => {
   const onIntersect = async ([entry], observer) => {
     if (entry.isIntersecting) {
       observer.unobserve(entry.target);
-      getMorePosts('fuck');
+      getMorePosts();
     }
     setTimeout(() => {
       observer.observe(entry.target);
@@ -25,26 +25,28 @@ const Posts = ({ isDone, postsCount, posts, getMorePosts, viewPost }) => {
   return (
     <>
       <div className={styles.emptySpace} />
-      <div className={styles.grid_container}>
-        {posts.map((post) => {
-          return (
-            <Post
-              thumbnail={post.thumbnail}
-              key={post.postId}
-              postId={post.postId}
-              viewPost={viewPost}
-            />
-          );
-        })}
-      </div>
-      <div
-        ref={targetRef}
-        className={`${styles.target} ${
-          !isDone && postsCount >= 15 && styles.isOn
-        }`}
-      >
-        Loading...
-        <i className="fas fa-fan fa-spin" />
+      <div className={styles.container}>
+        <div className={styles.grid_container}>
+          {posts.map((post) => {
+            return (
+              <Post
+                thumbnail={post.thumbnail}
+                key={post.postId}
+                postId={post.postId}
+                viewPost={viewPost}
+              />
+            );
+          })}
+        </div>
+        <div
+          ref={targetRef}
+          className={`${styles.target} ${
+            !isDone && postsCount >= 15 && styles.isOn
+          }`}
+        >
+          Loading...
+          <i className="fas fa-fan fa-spin" />
+        </div>
       </div>
     </>
   );

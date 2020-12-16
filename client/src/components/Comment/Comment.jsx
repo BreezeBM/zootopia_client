@@ -54,6 +54,8 @@ const Comment = ({
       } catch (err) {
         if (err.response.status === 401) {
           history.push('/');
+        } else if (err.response.status === 400) {
+          alert('1글자 이상의 댓글을 입력해주세요');
         } else {
           console.log(err);
         }
@@ -79,20 +81,24 @@ const Comment = ({
   }, [userProfileId, userId]);
 
   const getDateType = () => {
+    const todayDate = new Date();
     const date = new Date(time);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const dates = date.getDate();
-    let day = date.getDay();
-    if (day === 1) day = '월';
-    if (day === 2) day = '화';
-    if (day === 3) day = '수';
-    if (day === 4) day = '목';
-    if (day === 5) day = '금';
-    if (day === 6) day = '토';
-    if (day === 0) day = '일';
-    const dateForm = `${year}/${month}/${dates} (${day})`;
-    return dateForm;
+    const betweenTime = Math.floor(
+      (todayDate.getTime() - date.getTime()) / 1000 / 60,
+    );
+    if (betweenTime < 1) return '방금전';
+    if (betweenTime < 60) {
+      return `${betweenTime}분전`;
+    }
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    if (betweenTimeHour < 24) {
+      return `${betweenTimeHour}시간전`;
+    }
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    if (betweenTimeDay < 365) {
+      return `${betweenTimeDay}일전`;
+    }
+    return `${Math.floor(betweenTimeDay / 365)}년전`;
   };
 
   useEffect(() => {
