@@ -28,7 +28,7 @@ const ImageSlide = ({ imageUrls }) => {
     if (mediaQuery.matches) {
       slideRef.current.style.transform = `translateX(-${currentSlide}00vw)`;
     } else {
-      slideRef.current.style.transform = `translateX(${-25 * currentSlide}vw)`;
+      slideRef.current.style.transform = `translateX(${-30 * currentSlide}vw)`;
     }
   }, [currentSlide]);
 
@@ -42,7 +42,7 @@ const ImageSlide = ({ imageUrls }) => {
 
   return (
     <Container>
-      {totalSlides >= 2 ? (
+      {totalSlides >= 1 ? (
         <>
           <Button onClick={prevSlide} style={{ left: '0.5rem' }}>
             <i className="fas fa-chevron-left" />
@@ -54,8 +54,8 @@ const ImageSlide = ({ imageUrls }) => {
       ) : null}
 
       <SliderContainer ref={slideRef}>
-        {imageUrls.map((image) => {
-          return <EachSlide imageSrc={image} />;
+        {imageUrls.map((image, idx) => {
+          return <EachSlide key={idx} imageSrc={image} />;
         })}
       </SliderContainer>
     </Container>
@@ -66,7 +66,7 @@ export default ImageSlide;
 
 // ** css styled definitions **
 const Container = styled.div`
-  width: 25vw;
+  width: 30vw;
   height: 25rem;
   overflow: hidden;
   position: relative;

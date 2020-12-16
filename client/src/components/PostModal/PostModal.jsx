@@ -153,6 +153,8 @@ const PostModal = ({
       } catch (err) {
         if (err.response.status === 401) {
           history.push('/');
+        } else if (err.response.status === 400) {
+          alert('포스팅 내용을 반드시 입력해주세요');
         } else {
           console.log(err);
         }
@@ -503,7 +505,7 @@ const PostModal = ({
                     >
                       {commentToWhom}
                     </span>
-                    님께 답글 달기 취소 x
+                    님께 답글 달기 취소
                   </div>
                 ) : null}
                 <span onClick={postComment} className={styles.commentBtn}>

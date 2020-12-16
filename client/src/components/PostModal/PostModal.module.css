@@ -297,6 +297,7 @@
   width: 2rem;
   height: 2rem;
 }
+
 @media screen and (max-width: 65rem) {
   .userArea .updateBtn {
     visibility: visible;
@@ -329,8 +330,11 @@
     width: 100vw;
   }
   .textArea {
-    height: 15vh;
+    max-height: 15vh;
     overflow-y: scroll;
+  }
+  .updateText {
+    max-height: 15vh;
   }
   .close {
     top: 0.5rem;

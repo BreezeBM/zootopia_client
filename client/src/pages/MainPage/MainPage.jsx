@@ -12,7 +12,6 @@ import chatBtn from '../../images/chat.png';
 
 const MainPage = ({
   from,
-  onOff,
   offsetCount,
   acceptUserData,
   kind,
@@ -26,6 +25,7 @@ const MainPage = ({
   profile,
   deletePost,
   getMorePosts,
+  axiosInform,
 }) => {
   // 1) ComponentDidMount(첫 렌더링시에)로 유저 정보와 latest posts 정보를 받아오고 re render
   const firstOptionFunc = () => {
@@ -105,6 +105,7 @@ const MainPage = ({
       />
       {isPostOn ? (
         <PostModal
+          axiosInform={axiosInform}
           posts={posts}
           kind={kind}
           setProfileForDeleteAndAdd={setProfileForDeleteAndAdd}
@@ -123,7 +124,6 @@ const MainPage = ({
       ) : null}
       <div className={styles.gridFrame} />
       <div className={styles.profile} onClick={viewProfile}>
-        <img className={styles.chatBtn} src={chatBtn} alt="chat button" />
         <img
           src={profile.thumbnail}
           className={styles.image}
@@ -139,6 +139,7 @@ const MainPage = ({
         </div>
       </div>
       <Posts
+        axiosInform={axiosInform}
         getMorePosts={getMorePosts}
         from={from}
         offsetCount={offsetCount}

@@ -135,8 +135,10 @@ const PostNewFormModal = ({
         }
         resetAndCloseModal();
       } catch (err) {
-        if (err.response.status === 401) {
-          history.push('/');
+        if (err.response) {
+          if (err.response.status === 401) {
+            history.push('/');
+          }
         } else {
           alert('sorry, server got an error. please try again');
         }

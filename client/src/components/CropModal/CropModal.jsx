@@ -88,7 +88,7 @@ const CropModal = ({
 
     const response = await axios({
       method: 'post',
-      url: 'https://97ea7eec4cdf.ngrok.io/user/photo',
+      url: 'https://server.codestates-project.tk/user/photo',
       data: formData,
       headers: {
         'Content-Type': `multipart/form-data`,
