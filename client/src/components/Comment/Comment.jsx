@@ -54,6 +54,8 @@ const Comment = ({
       } catch (err) {
         if (err.response.status === 401) {
           history.push('/');
+        } else if (err.response.status === 400) {
+          alert('1글자 이상의 댓글을 입력해주세요');
         } else {
           console.log(err);
         }
@@ -79,7 +81,14 @@ const Comment = ({
   }, [userProfileId, userId]);
 
   const getDateType = () => {
+    const todayDate = new Date();
     const date = new Date(time);
+    console.log(todayDate.getTime() / 1000 / 60);
+    console.log(date.getTime() / 1000 / 60);
+    const betweenTime = Math.floor(
+      (todayDate.getTime() - date.getTime()) / 1000 / 60,
+    );
+    console.log(betweenTime);
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const dates = date.getDate();

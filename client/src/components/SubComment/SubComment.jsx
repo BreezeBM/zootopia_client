@@ -70,6 +70,8 @@ const SubComment = ({
       } catch (err) {
         if (err.response.status === 401) {
           history.push('/');
+        } else if (err.response.status === 400) {
+          alert('1글자 이상의 댓글을 입력해주세요');
         } else {
           console.log(err);
         }

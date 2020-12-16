@@ -42,7 +42,7 @@ const ImageSlide = ({ imageUrls }) => {
 
   return (
     <Container>
-      {totalSlides >= 2 ? (
+      {totalSlides >= 1 ? (
         <>
           <Button onClick={prevSlide} style={{ left: '0.5rem' }}>
             <i className="fas fa-chevron-left" />
@@ -54,8 +54,8 @@ const ImageSlide = ({ imageUrls }) => {
       ) : null}
 
       <SliderContainer ref={slideRef}>
-        {imageUrls.map((image) => {
-          return <EachSlide imageSrc={image} />;
+        {imageUrls.map((image, idx) => {
+          return <EachSlide key={idx} imageSrc={image} />;
         })}
       </SliderContainer>
     </Container>

@@ -114,7 +114,7 @@ const PostNewFormModal = ({
       try {
         const response = await axios({
           method: 'post',
-          url: 'https://server.codestates-project.tk/post',
+          url: 'https://9a782e31b176.ngrok.io/post',
           data: formData,
           headers: {
             'Content-Type': `multipart/form-data`,
@@ -135,8 +135,10 @@ const PostNewFormModal = ({
         }
         resetAndCloseModal();
       } catch (err) {
-        if (err.response.status === 401) {
-          history.push('/');
+        if (err.response) {
+          if (err.response.status === 401) {
+            history.push('/');
+          }
         } else {
           alert('sorry, server got an error. please try again');
         }

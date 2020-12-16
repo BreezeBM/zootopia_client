@@ -9,7 +9,7 @@ const Posts = ({ isDone, postsCount, posts, getMorePosts, viewPost }) => {
   const onIntersect = async ([entry], observer) => {
     if (entry.isIntersecting) {
       observer.unobserve(entry.target);
-      getMorePosts('fuck');
+      getMorePosts();
     }
     setTimeout(() => {
       observer.observe(entry.target);

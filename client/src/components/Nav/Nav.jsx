@@ -12,7 +12,6 @@ const Nav = ({
   profile,
   acceptPosts,
   setProfile,
-  setOnOff,
 }) => {
   const [isMypageOn, setIsMypageOn] = useState(false);
   const history = useHistory();
@@ -21,8 +20,7 @@ const Nav = ({
   };
 
   const clickLogoFunc = () => {
-    if (window.location.href === 'http://localhost:3001/main') {
-      setOnOff(true);
+    if (window.location.href === 'https://71f4c732e2e5.ngrok.io/main') {
       acceptPosts(0);
       acceptUserData(0);
     }
