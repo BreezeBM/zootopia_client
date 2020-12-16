@@ -194,7 +194,7 @@ const PostModal = ({
     } else if (whichComment === 'subComment') {
       try {
         const response = await axios.post(
-          'https://server.codestates-project.tk/post/reply',
+          'https://chat.codestates-project.tk/post/reply',
           {
             postId: postDatas.postId,
             commentId,
@@ -221,7 +221,7 @@ const PostModal = ({
   const deleteComment = async (id) => {
     try {
       const response = await axios.delete(
-        'https://server.codestates-project.tk/post/comment',
+        'https://chat.codestates-project.tk/post/comment',
         {
           data: {
             postId: postDatas.postId,
@@ -248,11 +248,11 @@ const PostModal = ({
     console.log(userInform.userId);
 
     const idData = {
-      myId: 1,
+      myId: userProfileId.userId,
     };
     const config = {
       method: 'post',
-      url: `https://zootopia-chat.herokuapp.com/room/private/2`,
+      url: `https://chat.codestates-project.tk/room/private/${userInform}`,
       data: idData,
     };
 
