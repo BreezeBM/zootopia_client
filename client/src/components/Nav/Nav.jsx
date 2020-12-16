@@ -20,7 +20,7 @@ const Nav = ({
   };
 
   const clickLogoFunc = () => {
-    if (window.location.href === 'https://71f4c732e2e5.ngrok.io/main') {
+    if (window.location.href === 'https://www.codestates-project.tk/main') {
       acceptPosts(0);
       acceptUserData(0);
     }

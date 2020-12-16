@@ -33,13 +33,17 @@
 }
 
 @media screen and (max-width: 65rem) {
+  .container {
+    position: relative;
+    z-index: 2;
+    top: 17rem;
+  }
+
   .grid_container {
     all: unset;
     z-index: 2;
     text-align: center;
-    position: relative;
     width: 100vw;
-    top: 17rem;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -51,16 +55,12 @@
 
   .target.isOn {
     all: unset;
-    width: 100vw;
+    display: inline;
     text-align: center;
     font-size: 2rem;
-    height: 10vh;
-    padding-top: 2.5vh;
-    margin: 0 auto;
+    margin-left: 27%;
     color: grey;
     font-family: MaplestoryOTFBold;
     font-weight: bold;
-    text-align: center;
-    z-index: 2;
   }
 }

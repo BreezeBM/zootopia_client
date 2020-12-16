@@ -28,7 +28,7 @@ const ImageSlide = ({ imageUrls }) => {
     if (mediaQuery.matches) {
       slideRef.current.style.transform = `translateX(-${currentSlide}00vw)`;
     } else {
-      slideRef.current.style.transform = `translateX(${-25 * currentSlide}vw)`;
+      slideRef.current.style.transform = `translateX(${-30 * currentSlide}vw)`;
     }
   }, [currentSlide]);
 
@@ -66,7 +66,7 @@ export default ImageSlide;
 
 // ** css styled definitions **
 const Container = styled.div`
-  width: 25vw;
+  width: 30vw;
   height: 25rem;
   overflow: hidden;
   position: relative;

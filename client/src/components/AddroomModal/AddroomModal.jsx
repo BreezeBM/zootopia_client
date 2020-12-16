@@ -54,7 +54,7 @@ const AddroomModal = ({
         setRoom([...roomState, room]);
       });
       socket.on('newPrivate', function (room, myid, id) {
-        if (myid === 5 || id === 5) {
+        if (myid === 1 || id === 1) {
           setRoom([...roomState, room]);
         }
       });

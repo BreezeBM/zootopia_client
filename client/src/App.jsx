@@ -111,25 +111,14 @@ function App() {
       if (acceptedPosts.length < 15) {
         setIsDone(true);
       }
-      if (nowId === 0) {
-        setPosts({
-          kind: 'latest',
+
+      setPosts((prev) => {
+        return {
+          kind: prev.kind,
           postData: postsDatas.concat(acceptedPosts),
           postsCount: offsetCount + acceptedPosts.length,
-        });
-      } else if (nowId === userProfile.userId) {
-        setPosts({
-          kind: 'user',
-          postData: postsDatas.concat(acceptedPosts),
-          postsCount: offsetCount + acceptedPosts.length,
-        });
-      } else {
-        setPosts({
-          kind: 'other',
-          postData: postsDatas.concat(acceptedPosts),
-          postsCount: offsetCount + acceptedPosts.length,
-        });
-      }
+        };
+      });
 
       postsDatas = postsDatas.concat(acceptedPosts);
       offsetCount += acceptedPosts.length;
@@ -215,12 +204,12 @@ function App() {
             profile={userProfile}
             acceptPosts={acceptPosts}
           />
-          {/* <ChatPage
+          <ChatPage
             myPicture={userProfile.thumbnail} // = img src
             myId={userProfile.userId}
             myNickname={userProfile.petName}
             myBreed={userProfile.breed}
-          /> */}
+          />
         </Route>
       </Switch>
     </>

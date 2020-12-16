@@ -114,7 +114,7 @@ const PostNewFormModal = ({
       try {
         const response = await axios({
           method: 'post',
-          url: 'https://9a782e31b176.ngrok.io/post',
+          url: 'https://server.codestates-project.tk/post',
           data: formData,
           headers: {
             'Content-Type': `multipart/form-data`,
