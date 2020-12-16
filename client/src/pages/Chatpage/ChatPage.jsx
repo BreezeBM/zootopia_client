@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import io from 'socket.io-client';
 import styles from './ChatPage.module.css';
-import iguanaImg from '../../images/iguana.jpeg';
 import backListImg from '../../images/backList.png';
 import addRoomImg from '../../images/addRoom.png';
 import ChatUser from '../../components/ChatUser/ChatUser';
@@ -18,7 +17,7 @@ const socket = io('https://zootopia-chat.herokuapp.com/', {
 const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
   let roomLists = '';
   const pictureData = myPicture;
-  const myIdData = `여기서 id로 ${myId}를 가져온 다음에 채팅서버에 활용할 예정입니다.`;
+  const myIdData = 1;
   const username = myNickname;
   const breedname = myBreed;
 
@@ -42,16 +41,24 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
   };
 
   const mapFunction = function (el) {
-    if (el.user === 1) {
+    if (el.user === myIdData) {
       return <MyChat textData={el.text} dateData={el.createdAt} />;
     } else {
-      return <UserChat textData={el.text} dateData={el.createdAt} />;
+      return (
+        <UserChat
+          textData={el.text}
+          dateData={el.createdAt}
+          imgData={myPicture}
+        />
+      );
     }
   };
 
   const getRooms = async function () {
     try {
-      const res = await axios.get(`https://zootopia-chat.herokuapp.com/room/1`);
+      const res = await axios.get(
+        `https://zootopia-chat.herokuapp.com/room/${myIdData}`,
+      );
       console.log(res.data);
       setRooms(res.data);
       console.log(roomState);
@@ -60,13 +67,6 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
     } finally {
       console.log('룸 정보 GET 함수 실행');
     }
-  };
-
-  const chatroomClear = () => {
-    console.log('방삭제에서 룸 갯!');
-    getRooms();
-    mapingFunc();
-    setMessages([]);
   };
 
   const getMessages = async function (id) {
@@ -84,7 +84,6 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
   const mapingFunc = () => {
     if (roomState.length > 0) {
       roomLists = roomState.map((el) => {
-        const readCheck = el.users.filter((dl) => dl.id === 1)[0];
         if (el.type === '공개 채팅방') {
           const userNum = `${el.users.length}명`;
           return (
@@ -97,13 +96,18 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
               userImg="<사진파일>"
               roomPeople={userNum}
               dataFunc={getMessages}
-              clearFunc={chatroomClear}
               Myid={1}
             />
           );
         } else {
-          const you = el.users.filter((dl) => dl.id !== 1)[0];
-          const me = el.users.filter((dl) => dl.id === 1)[0];
+          let you = el.users.filter((dl) => dl.id !== myIdData)[0];
+          let me = el.users.filter((dl) => dl.id === myIdData)[0];
+          if (!you) {
+            you = { isOnline: undefined };
+          }
+          if (!me) {
+            me = { unRead: false };
+          }
           return (
             <ChatUser
               idValue={el._id}
@@ -114,7 +118,6 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
               userImg="<사진파일>"
               roomPeople={you.isOnline ? 'online' : 'offline'}
               dataFunc={getMessages}
-              clearFunc={chatroomClear}
               Myid={1}
             />
           );
@@ -125,6 +128,11 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
 
   mapingFunc();
 
+  const onChange = (e) => {
+    setInput(e.target.value);
+    console.log(inputState);
+  };
+
   const sendMessage = function (e) {
     if (e.target.value.length > 1) {
       targetButton.current.style.backgroundColor = 'rgba(255,198,0)';
@@ -133,7 +141,6 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
       targetButton.current.style.backgroundColor = 'rgba(248,248,248)';
       targetButton.current.style.color = '';
     }
-    setInput(e.target.value);
 
     if (e.keyCode === 13) {
       const message = JSON.stringify({
@@ -153,10 +160,6 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
         .catch(function (error) {
           console.log(error);
         });
-      socket.on('newMessage', function (chat) {
-        console.log(chat);
-        setMessages([...messageState, chat]);
-      });
     }
   };
 
@@ -178,16 +181,52 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
       .catch(function (error) {
         console.log(error);
       });
-    socket.on('newMessage', function (chat) {
-      console.log(chat);
-      setMessages([...messageState, chat]);
-    });
   };
 
   useEffect(() => {
     getRooms();
     mapingFunc();
   }, []);
+
+  useEffect(() => {
+    socket.on('newPublic', function (room) {
+      console.log(room);
+      setRooms([...roomState, room]);
+    });
+
+    socket.on('newPrivate', (room, myid, id) => {
+      console.log(room);
+      if (myid === '1' || id === '1') {
+        setRooms([...roomState, room]);
+      }
+    });
+    mapingFunc();
+  }, [roomState]);
+
+  useEffect(() => {
+    socket.on('newMessage', function (chat) {
+      console.log(chat);
+      setMessages([...messageState, chat]);
+    });
+    console.log(messageState);
+    return () => socket.off('newMessage');
+  }, [messageState]);
+
+  useEffect(() => {
+    socket.on('roomUpdate', function (room) {
+      const arry = roomState.filter((el) => {
+        return el._id === room._id;
+      });
+      if (arry.length > 0) {
+        console.log('@@@@@@@잘됩니다@@@@@@@@');
+        const num = roomState.indexOf(arry[0]);
+        const result = roomState.slice(undefined);
+        result.splice(num, 1, room);
+        setRooms(result);
+      }
+    });
+    return () => socket.off('roomUpdate');
+  }, [roomState]);
 
   // 모바일 기종에선 전용 UI로 나올 수 있도록
   useEffect(() => {
@@ -200,19 +239,6 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
       }
     }
     mapingFunc();
-
-    socket.on('roomUpdate', function (room) {
-      const arry = roomState.filter((el) => {
-        return el._id === room._id;
-      });
-      if (arry.length > 0) {
-        console.log('@@@@@@@잘됩니다@@@@@@@@');
-        const num = roomState.indexOf(arry[0]);
-        const result = roomState.slice(undefined);
-        result.splice(num, 1, room);
-        // setRooms(result);
-      }
-    });
   }, [targetId]);
   console.log('랜더링');
   return (
@@ -228,7 +254,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
         <div className={styles.flexBox}>
           <div className={styles.listBox} ref={targetList}>
             <div className={styles.profile}>
-              <img className={styles.image} src={iguanaImg} alt="profile" />
+              <img className={styles.image} src={myPicture} alt="profile" />
               <div className={styles.name}>{username}</div>
               <div className={styles.breed}>{breedname}</div>
             </div>
@@ -262,7 +288,9 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
             <input
               className={styles.chatPost}
               type="text"
+              value={inputState}
               placeholder="메시지 입력..."
+              onChange={onChange}
               onKeyDown={sendMessage}
               ref={inputData}
             />

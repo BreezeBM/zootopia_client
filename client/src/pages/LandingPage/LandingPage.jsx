@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 import styles from './LandingPage.module.css';
 import googleImg from '../../images/google.png';
 import githubImg from '../../images/github.png';
@@ -19,8 +20,19 @@ const LandingPage = () => {
     } else if (e.target.name === 'github') {
       window.location.href = `https://github.com/login/oauth/authorize?client_id=${githubId}&scope=user:email&redirect_uri=${githubReURI}`;
     } else if (e.target.name === 'guest') {
-      window.location.href = 'https://www.codestates-project.tk/auth/guest';
-      history.push('/main');
+      const config = {
+        method: 'get',
+        url: 'https://www.codestates-project.tk/auth/guest',
+      };
+
+      axios(config)
+        .then(function (response) {
+          console.log(response);
+          history.push('/main');
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   };
 

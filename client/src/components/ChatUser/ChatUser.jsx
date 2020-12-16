@@ -1,4 +1,5 @@
 import React, { createRef, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import io from 'socket.io-client';
 import axios from 'axios';
 import styles from './ChatUser.module.css';
@@ -18,14 +19,15 @@ const ChatUser = ({
   userImg,
   roomPeople,
   dataFunc,
-  clearFunc,
   Myid,
 }) => {
   const Card = createRef();
+  const history = useHistory();
 
   useEffect(() => {
     if (targetId !== idValue) {
       Card.current.style.backgroundColor = 'white';
+      disconnect();
     }
   }, [targetId]);
 
@@ -47,7 +49,7 @@ const ChatUser = ({
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        clearFunc();
+        history.go();
       })
       .catch(function (error) {
         console.log(error);
@@ -62,10 +64,9 @@ const ChatUser = ({
       headers: { 'Content-Type': 'application/json' },
       data: connectData,
     };
-    axios(config)
+    axios(config, { withCredentials: true })
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        clearFunc();
       })
       .catch(function (error) {
         console.log(error);
