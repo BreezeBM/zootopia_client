@@ -112,19 +112,15 @@ const PostNewFormModal = ({
       if (image3) formData.append('image3', image3, fileName);
       formData.append('text', textAreaRef.current.value);
       try {
-        const response = await axios(
-          {
-            method: 'post',
-            url: 'https://server.codestates-project.tk/post',
-            data: formData,
-            headers: {
-              'Content-Type': `multipart/form-data`,
-            },
+        const response = await axios({
+          method: 'post',
+          url: 'https://server.codestates-project.tk/post',
+          data: formData,
+          headers: {
+            'Content-Type': `multipart/form-data`,
           },
-          {
-            withCredentials: true,
-          },
-        );
+          withCredentials: true,
+        });
         setUserProfile((prev) => {
           return { ...prev, postCount: prev.postCount + 1 };
         });

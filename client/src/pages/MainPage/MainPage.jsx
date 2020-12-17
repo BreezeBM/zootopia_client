@@ -88,9 +88,7 @@ const MainPage = ({
   // #######################################################
   // 프로필 div를 눌렀을 때 해당 프로필 grid data를 불러오는 logic
   const viewProfile = () => {
-    console.log('start');
     getPosts(profile.userId);
-    console.log('end');
   };
   // #######################################################
 

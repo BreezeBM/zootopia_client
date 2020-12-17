@@ -86,17 +86,15 @@ const CropModal = ({
     const formData = new FormData();
     formData.append('image', file, fileName);
 
-    const response = await axios(
-      {
-        method: 'post',
-        url: 'https://server.codestates-project.tk/user/photo',
-        data: formData,
-        headers: {
-          'Content-Type': `multipart/form-data`,
-        },
+    const response = await axios({
+      method: 'post',
+      url: 'https://server.codestates-project.tk/user/photo',
+      data: formData,
+      headers: {
+        'Content-Type': `multipart/form-data`,
       },
-      { withCredentials: true },
-    );
+      withCredentials: true,
+    });
     setNowImg(response.data.thumbnail);
     setImgSrc(null);
     if (kind === 'user' || kind === 'latest') {

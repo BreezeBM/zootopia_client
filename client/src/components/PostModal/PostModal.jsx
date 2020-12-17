@@ -229,8 +229,6 @@ const PostModal = ({
             postId: postDatas.postId,
             commentId: id,
           },
-        },
-        {
           withCredentials: true,
         },
       );
