@@ -161,7 +161,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
   const sendClick = function () {
     const message = JSON.stringify({
       user: myIdData,
-      text: inputData.target.value,
+      text: inputData.current.value,
     });
     const config = {
       method: 'post',
@@ -294,7 +294,6 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
             <input
               className={styles.chatPost}
               type="text"
-              value={inputState}
               placeholder="메시지 입력..."
               onKeyDown={sendMessage}
               ref={inputData}
