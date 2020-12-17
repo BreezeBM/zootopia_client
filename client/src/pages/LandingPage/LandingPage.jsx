@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import styles from './LandingPage.module.css';
@@ -14,6 +14,17 @@ const LandingPage = () => {
   const googleReURI = 'https://server.codestates-project.tk/auth/google';
   const history = useHistory();
 
+  const checkToken = async () => {
+    try {
+      await axios.get(`https://server.codestates-project.tk/user/0`, {
+        withCredentials: true,
+      });
+      history.push('/main');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleLogin = async (e) => {
     if (e.target.name === 'google') {
       window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleId}&redirect_uri=${googleReURI}&response_type=code&scope=email`;
@@ -23,6 +34,7 @@ const LandingPage = () => {
       const config = {
         method: 'get',
         url: 'https://server.codestates-project.tk/auth/guest',
+        withCredentials: true,
       };
 
       axios(config)
@@ -35,6 +47,10 @@ const LandingPage = () => {
         });
     }
   };
+
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   return (
     <>

@@ -39,6 +39,7 @@ const AddroomModal = ({
         method: 'post',
         url: `https://chat.codestates-project.tk/room/public/5`,
         data: titleData,
+        withCredentials: true,
       };
 
       console.log(config);
