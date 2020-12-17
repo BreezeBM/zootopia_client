@@ -32,6 +32,8 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
   const [roomState, setRooms] = useState([]);
   const [messageState, setMessages] = useState([]);
   const [addRoomOn, setaddRoomOn] = useState(false);
+  const [profileState, setProfile] = useState({});
+  const [myState, setMy] = useState({});
 
   const history = useHistory();
   const viewAddRoompage = () => {
@@ -82,15 +84,30 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
     }
   };
 
-  const youData = async function (id) {
-    const res = await axios.get(
-      `https://server.codestates-project.tk/user/${id}`,
-      { withCredentials: true },
-    );
-    const arr = [];
-    arr.push(res.data.thumbnail);
-    arr.push(res.data.petName);
-    return arr;
+  const getUserData = async function (id) {
+    try {
+      const res = await axios.get(
+        `https://server.codestates-project.tk/user/${id}`,
+        { withCredentials: true },
+      );
+      console.log(res.dat);
+      setProfile(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getMyData = async function () {
+    try {
+      const res = await axios.get(
+        `https://server.codestates-project.tk/user/0`,
+        { withCredentials: true },
+      );
+      console.log(res.dat);
+      setMy(res.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const mapingFunc = () => {
@@ -120,10 +137,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
           if (!me) {
             me = { unRead: false };
           }
-          console.log(you);
-          console.log(me);
-          const targetUserData = youData(you.id);
-          console.log(targetUserData);
+          getUserData(you.id);
 
           return (
             <ChatUser
@@ -131,8 +145,8 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
               unread={me.unRead}
               targetId={targetId}
               targetToggle={targetToggle}
-              roomTitle={targetUserData[1]}
-              userImg={targetUserData[0]}
+              roomTitle={profileState.petName}
+              userImg={profileState.thumbnail}
               roomPeople={you.isOnline ? 'online' : 'offline'}
               dataFunc={getMessages}
               Myid={myIdData}
@@ -203,6 +217,8 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
     acceptUserData(0);
     getRooms();
     mapingFunc();
+    getMyData(0);
+    myIdData = myState.userId;
   }, []);
 
   useEffect(() => {
