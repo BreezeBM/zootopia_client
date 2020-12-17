@@ -89,7 +89,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
     );
     const arr = [];
     arr.push(res.data.thumbnail);
-    arr.push(res.data.petname);
+    arr.push(res.data.petName);
     return arr;
   };
 
@@ -120,7 +120,10 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
           if (!me) {
             me = { unRead: false };
           }
+          console.log(you);
+          console.log(me);
           const targetUserData = youData(you.id);
+          console.log(targetUserData);
 
           return (
             <ChatUser
@@ -143,10 +146,10 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
   mapingFunc();
 
   const sendMessage = function (e) {
-    if (inputData.current.value.length > 1) {
+    if (inputData.current.value) {
       targetButton.current.style.backgroundColor = 'rgba(255,198,0)';
       targetButton.current.style.color = 'black';
-    } else if (inputData.current.value.length <= 1) {
+    } else if (!inputData.current.value) {
       targetButton.current.style.backgroundColor = 'rgba(248,248,248)';
       targetButton.current.style.color = '';
     }
@@ -166,6 +169,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
       axios(config)
         .then(function (response) {
           console.log(JSON.stringify(response.data));
+          inputData.current.value = null;
         })
         .catch(function (error) {
           console.log(error);
@@ -188,6 +192,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
+        inputData.current.value = null;
       })
       .catch(function (error) {
         console.log(error);
@@ -219,6 +224,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
     socket.on('newMessage', function (chat) {
       console.log(chat);
       setMessages([...messageState, chat]);
+      chatScroll.scrollIntoView({ behavior: 'smooth' });
     });
     console.log(messageState);
     return () => socket.off('newMessage');
