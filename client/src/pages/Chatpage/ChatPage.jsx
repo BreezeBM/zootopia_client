@@ -9,6 +9,7 @@ import ChatUser from '../../components/ChatUser/ChatUser';
 import MyChat from '../../components/MyChat/MyChat';
 import UserChat from '../../components/UserChat/UserChat';
 import AddroomModal from '../../components/AddroomModal/AddroomModal';
+import iguanaImg from '../../images/iguana.jpeg';
 
 const socket = io('https://chat.codestates-project.tk', {
   withCredentials: true,
@@ -80,6 +81,18 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
       console.log('메시지 GET 실행');
     }
   };
+
+  const youData = async function (id) {
+    const res = await axios.get(
+      `https://server.codestates-project.tk/user/${id}`,
+      { withCredentials: true },
+    );
+    const arr = [];
+    arr.push(res.data.thumbnail);
+    arr.push(res.data.petname);
+    return arr;
+  };
+
   const mapingFunc = () => {
     if (roomState.length > 0) {
       roomLists = roomState.map((el) => {
@@ -92,7 +105,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
               targetId={targetId}
               targetToggle={targetToggle}
               roomTitle={el.title}
-              userImg="<사진파일>"
+              userImg={iguanaImg}
               roomPeople={userNum}
               dataFunc={getMessages}
               Myid={myIdData}
@@ -107,14 +120,16 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
           if (!me) {
             me = { unRead: false };
           }
+          const targetUserData = youData(you.id);
+
           return (
             <ChatUser
               idValue={el._id}
               unread={me.unRead}
               targetId={targetId}
               targetToggle={targetToggle}
-              roomTitle="DM채팅,사람이름 들어갈 공간"
-              userImg="<사진파일>"
+              roomTitle={targetUserData[1]}
+              userImg={targetUserData[0]}
               roomPeople={you.isOnline ? 'online' : 'offline'}
               dataFunc={getMessages}
               Myid={myIdData}
@@ -128,10 +143,10 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
   mapingFunc();
 
   const sendMessage = function (e) {
-    if (e.target.value.length > 1) {
+    if (inputData.current.value.length > 1) {
       targetButton.current.style.backgroundColor = 'rgba(255,198,0)';
       targetButton.current.style.color = 'black';
-    } else if (e.target.value.length <= 1) {
+    } else if (inputData.current.value.length <= 1) {
       targetButton.current.style.backgroundColor = 'rgba(248,248,248)';
       targetButton.current.style.color = '';
     }

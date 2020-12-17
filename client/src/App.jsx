@@ -43,10 +43,10 @@ function App() {
   const acceptPosts = async (id) => {
     setIsDone(false);
     window.scrollTo(0, 0);
+    console.log('1');
     try {
       const response = await axios.post(
         'https://server.codestates-project.tk/post/grid',
-
         {
           userId: id,
           from: 0,
@@ -55,18 +55,17 @@ function App() {
         },
         { withCredentials: true },
       );
-
+      console.log('1');
       const acceptedPosts = response.data.postData;
       postsDatas.splice(0, postsDatas.length);
       postsDatas = postsDatas.concat(acceptedPosts);
       fromId = acceptedPosts[0].postId;
       offsetCount = acceptedPosts.length;
       nowId = id;
-
       if (acceptedPosts.length < 15) {
         setIsDone(true);
       }
-
+      console.log('2');
       if (id === 0) {
         setPosts({
           postData: acceptedPosts,
@@ -86,6 +85,7 @@ function App() {
           kind: 'other',
         });
       }
+      console.log('3');
     } catch (err) {
       if (err.response.status === 401) {
         history.push('/');

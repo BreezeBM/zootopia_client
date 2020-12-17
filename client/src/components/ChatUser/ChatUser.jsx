@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import io from 'socket.io-client';
 import axios from 'axios';
 import styles from './ChatUser.module.css';
-import iguanaImg from '../../images/iguana.jpeg';
 import OutImg from '../../images/roomOut.png';
 
 const socket = io('https://chat.codestates-project.tk/', {
@@ -78,8 +77,8 @@ const ChatUser = ({
   return (
     <>
       <div className={styles.usercard} ref={Card} onClick={handleCard}>
-        <img className={styles.userProfile} src={iguanaImg} alt="userprofile" />
-        <div className={styles.username}>{roomTitle + userImg}</div>
+        <img className={styles.userProfile} src={userImg} alt="userprofile" />
+        <div className={styles.username}>{roomTitle}</div>
         <div className={styles.userbreed}>{roomPeople}</div>
         <div className={styles.status}>
           {unread ? '안 읽은 메시지가 있습니다.' : ''}
