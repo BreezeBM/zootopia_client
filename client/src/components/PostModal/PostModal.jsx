@@ -196,7 +196,7 @@ const PostModal = ({
     } else if (whichComment === 'subComment') {
       try {
         const response = await axios.post(
-          'https://chat.codestates-project.tk/post/reply',
+          'https://server.codestates-project.tk/post/reply',
           {
             postId: postDatas.postId,
             commentId,
@@ -223,7 +223,7 @@ const PostModal = ({
   const deleteComment = async (id) => {
     try {
       const response = await axios.delete(
-        'https://chat.codestates-project.tk/post/comment',
+        'https://server.codestates-project.tk/post/comment',
         {
           data: {
             postId: postDatas.postId,
