@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 import styles from './Nav.module.css';
 import logoImg from '../../images/zootopiaLogo.png';
 import MypageModal from '../MypageModal/MypageModal';
@@ -27,6 +28,20 @@ const Nav = ({
     history.push('/main');
   };
 
+  const logoutFunc = async () => {
+    try {
+      await axios.post('https://server.codestates-project.tk/auth/guest', {
+        withCredentials: true,
+      });
+      history.push('/');
+    } catch (err) {
+      if (err.response.status === 401) {
+        history.push('/');
+      } else {
+        console.log(err);
+      }
+    }
+  };
   return (
     <>
       {Object.keys(profile).length !== 0 && (
@@ -60,7 +75,9 @@ const Nav = ({
           <div className={styles.mypage} onClick={viewMypage}>
             Mypage
           </div>
-          <div className={styles.logout}>Logout</div>
+          <div className={styles.logout} onClick={logoutFunc}>
+            Logout
+          </div>
         </div>
       </div>
     </>
