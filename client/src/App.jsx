@@ -209,6 +209,7 @@ function App() {
             myId={userProfile.userId}
             myNickname={userProfile.petName}
             myBreed={userProfile.breed}
+            acceptUserData={acceptUserData}
           />
         </Route>
       </Switch>

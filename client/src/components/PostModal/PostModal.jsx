@@ -246,16 +246,17 @@ const PostModal = ({
 
   const DMchat = () => {
     console.log('DM 보내기');
-    console.log(userProfileId.userId);
+    console.log(userProfileId);
     console.log(userInform.userId);
 
     const idData = {
-      myId: userProfileId.userId,
+      myId: userProfileId,
     };
     const config = {
       method: 'post',
-      url: `https://chat.codestates-project.tk/room/private/${userInform}`,
+      url: `https://chat.codestates-project.tk/room/private/${userInform.userId}`,
       data: idData,
+      withCredentials: true,
     };
 
     axios(config)

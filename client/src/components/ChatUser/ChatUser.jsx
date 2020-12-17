@@ -45,6 +45,7 @@ const ChatUser = ({
       url: `https://chat.codestates-project.tk/room/${idValue}`,
       headers: { 'Content-Type': 'application/json' },
       data: goobyeData,
+      withCredentials: true,
     };
     axios(config)
       .then(function (response) {
@@ -63,6 +64,7 @@ const ChatUser = ({
       url: `https://chat.codestates-project.tk/chat/leave/${idValue}`,
       headers: { 'Content-Type': 'application/json' },
       data: connectData,
+      withCredentials: true,
     };
     axios(config, { withCredentials: true })
       .then(function (response) {

@@ -14,7 +14,7 @@ const socket = io('https://chat.codestates-project.tk', {
   withCredentials: true,
 });
 
-const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
+const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
   let roomLists = '';
   const myIdData = myId;
   const username = myNickname;
@@ -31,7 +31,6 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
   const [roomState, setRooms] = useState([]);
   const [messageState, setMessages] = useState([]);
   const [addRoomOn, setaddRoomOn] = useState(false);
-  const [inputState, setInput] = useState('');
 
   const history = useHistory();
   const viewAddRoompage = () => {
@@ -56,6 +55,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
     try {
       const res = await axios.get(
         `https://chat.codestates-project.tk/room/${myIdData}`,
+        { withCredentials: true },
       );
       console.log(res.data);
       setRooms(res.data);
@@ -71,6 +71,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
     try {
       const res = await axios.get(
         `https://chat.codestates-project.tk/chat/${id}`,
+        { withCredentials: true },
       );
       setMessages(res.data);
     } catch (err) {
@@ -94,7 +95,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
               userImg="<사진파일>"
               roomPeople={userNum}
               dataFunc={getMessages}
-              Myid={1}
+              Myid={myIdData}
             />
           );
         } else {
@@ -116,7 +117,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
               userImg="<사진파일>"
               roomPeople={you.isOnline ? 'online' : 'offline'}
               dataFunc={getMessages}
-              Myid={1}
+              Myid={myIdData}
             />
           );
         }
@@ -125,11 +126,6 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
   };
 
   mapingFunc();
-
-  const onChange = (e) => {
-    setInput(e.target.value);
-    console.log(inputState);
-  };
 
   const sendMessage = function (e) {
     if (e.target.value.length > 1) {
@@ -142,7 +138,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
 
     if (e.keyCode === 13) {
       const message = JSON.stringify({
-        user: 1,
+        user: myIdData,
         text: `${e.target.value}`,
       });
       const config = {
@@ -150,6 +146,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
         url: `https://chat.codestates-project.tk/chat/${targetId}`,
         headers: { 'Content-Type': 'application/json' },
         data: message,
+        withCredentials: true,
       };
       axios(config)
         .then(function (response) {
@@ -163,7 +160,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
 
   const sendClick = function () {
     const message = JSON.stringify({
-      user: 1,
+      user: myIdData,
       text: inputData.target.value,
     });
     const config = {
@@ -171,6 +168,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
       url: `https://chat.codestates-project.tk/chat/${targetId}`,
       headers: { 'Content-Type': 'application/json' },
       data: message,
+      withCredentials: true,
     };
     axios(config)
       .then(function (response) {
@@ -182,6 +180,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
   };
 
   useEffect(() => {
+    acceptUserData(0);
     getRooms();
     mapingFunc();
   }, []);
@@ -194,7 +193,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
 
     socket.on('newPrivate', (room, myid, id) => {
       console.log(room);
-      if (myid === '1' || id === '1') {
+      if (myid === myIdData || id === myIdData) {
         setRooms([...roomState, room]);
       }
     });
@@ -228,7 +227,15 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
 
   // 모바일 기종에선 전용 UI로 나올 수 있도록
   useEffect(() => {
-    const arr = ['Win16', 'Win32', 'Win64', 'Mac', 'MacIntel'];
+    const arr = [
+      'Win16',
+      'Win32',
+      'Win64',
+      'Mac',
+      'MacIntel',
+      'Linux x86_64',
+      'Linux x86_32',
+    ];
     if (!arr.includes(navigator.platform)) {
       targetChat.current.style.display = 'none';
       if (targetId.length > 5) {
@@ -246,6 +253,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
         handleClose={viewAddRoompage}
         roomState={roomState}
         setRoom={setRooms}
+        myId={myIdData}
       />
       <div className={styles.main}>
         <div className={styles.main}> </div>
@@ -288,7 +296,6 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed }) => {
               type="text"
               value={inputState}
               placeholder="메시지 입력..."
-              onChange={onChange}
               onKeyDown={sendMessage}
               ref={inputData}
             />
