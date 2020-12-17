@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { React, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import styles from './LandingPage.module.css';
@@ -45,6 +45,17 @@ const LandingPage = () => {
         .catch(function (error) {
           console.log(error);
         });
+    }
+  };
+
+  const checkToken = async () => {
+    try {
+      await axios.get(`https://server.codestates-project.tk/user/0`, {
+        withCredentials: true,
+      });
+      history.push('/main');
+    } catch (err) {
+      console.log(err);
     }
   };
 

@@ -6,7 +6,6 @@ import Posts from '../../components/Posts/Posts';
 import addPostImg from '../../images/bark.png';
 import PostModal from '../../components/PostModal/PostModal';
 import PostNewFormModal from '../../components/PostNewFormModal/PostNewFormModal';
-import chatBtn from '../../images/chat.png';
 // test용 fakedata
 // import fakedata from '../../fakeData';
 
@@ -89,7 +88,9 @@ const MainPage = ({
   // #######################################################
   // 프로필 div를 눌렀을 때 해당 프로필 grid data를 불러오는 logic
   const viewProfile = () => {
+    console.log('start');
     getPosts(profile.userId);
+    console.log('end');
   };
   // #######################################################
 
