@@ -10,13 +10,7 @@ const socket = io('https://chat.codestates-project.tk/', {
   withCredentials: true,
 });
 
-const AddroomModal = ({
-  isModalOn,
-  handleClose,
-  roomState,
-  setRoom,
-  children,
-}) => {
+const AddroomModal = ({ isModalOn, handleClose, children, myId }) => {
   const [titleInfo, setTitleInfo] = useState('');
   const [checked, setChecked] = useState({ title: true });
 
@@ -37,7 +31,7 @@ const AddroomModal = ({
       };
       const config = {
         method: 'post',
-        url: `https://chat.codestates-project.tk/room/public/5`,
+        url: `https://chat.codestates-project.tk/room/public/${myId}`,
         data: titleData,
         withCredentials: true,
       };
@@ -50,15 +44,6 @@ const AddroomModal = ({
         .catch(function (error) {
           console.log(error);
         });
-      socket.on('newPublic', function (room) {
-        console.log(room);
-        setRoom([...roomState, room]);
-      });
-      socket.on('newPrivate', function (room, myid, id) {
-        if (myid === 1 || id === 1) {
-          setRoom([...roomState, room]);
-        }
-      });
     }
   };
 

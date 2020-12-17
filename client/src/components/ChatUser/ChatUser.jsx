@@ -49,7 +49,8 @@ const ChatUser = ({
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        history.go();
+        history.push('/main');
+        history.push('/chat');
       })
       .catch(function (error) {
         console.log(error);
@@ -68,7 +69,6 @@ const ChatUser = ({
     axios(config, { withCredentials: true })
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        history.go();
       })
       .catch(function (error) {
         console.log(error);

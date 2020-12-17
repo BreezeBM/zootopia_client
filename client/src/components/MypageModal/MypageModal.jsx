@@ -45,7 +45,7 @@ const MypageModal = ({
   // 서버에서 보내준 정보를 렌더링(초기)할 때 useState 디폴트 값으로 받기
   // + 유효성 검사 로직
   const [nowPetName, setNowPetName] = useState(userProfile.petName);
-  const [nowBreed, setNowBreed] = useState(userProfile.petName);
+  const [nowBreed, setNowBreed] = useState(userProfile.breed);
   const petnameRef = useRef(null);
   const breedRef = useRef(null);
 

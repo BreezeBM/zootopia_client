@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from 'react';
+import React, { createRef, useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import io from 'socket.io-client';
@@ -6,6 +6,7 @@ import styles from './ChatPage.module.css';
 import backListImg from '../../images/backList.png';
 import addRoomImg from '../../images/addRoom.png';
 import ChatUser from '../../components/ChatUser/ChatUser';
+import PrivateChat from '../../components/PrivateChat/PrivateChat';
 import MyChat from '../../components/MyChat/MyChat';
 import UserChat from '../../components/UserChat/UserChat';
 import AddroomModal from '../../components/AddroomModal/AddroomModal';
@@ -15,23 +16,28 @@ const socket = io('https://chat.codestates-project.tk', {
   withCredentials: true,
 });
 
+socket.on('connect_error', (err) => {
+  console.log(err.message);
+});
+let roomLists = '';
+
 const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
-  let roomLists = '';
   const myIdData = myId;
   const username = myNickname;
   const breedname = myBreed;
 
-  const chatScroll = createRef();
+  const chatScroll = useRef();
   const targetList = createRef();
   const targetChat = createRef();
   const targetButton = createRef();
   const backList = createRef();
-  const inputData = createRef();
+  const inputData = useRef();
 
   const [targetId, targetToggle] = useState('');
   const [roomState, setRooms] = useState([]);
   const [messageState, setMessages] = useState([]);
   const [addRoomOn, setaddRoomOn] = useState(false);
+  const [youProfile, setYou] = useState({ userId: -1 });
 
   const history = useHistory();
   const viewAddRoompage = () => {
@@ -46,7 +52,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
         <UserChat
           textData={el.text}
           dateData={el.createdAt}
-          imgData={myPicture}
+          imgData={youProfile.thumbnail}
         />
       );
     }
@@ -82,18 +88,24 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
     }
   };
 
-  const youData = async function (id) {
-    const res = await axios.get(
-      `https://server.codestates-project.tk/user/${id}`,
-      { withCredentials: true },
-    );
-    const arr = [];
-    arr.push(res.data.thumbnail);
-    arr.push(res.data.petName);
-    return arr;
+  const getUserData = (id) => {
+    const config = {
+      method: 'get',
+      url: `https://server.codestates-project.tk/user/${id}`,
+      withCredentials: true,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(response.data);
+        setYou(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
-  const mapingFunc = () => {
+  const mapingFunc = async () => {
     if (roomState.length > 0) {
       roomLists = roomState.map((el) => {
         if (el.type === '공개 채팅방') {
@@ -120,22 +132,19 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
           if (!me) {
             me = { unRead: false };
           }
-          console.log(you);
-          console.log(me);
-          const targetUserData = youData(you.id);
-          console.log(targetUserData);
 
           return (
-            <ChatUser
+            <PrivateChat
               idValue={el._id}
               unread={me.unRead}
               targetId={targetId}
               targetToggle={targetToggle}
-              roomTitle={targetUserData[1]}
-              userImg={targetUserData[0]}
-              roomPeople={you.isOnline ? 'online' : 'offline'}
+              connection={you.isOnline ? 'online' : 'offline'}
+              youProfile={youProfile}
+              getUserData={getUserData}
               dataFunc={getMessages}
               Myid={myIdData}
+              Youid={you.id}
             />
           );
         }
@@ -143,13 +152,11 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
     }
   };
 
-  mapingFunc();
-
   const sendMessage = function (e) {
-    if (inputData.current.value) {
+    if (inputData.current.value !== '') {
       targetButton.current.style.backgroundColor = 'rgba(255,198,0)';
       targetButton.current.style.color = 'black';
-    } else if (!inputData.current.value) {
+    } else if (inputData.current.value === '') {
       targetButton.current.style.backgroundColor = 'rgba(248,248,248)';
       targetButton.current.style.color = '';
     }
@@ -202,7 +209,6 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
   useEffect(() => {
     acceptUserData(0);
     getRooms();
-    mapingFunc();
   }, []);
 
   useEffect(() => {
@@ -211,20 +217,24 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
       setRooms([...roomState, room]);
     });
 
+    return () => socket.off('newPublic');
+  }, [roomState]);
+
+  useEffect(() => {
     socket.on('newPrivate', (room, myid, id) => {
       console.log(room);
       if (myid === myIdData || id === myIdData) {
         setRooms([...roomState, room]);
       }
     });
-    mapingFunc();
+
+    return () => socket.off('newPrivate');
   }, [roomState]);
 
   useEffect(() => {
     socket.on('newMessage', function (chat) {
       console.log(chat);
       setMessages([...messageState, chat]);
-      chatScroll.scrollIntoView({ behavior: 'smooth' });
     });
     console.log(messageState);
     return () => socket.off('newMessage');
@@ -244,7 +254,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
       }
     });
     return () => socket.off('roomUpdate');
-  }, [roomState]);
+  }, []);
 
   // 모바일 기종에선 전용 UI로 나올 수 있도록
   useEffect(() => {
@@ -264,16 +274,15 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
         targetList.current.style.display = 'none';
       }
     }
-    mapingFunc();
   }, [targetId]);
+
+  mapingFunc();
   console.log('랜더링');
   return (
     <>
       <AddroomModal
         isModalOn={addRoomOn}
         handleClose={viewAddRoompage}
-        roomState={roomState}
-        setRoom={setRooms}
         myId={myIdData}
       />
       <div className={styles.main}>
