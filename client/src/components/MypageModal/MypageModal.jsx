@@ -44,13 +44,13 @@ const MypageModal = ({
 
   // 서버에서 보내준 정보를 렌더링(초기)할 때 useState 디폴트 값으로 받기
   // + 유효성 검사 로직
-  const [nowPetName, setNowPetName] = useState(profile.petName);
-  const [nowBreed, setNowBreed] = useState(profile.petName);
+  const [nowPetName, setNowPetName] = useState(userProfile.petName);
+  const [nowBreed, setNowBreed] = useState(userProfile.petName);
   const petnameRef = useRef(null);
   const breedRef = useRef(null);
 
-  const [petName, setPetname] = useState(profile.petName);
-  const [breed, setBreed] = useState(profile.breed);
+  const [petName, setPetname] = useState(userProfile.petName);
+  const [breed, setBreed] = useState(userProfile.breed);
   const [checked, setChecked] = useState({ petname: true, breed: true });
 
   // 유효성 검사 로직

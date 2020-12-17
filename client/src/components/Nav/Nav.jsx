@@ -30,9 +30,13 @@ const Nav = ({
 
   const logoutFunc = async () => {
     try {
-      await axios.post('https://server.codestates-project.tk/auth/logout', {
-        withCredentials: true,
-      });
+      await axios.post(
+        'https://server.codestates-project.tk/auth/logout',
+        {},
+        {
+          withCredentials: true,
+        },
+      );
       history.push('/');
     } catch (err) {
       if (err.response.status === 401) {
