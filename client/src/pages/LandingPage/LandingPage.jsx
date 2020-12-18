@@ -23,6 +23,7 @@ const LandingPage = () => {
       const config = {
         method: 'get',
         url: 'https://server.codestates-project.tk/auth/guest',
+        withCredentials: true,
       };
 
       axios(config)

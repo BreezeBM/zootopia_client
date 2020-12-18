@@ -24,7 +24,7 @@ const Comment = ({
   time,
   handleCommentBtn,
 }) => {
-  // 수정권한이 있는지에 관한 처리
+  const history = useHistory();
   const [today, setToday] = useState(null);
   const [hasRights, setHasRights] = useState(false);
   const textRef = useRef(null);
@@ -71,6 +71,32 @@ const Comment = ({
     if (e.keyCode === 13) {
       updateComment();
     }
+  };
+
+  const DMchat = () => {
+    console.log('DM 보내기');
+    console.log(userProfileId);
+    console.log(userId);
+
+    const idData = {
+      myId: userProfileId,
+    };
+    const config = {
+      method: 'post',
+      url: `https://chat.codestates-project.tk/room/private/${userId}`,
+      data: idData,
+      withCredentials: true,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(response);
+        history.push('/chat');
+        console.log('야호~~~');
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   // 수정권한이 있는지에 관한 처리
@@ -149,9 +175,7 @@ const Comment = ({
               className={styles.chatBtn}
               src={chatBtn}
               alt="chat button"
-              onClick={() => {
-                console.log(userId);
-              }}
+              onClick={DMchat}
             />
             <span
               className={styles.commentBtn}

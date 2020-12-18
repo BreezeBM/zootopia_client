@@ -40,8 +40,8 @@ const SubComment = ({
             postId,
             replyId,
           },
+          withCredentials: true,
         },
-        { withCredentials: true },
       );
       refreshPost(response.data.comments);
       setUpdateToggled(false);
