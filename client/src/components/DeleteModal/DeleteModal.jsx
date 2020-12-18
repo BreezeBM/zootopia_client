@@ -13,6 +13,7 @@ const DeleteModal = ({ isModalOn, handleClose }) => {
     try {
       const response = await axios.delete(
         'https://server.codestates-project.tk/user',
+        { withCredentials: true },
       );
       if (response.status === 201) {
         setDeleted(true);
@@ -22,10 +23,10 @@ const DeleteModal = ({ isModalOn, handleClose }) => {
         }, 5000);
       }
     } catch (err) {
-      if (err.response.status === 501) {
-        alert('some errors occur at server, please try again');
+      if (err.response.status === 401) {
+        history.push('/');
       } else {
-        console.log(err);
+        alert('sorry server got some errors please try again');
       }
     }
   };

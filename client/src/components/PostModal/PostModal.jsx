@@ -27,11 +27,10 @@ const PostModal = ({
   handleClose,
   deletePost,
 }) => {
-  // 포스팅에 대한 수정권한이 있는지에 대한 설정
+  // state lists
   const [today, setToday] = useState(null);
   const [hasRights, setHasRights] = useState(false);
   const history = useHistory();
-  // rerender 될 때마다 바뀔 수 있도록 변수로 post와 user정보는 const 변수로 선언
   const userInform = postData.user;
   const postDatas = postData.post;
   const commentsInform = postData.comments;
@@ -41,24 +40,22 @@ const PostModal = ({
   const [updateBtnToggle, setUpdateBtnToggle] = useState(false);
   const [textUpdateToggled, setTextUpdateToggled] = useState(false);
   const [isDeleteOn, setIsDeleteOn] = useState(false);
-
   const [textVal, setTextVal] = useState(null);
-
-  // post에 대한 댓글인지, 댓글에 대한 대댓글인지
   const [whichComment, setWhichComment] = useState('comment');
   const [commentToWhom, setCommentToWhom] = useState(null);
   const [comment, setComment] = useState(null);
   const [commentId, setCommentId] = useState(null);
 
   // postModal 창 닫을 때 전부다 디폴트로 돌리는고 꺼주는 세팅
+  // ################################################
   const makePostDefaultSetting = () => {
     setIsDeleteOn(false);
     handleClose();
   };
   // ################################################
 
-  // ################################################
   // 좋아요 버튼 눌렀을 때 처리 logic
+  // ################################################
   const handleLike = async () => {
     try {
       const response = await axios.post(
@@ -84,7 +81,7 @@ const PostModal = ({
       if (err.response.status === 401) {
         history.push('/');
       } else {
-        console.log(err);
+        alert('sorry server got some errors please try again');
       }
     }
   };
@@ -160,13 +157,9 @@ const PostModal = ({
         } else if (err.response.status === 400) {
           alert('포스팅 내용을 반드시 입력해주세요');
         } else {
-          console.log(err);
+          alert('sorry server got some errors please try again');
         }
       }
-      // test 용도
-      // await setPostInform({ ...postInform, text: textRef.current.value });
-      // await setTextUpdateToggled(false);
-      // setUpdateBtnToggle(false);
     } else {
       setTextVal(postDatas.text);
       await setTextUpdateToggled(true);
@@ -194,7 +187,7 @@ const PostModal = ({
         if (err.response.status === 401) {
           history.push('/');
         } else {
-          console.log(err);
+          alert('sorry server got some errors please try again');
         }
       }
     } else if (whichComment === 'subComment') {
@@ -217,7 +210,7 @@ const PostModal = ({
         if (err.response.status === 401) {
           history.push('/');
         } else {
-          console.log(err);
+          alert('sorry server got some errors please try again');
         }
       }
     }
@@ -241,7 +234,7 @@ const PostModal = ({
       if (err.response.status === 401) {
         history.push('/');
       } else {
-        console.log(err);
+        alert('sorry server got some errors please try again');
       }
     }
   };
@@ -323,10 +316,7 @@ const PostModal = ({
             className={styles.close}
             src={close}
             alt="close"
-            onClick={
-              // 무슨 액션이던지 중간에 모달창을 닫으면 다 리셋시켜줘야함
-              makePostDefaultSetting
-            }
+            onClick={makePostDefaultSetting}
           />
           <div className={styles.postModal}>
             <ImageSlide

@@ -31,6 +31,9 @@ const MainPage = ({
 
   useEffect(() => {
     firstOptionFunc();
+    document.body.style.position = '';
+    document.body.style.top = '';
+    window.scrollTo(0, parseInt(scrollY || '0', 8) * -1);
   }, []);
   // ###############################################3
 

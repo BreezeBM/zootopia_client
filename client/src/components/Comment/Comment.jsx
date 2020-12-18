@@ -34,7 +34,6 @@ const Comment = ({
 
   // 댓글 수정
   const updateComment = async () => {
-    console.log(commentId);
     if (textUpdateToggled === true) {
       try {
         const response = await axios.patch(
@@ -57,7 +56,7 @@ const Comment = ({
         } else if (err.response.status === 400) {
           alert('1글자 이상의 댓글을 입력해주세요');
         } else {
-          console.log(err);
+          alert('sorry server got some errors please try again');
         }
       }
     } else {
