@@ -15,7 +15,7 @@ const PostDeleteModal = ({
   kind,
 }) => {
   const [deleted, setDeleted] = useState(false);
-
+  const history = useHistory();
   // 포스트 삭제
   const deletePostFunc = async () => {
     try {
