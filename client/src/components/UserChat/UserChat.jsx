@@ -1,13 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import styles from './UserChat.module.css';
-import iguanaImg from '../../images/iguana.jpeg';
 
-const UserChat = ({ textData, dateData, imgData }) => {
+const UserChat = ({ textData, dateData, userId, img }) => {
   const messageContent = textData;
+  const [userData, setData] = useState(false);
+
+  const kakao = async (id) => {
+    const res = await axios.get(
+      `https://server.codestates-project.tk/user/${id}`,
+      { withCredentials: true },
+    );
+    if (!userData) {
+      setData(res.data);
+      console.log(userData);
+    }
+  };
+
+  useEffect(() => {
+    if (userId) {
+      kakao(userId);
+    }
+  }, [userData]);
+
+  console.log('스몰메시지 랜딩');
 
   return (
     <div className={styles.talkBox}>
-      <img className={styles.chatProfile} src={imgData} alt="chatprofile_img" />
+      <img
+        className={styles.chatProfile}
+        src={img === 'false' ? userData.thumbnail : img.thumbnail}
+        alt="chatprofile_img"
+      />
       <div className={styles.message}>{messageContent}</div>
       <div className={styles.dates}>{dateData}</div>
     </div>

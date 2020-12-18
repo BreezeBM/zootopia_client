@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import styles from './AddroomModal.module.css';
 import close from '../../images/close.png';
 import submitImg from '../../images/create.png';
-import backImg from '../../images/cloud.gif';
+import backImg from '../../images/movingAni2.gif';
 
 const socket = io('https://chat.codestates-project.tk/', {
   withCredentials: true,

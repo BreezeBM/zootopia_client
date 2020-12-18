@@ -15,12 +15,12 @@ const PrivateChat = ({
   targetId,
   targetToggle,
   connection,
-  roomPeople,
   dataFunc,
-  youProfile,
+  setYou,
   getUserData,
   Myid,
   Youid,
+  setRoomType,
 }) => {
   const Card = createRef();
   const history = useHistory();
@@ -35,6 +35,7 @@ const PrivateChat = ({
   }, [targetId]);
 
   const handleCard = function () {
+    setRoomType('private');
     Card.current.style.backgroundColor = 'rgba(255,198,0)';
     targetToggle(idValue);
     console.log(idValue);
@@ -49,6 +50,7 @@ const PrivateChat = ({
     );
     if (!userData) {
       setData(res.data);
+      setYou(res.data);
     }
   };
 
