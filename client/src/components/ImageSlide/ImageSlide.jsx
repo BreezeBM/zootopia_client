@@ -8,7 +8,6 @@ const ImageSlide = ({ imageUrls }) => {
   const slideRef = useRef(null);
   const nextSlide = () => {
     if (currentSlide >= totalSlides) {
-      // 더 이상 넘어갈 슬라이드가 없으면 슬라이드를 초기화합니다.
       setCurrentSlide(0);
     } else {
       setCurrentSlide(currentSlide + 1);

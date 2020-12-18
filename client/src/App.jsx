@@ -170,7 +170,7 @@ function App() {
       if (err.response.status === 401) {
         history.push('/');
       } else {
-        console.log(err);
+        alert('sorry server got some errors please try again');
       }
     }
   };
@@ -199,7 +199,6 @@ function App() {
         </Route>
         <Route path="/main">
           <Nav
-            setPosts={setPosts}
             kind={posts.kind}
             setProfile={setProfile}
             userProfile={userProfile}

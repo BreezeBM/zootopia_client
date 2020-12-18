@@ -49,7 +49,7 @@ const SubComment = ({
       if (err.response.status === 401) {
         history.push('/');
       } else {
-        console.log(err);
+        alert('sorry server got some errors please try again');
       }
     }
   };
@@ -74,7 +74,7 @@ const SubComment = ({
         } else if (err.response.status === 400) {
           alert('1글자 이상의 댓글을 입력해주세요');
         } else {
-          console.log(err);
+          alert('sorry server got some errors please try again');
         }
       }
       setTextUpdateToggled(false);
@@ -116,6 +116,7 @@ const SubComment = ({
   useEffect(() => {
     setToday(getDateType());
   });
+
   useEffect(() => {
     if (userId === userProfileId) {
       setHasRights(true);

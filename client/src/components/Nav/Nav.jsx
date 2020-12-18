@@ -1,4 +1,3 @@
-/* eslint-disable radix */
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -21,7 +20,7 @@ const Nav = ({
     if (isMypageOn) {
       document.body.style.position = '';
       document.body.style.top = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      window.scrollTo(0, parseInt(scrollY || '0', 8) * -1);
       setIsMypageOn(!isMypageOn);
     } else {
       document.body.style.position = 'fixed';
@@ -52,7 +51,7 @@ const Nav = ({
       if (err.response.status === 401) {
         history.push('/');
       } else {
-        console.log(err);
+        alert('sorry server got some errors please try again');
       }
     }
   };
