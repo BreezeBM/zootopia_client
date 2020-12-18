@@ -1,4 +1,4 @@
-import React, { useEffect, userState, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from './UserChat.module.css';
 
@@ -17,10 +17,10 @@ const UserChat = ({ textData, dateData, userId, img }) => {
     }
   };
 
-  kakao(userId);
-
   useEffect(() => {
-    kakao(userId);
+    if (userId) {
+      kakao(userId);
+    }
   }, [userData]);
 
   console.log('스몰메시지 랜딩');
@@ -29,7 +29,7 @@ const UserChat = ({ textData, dateData, userId, img }) => {
     <div className={styles.talkBox}>
       <img
         className={styles.chatProfile}
-        src={img.thumbnail}
+        src={img === 'false' ? userData.thumbnail : img.thumbnail}
         alt="chatprofile_img"
       />
       <div className={styles.message}>{messageContent}</div>

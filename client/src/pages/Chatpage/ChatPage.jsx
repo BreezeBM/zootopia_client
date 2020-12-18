@@ -38,6 +38,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
   const [messageState, setMessages] = useState([]);
   const [addRoomOn, setaddRoomOn] = useState(false);
   const [youProfile, setYou] = useState({ userId: -1 });
+  const [roomType, setRoomType] = useState('');
 
   const history = useHistory();
   const viewAddRoompage = () => {
@@ -47,7 +48,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
   const mapFunction = function (el) {
     if (el.user === myIdData) {
       return <MyChat textData={el.text} dateData={el.createdAt} />;
-    } else {
+    } else if (roomType === 'public') {
       return (
         <UserChat
           textData={el.text}
@@ -56,6 +57,13 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
           img={youProfile}
         />
       );
+    } else if (roomType === 'private') {
+      <UserChat
+        textData={el.text}
+        dateData={el.createdAt}
+        userId={el.user}
+        img="false"
+      />;
     }
   };
 
@@ -114,7 +122,6 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
           return (
             <ChatUser
               idValue={el._id}
-              unread=""
               targetId={targetId}
               targetToggle={targetToggle}
               roomTitle={el.title}
@@ -122,6 +129,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
               roomPeople={userNum}
               dataFunc={getMessages}
               Myid={myIdData}
+              setRoomType={setRoomType}
             />
           );
         } else {
@@ -146,6 +154,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
               dataFunc={getMessages}
               Myid={myIdData}
               Youid={you.id}
+              setRoomType={setRoomType}
             />
           );
         }
@@ -208,7 +217,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
   };
 
   useEffect(() => {
-    // acceptUserData(0);
+    acceptUserData(0);
     getRooms();
   }, []);
 
@@ -233,9 +242,11 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
   }, [roomState]);
 
   useEffect(() => {
-    socket.on('newMessage', function (chat) {
+    socket.on('newMessage', function (roomId, chat) {
       console.log(chat);
-      setMessages([...messageState, chat]);
+      if (roomId === targetId) {
+        setMessages([...messageState, chat]);
+      }
     });
     console.log(messageState);
     return () => socket.off('newMessage');
