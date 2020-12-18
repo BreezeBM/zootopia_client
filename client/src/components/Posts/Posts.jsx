@@ -1,10 +1,9 @@
-import { React, useRef, useState, useEffect } from 'react';
+import { React, useRef, useEffect } from 'react';
 import axios from 'axios';
 import styles from './Posts.module.css';
 import Post from '../Post/Post';
 
 const Posts = ({ isDone, postsCount, posts, getMorePosts, viewPost }) => {
-  // infinite scroll logic with IntersectionObserver API
   const targetRef = useRef(null);
   const onIntersect = async ([entry], observer) => {
     if (entry.isIntersecting) {
@@ -31,7 +30,6 @@ const Posts = ({ isDone, postsCount, posts, getMorePosts, viewPost }) => {
             return (
               <Post
                 thumbnail={post.thumbnail}
-                key={post.postId}
                 postId={post.postId}
                 viewPost={viewPost}
               />

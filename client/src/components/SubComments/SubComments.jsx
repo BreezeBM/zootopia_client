@@ -25,7 +25,6 @@ const SubComments = ({
             setCommentToWhom={setCommentToWhom}
             postId={postId}
             refreshPost={refreshPost}
-            key={reply.replyId}
             replyId={reply.replyId}
             userId={reply.userId}
             thumbnail={reply.thumbnail}

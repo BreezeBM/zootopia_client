@@ -4,7 +4,6 @@ import axios from 'axios';
 import styles from './PostNewFormModal.module.css';
 import close from '../../images/close.png';
 import PostCropModal from '../PostCropModal/PostCropModal';
-// import FAKEIMG from '../../thumbnails/post_a.png';
 
 const PostNewFormModal = ({
   setProfileForDeleteAndAdd,
@@ -15,22 +14,25 @@ const PostNewFormModal = ({
   handleClose,
 }) => {
   const history = useHistory();
-  const imgInput1 = createRef();
-  const imgInput2 = createRef();
-  const imgInput3 = createRef();
+
+  // states lists
+  // ###################################################
   const textAreaRef = useRef(null);
   const [isCropModalOn, setIsCropModalOn] = useState(false);
   const [inputNum, setInputNum] = useState(null);
   const [checked, setChecked] = useState(false);
   const [imgChecked, setImgChecked] = useState(false);
+  const [imgSrc, setImgSrc] = useState(null);
+  const [imgSrcs, setImgSrcs] = useState({ 1: '+', 2: '+', 3: '+' });
+  // ###################################################
 
+  // functions lists
+  // 1) Crop을 위한 cropModal이 popup되도록 하는 (혹은 닫는) 함수
   const handleCropModal = () => {
     setIsCropModalOn(!isCropModalOn);
   };
-  const [imgSrc, setImgSrc] = useState(null);
 
-  const [imgSrcs, setImgSrcs] = useState({ 1: '+', 2: '+', 3: '+' });
-
+  // 2) 이미지 input을 받아서 state에 추가하는 로직
   const setImgSrcsFunc = (inputNumber, urlSrc) => {
     if (inputNumber === 1) {
       setImgSrcs({ ...imgSrcs, 1: urlSrc });
@@ -41,6 +43,7 @@ const PostNewFormModal = ({
     }
   };
 
+  // 3) 이미지 input 의 onChange  event를 구성하는 로직
   const imgOnChange = (e) => {
     setImgChecked(false);
     try {
@@ -63,6 +66,7 @@ const PostNewFormModal = ({
     }
   };
 
+  // 4) 작성 도중 혹은 작성 완료 후에 모달창이 꺼질때 인풋을 리셋하는 로직
   const resetAndCloseModal = () => {
     setImgSrcs({ 1: '+', 2: '+', 3: '+' });
     setChecked(false);
@@ -71,11 +75,13 @@ const PostNewFormModal = ({
     handleClose();
   };
 
+  // 5) 새로 포스팅을 작성하는 로직
+  // 받아놓은 이미지 input을 바탕으로 파일 포맷 설정을 거친 뒤에
+  // FormData에 넣어서 post
   const sendNewPost = async () => {
     if (textAreaRef.current.value.trim().length === 0) {
       setChecked(true);
     } else {
-      // 이미지가 1개 미만이면 즉, 0개 업로딩이면 못보내게 하기
       const formData = new FormData();
       const dataArr = [];
       for (const el of Object.values(imgSrcs)) {
@@ -90,7 +96,6 @@ const PostNewFormModal = ({
           dataArr.push(file);
         }
       }
-      // 현재 dataArr 에 이미지가 있음 (Blob 타입의)
       let image1;
       if (dataArr[0]) {
         // eslint-disable-next-line prefer-destructuring
@@ -173,7 +178,6 @@ const PostNewFormModal = ({
                 accept="image/gif, image/jpeg, image/png"
                 name="imgInput1"
                 id="imgInput1"
-                ref={imgInput1}
                 onChange={imgOnChange}
               />
               <input
@@ -182,7 +186,6 @@ const PostNewFormModal = ({
                 accept="image/gif, image/jpeg, image/png"
                 name="imgInput2"
                 id="imgInput2"
-                ref={imgInput2}
                 onChange={imgOnChange}
               />
               <input
@@ -191,7 +194,6 @@ const PostNewFormModal = ({
                 accept="image/gif, image/jpeg, image/png"
                 name="imgInput3"
                 id="imgInput3"
-                ref={imgInput3}
                 onChange={imgOnChange}
               />
               <label className={styles.labels} htmlFor="imgInput1">

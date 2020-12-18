@@ -5,9 +5,7 @@ import Comment from '../Comment/Comment';
 const Comments = ({
   userProfileId,
   getSpecificUser,
-  setWhichComment,
   setCommentToWhom,
-  postComment,
   postId,
   setCommentId,
   refreshPost,
@@ -21,24 +19,20 @@ const Comments = ({
         return (
           <Comment
             userProfileId={userProfileId}
+            userId={comment.userId}
             getSpecificUser={getSpecificUser}
             setCommentId={setCommentId}
             setCommentToWhom={setCommentToWhom}
-            setWhichComment={setWhichComment}
-            postComment={postComment}
-            postId={postId}
             refreshPost={refreshPost}
+            postId={postId}
             replies={comment.replies}
             deleteComment={deleteComment}
-            key={comment.commentId}
             commentId={comment.commentId}
-            userId={comment.userId}
             thumbnail={comment.thumbnail}
-            breed={comment.breed}
             petName={comment.petName}
-            handleCommentBtn={handleCommentBtn}
             text={comment.text}
             time={comment.time}
+            handleCommentBtn={handleCommentBtn}
           />
         );
       })}
