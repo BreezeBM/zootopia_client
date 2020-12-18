@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import styles from './MypageModal.module.css';
 import Modal from '../Modal/Modal';
-import defaultProfile from '../../images/defaultProfile.png';
 import logoImg from '../../images/logo.png';
 import DeleteModal from '../DeleteModal/DeleteModal';
 import CropModal from '../CropModal/CropModal';
@@ -96,7 +95,6 @@ const MypageModal = ({
         }
       } catch (err) {
         // 중복 펫네임 409
-        console.log('hre');
         if (err.response.status === 501) {
           alert('some errors occur at server, please try again');
         } else if (err.response.status === 409) {

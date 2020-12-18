@@ -24,7 +24,7 @@ const Comment = ({
   time,
   handleCommentBtn,
 }) => {
-  // 수정권한이 있는지에 관한 처리
+  const history = useHistory();
   const [today, setToday] = useState(null);
   const [hasRights, setHasRights] = useState(false);
   const textRef = useRef(null);
