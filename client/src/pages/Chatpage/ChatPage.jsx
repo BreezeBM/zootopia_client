@@ -52,7 +52,8 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
         <UserChat
           textData={el.text}
           dateData={el.createdAt}
-          imgData={youProfile.thumbnail}
+          userId={el.user}
+          img={youProfile}
         />
       );
     }
@@ -140,7 +141,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
               targetId={targetId}
               targetToggle={targetToggle}
               connection={you.isOnline ? 'online' : 'offline'}
-              youProfile={youProfile}
+              setYou={setYou}
               getUserData={getUserData}
               dataFunc={getMessages}
               Myid={myIdData}
@@ -153,10 +154,10 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
   };
 
   const sendMessage = function (e) {
-    if (inputData.current.value !== '') {
+    if (e.keyCode !== 8) {
       targetButton.current.style.backgroundColor = 'rgba(255,198,0)';
       targetButton.current.style.color = 'black';
-    } else if (inputData.current.value === '') {
+    } else if (e.keyCode === 8 && inputData.current.value.length < 2) {
       targetButton.current.style.backgroundColor = 'rgba(248,248,248)';
       targetButton.current.style.color = '';
     }
@@ -207,7 +208,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
   };
 
   useEffect(() => {
-    acceptUserData(0);
+    // acceptUserData(0);
     getRooms();
   }, []);
 

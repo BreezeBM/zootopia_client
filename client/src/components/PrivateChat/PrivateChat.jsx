@@ -15,9 +15,8 @@ const PrivateChat = ({
   targetId,
   targetToggle,
   connection,
-  roomPeople,
   dataFunc,
-  youProfile,
+  setYou,
   getUserData,
   Myid,
   Youid,
@@ -49,6 +48,7 @@ const PrivateChat = ({
     );
     if (!userData) {
       setData(res.data);
+      setYou(res.data);
     }
   };
 
