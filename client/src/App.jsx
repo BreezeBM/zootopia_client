@@ -59,7 +59,9 @@ function App() {
       const acceptedPosts = response.data.postData;
       postsDatas.splice(0, postsDatas.length);
       postsDatas = postsDatas.concat(acceptedPosts);
-      fromId = acceptedPosts[0].postId;
+      if (acceptedPosts[0]) {
+        fromId = acceptedPosts[0].postId;
+      }
       offsetCount = acceptedPosts.length;
       nowId = id;
 

@@ -15,17 +15,14 @@ const PostDeleteModal = ({
   kind,
 }) => {
   const [deleted, setDeleted] = useState(false);
-
+  const history = useHistory();
   // 포스트 삭제
   const deletePostFunc = async () => {
     try {
-      await axios.delete(
-        `https://server.codestates-project.tk/post`,
-        { data: { postId } },
-        {
-          withCredentials: true,
-        },
-      );
+      await axios.delete(`https://server.codestates-project.tk/post`, {
+        data: { postId },
+        withCredentials: true,
+      });
       setUserProfile((prev) => {
         return { ...prev, postCount: prev.postCount - 1 };
       });

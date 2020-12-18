@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -41,7 +42,16 @@ const MainPage = ({
   // 새로운 포스트를 만드는 모달창을 끄고, 켜는 state & functions
   const [isAddPostOn, setIsAddPostOn] = useState(false);
   const viewAddPost = () => {
-    setIsAddPostOn(!isAddPostOn);
+    if (isAddPostOn) {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      setIsAddPostOn(!isAddPostOn);
+    } else {
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${window.scrollY}px`;
+      setIsAddPostOn(!isAddPostOn);
+    }
   };
   // #######################################################
 
@@ -62,8 +72,13 @@ const MainPage = ({
   const viewPost = async (postId) => {
     if (isPostOn) {
       // 만약에 켜져있으면, false로 다시 끄기
+      document.body.style.position = '';
+      document.body.style.top = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
       setIsPostOn(false);
     } else {
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${window.scrollY}px`;
       try {
         const response = await axios.get(
           `https://server.codestates-project.tk/post/${postId}`,
@@ -88,9 +103,7 @@ const MainPage = ({
   // #######################################################
   // 프로필 div를 눌렀을 때 해당 프로필 grid data를 불러오는 logic
   const viewProfile = () => {
-    console.log('start');
     getPosts(profile.userId);
-    console.log('end');
   };
   // #######################################################
 

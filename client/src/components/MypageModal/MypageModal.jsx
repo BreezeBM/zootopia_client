@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import styles from './MypageModal.module.css';
 import Modal from '../Modal/Modal';
-import defaultProfile from '../../images/defaultProfile.png';
 import logoImg from '../../images/logo.png';
 import DeleteModal from '../DeleteModal/DeleteModal';
 import CropModal from '../CropModal/CropModal';
@@ -44,13 +43,13 @@ const MypageModal = ({
 
   // 서버에서 보내준 정보를 렌더링(초기)할 때 useState 디폴트 값으로 받기
   // + 유효성 검사 로직
-  const [nowPetName, setNowPetName] = useState(profile.petName);
-  const [nowBreed, setNowBreed] = useState(profile.petName);
+  const [nowPetName, setNowPetName] = useState(userProfile.petName);
+  const [nowBreed, setNowBreed] = useState(userProfile.breed);
   const petnameRef = useRef(null);
   const breedRef = useRef(null);
 
-  const [petName, setPetname] = useState(profile.petName);
-  const [breed, setBreed] = useState(profile.breed);
+  const [petName, setPetname] = useState(userProfile.petName);
+  const [breed, setBreed] = useState(userProfile.breed);
   const [checked, setChecked] = useState({ petname: true, breed: true });
 
   // 유효성 검사 로직
@@ -96,7 +95,6 @@ const MypageModal = ({
         }
       } catch (err) {
         // 중복 펫네임 409
-        console.log('hre');
         if (err.response.status === 501) {
           alert('some errors occur at server, please try again');
         } else if (err.response.status === 409) {

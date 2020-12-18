@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 /* eslint-disable no-nested-ternary */
 import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -131,6 +132,9 @@ const PostModal = ({
       commentInputRef.current.blur();
     }
   };
+  const clickPostCommentBtn = () => {
+    commentInputRef.current.blur();
+  };
   // 포스트 수정
   const updatePost = async () => {
     if (textUpdateToggled === true) {
@@ -229,8 +233,6 @@ const PostModal = ({
             postId: postDatas.postId,
             commentId: id,
           },
-        },
-        {
           withCredentials: true,
         },
       );
@@ -302,13 +304,6 @@ const PostModal = ({
       setHasRights(true);
     }
   }, [userProfileId, userInform]);
-
-  useEffect(() => {
-    const body = document.querySelector('body');
-    body.setAttribute('overflow-y', 'hidden');
-    body.setAttribute('height', '100vh');
-    body.setAttribute('padding-right', '15px');
-  }, [isModalOn]);
 
   return (
     <>
@@ -508,7 +503,10 @@ const PostModal = ({
                     님께 답글 달기 취소
                   </div>
                 ) : null}
-                <span onClick={postComment} className={styles.commentBtn}>
+                <span
+                  onClick={clickPostCommentBtn}
+                  className={styles.commentBtn}
+                >
                   게시
                 </span>
               </div>

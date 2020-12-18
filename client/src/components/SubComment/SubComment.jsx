@@ -22,6 +22,7 @@ const SubComment = ({
   time,
   handleCommentBtn,
 }) => {
+  const history = useHistory();
   const [today, setToday] = useState(null);
   const [hasRights, setHasRights] = useState(false);
   const textRef = useRef(null);
