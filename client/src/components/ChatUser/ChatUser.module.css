@@ -25,7 +25,7 @@
 .username {
   position: absolute;
   display: flex;
-  left: 4rem;
+  left: 4.3rem;
   top: 0.7rem;
   font-family: MaplestoryOTFLight;
   color: black;
@@ -35,7 +35,7 @@
 .userbreed {
   position: absolute;
   display: flex;
-  left: 4rem;
+  left: 4.6rem;
   top: 1.6rem;
   font-family: MaplestoryOTFLight;
   color: #8f8f8f;
@@ -50,6 +50,14 @@
   font-family: MaplestoryOTFLight;
   color: #ffc600;
   font-size: 0.6rem;
+}
+
+.outButton {
+  position: relative;
+  margin-top: 2%;
+  margin-left: 75%;
+  width: 3rem;
+  height: 3rem;
 }
 
 @media (max-width: 600px) {

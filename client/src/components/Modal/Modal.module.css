@@ -14,13 +14,13 @@
 }
 
 .modal.isOn {
-  z-index: 3;
+  z-index: 4;
   opacity: 1;
 }
 
 .box {
+  z-index: 4;
   position: relative;
-
   width: 45rem;
   height: 28rem;
   background: white;
@@ -44,16 +44,14 @@
 @media (max-width: 500px) {
   .box {
     position: relative;
-
     width: 22rem;
-    height: 28rem;
+    height: 34rem;
     background: white;
     border-radius: 25px;
     box-shadow: 2px 4px 9px 0 rgba(0, 0, 0, 0.5);
     padding-top: 1.3rem;
     display: flex;
     flex-direction: column;
-    justify-content: end;
     align-items: baseline;
   }
 }

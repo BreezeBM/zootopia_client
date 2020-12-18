@@ -12,23 +12,25 @@
 .flexBox {
   position: relative;
   display: flex;
-  width: 60%;
+  width: 70%;
   top: 2%;
   height: 100%;
-  margin-left: 20%;
+  margin-left: 15%;
   border-left: 2px solid #e1e1e1;
   border-right: 2px solid #e1e1e1;
   border-bottom: 2px solid #e1e1e1;
   transition: all 250ms ease-in-out;
+  overflow-x: hidden;
 }
 
 .listBox {
   position: relative;
   display: flexbox;
   background-color: white;
-  width: 30%;
+  width: 35%;
   overflow: auto;
   transition: all 250ms ease-in-out;
+  overflow-x: hidden;
 }
 
 .profile {
@@ -53,28 +55,39 @@
 
 .name {
   position: relative;
-  display: flex;
-  width: 9rem;
-  top: 20%;
+  display: block;
+  width: 9.5rem;
+  top: 15%;
   left: 35%;
   margin: 0%;
   font-family: MaplestoryOTFBold;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   font-weight: bold;
   transition: all 250ms ease-in-out;
 }
 
 .breed {
   position: relative;
-  display: flex;
+  display: block;
   width: 9rem;
-  top: 27%;
+  top: 20%;
   left: 35%;
   margin: 0%;
   font-family: MaplestoryOTFLight;
   color: #8f8f8f;
   font-size: 0.6rem;
   transition: all 250ms ease-in-out;
+}
+
+.addRoom {
+  position: relative;
+  width: 5rem;
+  height: 5rem;
+  transition: all 250ms ease-in-out;
+}
+
+.addRoom:hover {
+  transform: translateX(7px);
 }
 
 .chatBox {
@@ -114,48 +127,85 @@
   display: none;
 }
 
+.send {
+  position: relative;
+  display: flex;
+  border: 1px solid lightgray;
+  border-radius: 10%;
+  background-color: #f8f8f8;
+  width: 20%;
+  height: 8%;
+  margin-top: 1.2%;
+  margin-left: 78%;
+  text-align: center;
+  font-size: 0.9rem;
+  color: lightgray;
+  align-items: center;
+  padding-left: 3.5vw;
+  transition: all 200ms ease-in-out;
+}
+
+.backList {
+  position: absolute;
+  display: none;
+  width: 3rem;
+  height: 3rem;
+  top: 3rem;
+}
+
 @media (max-width: 1200px) {
+  .flexBox {
+    width: 80%;
+    top: 2%;
+    height: 100%;
+    margin-left: 12%;
+  }
   .image {
-    width: 2.5rem;
-    height: 2.5rem;
-    top: 57%;
+    width: 2.9rem;
+    height: 2.9rem;
+    top: 50%;
     left: 7%;
   }
 
   .name {
     width: 7rem;
-    top: 31%;
+    top: 20%;
     font-size: 0.8rem;
   }
 
   .breed {
     width: 7rem;
-    top: 33%;
+    top: 27%;
     left: 34%;
     font-size: 0.36rem;
   }
 
   .listBox {
-    width: 14rem;
+    width: 40%;
   }
 
   .flexBox {
-    width: 40rem;
+    width: 75%;
   }
 }
 
 @media (max-width: 1038px) {
   .flexBox {
-    top: 7.7%;
+    top: 9%;
+    margin-left: 4rem;
+    width: 85%;
+  }
+  .listBox {
+    width: 55%;
   }
 }
 
 @media (max-width: 800px) {
   .flexBox {
     top: 10%;
-    width: 36rem;
+    width: 39rem;
     height: 100%;
-    margin-left: 6rem;
+    margin-left: 2rem;
   }
 
   .profile {
@@ -163,23 +213,26 @@
   }
 
   .image {
-    width: 2.2rem;
-    height: 2.2rem;
-    top: 57%;
+    width: 2.9rem;
+    height: 2.9rem;
+    top: 48%;
     left: 7%;
-  }
-
-  #name {
-    width: 7rem;
-    top: 31%;
-    font-size: 0.8rem;
   }
 
   .breed {
     width: 7rem;
-    top: 33%;
+    top: 20%;
     left: 34%;
     font-size: 0.36rem;
+  }
+  .name {
+    top: 13%;
+  }
+  .listBox {
+    width: 50%;
+  }
+  .chatBox {
+    width: 70%;
   }
 }
 
@@ -195,23 +248,23 @@
   }
 
   .image {
-    width: 2.2rem;
-    height: 2.2rem;
-    top: 57%;
+    width: 2.9rem;
+    height: 2.9rem;
+    top: 51%;
     left: 7%;
     transition: all 250ms ease-in-out;
   }
 
   .name {
     width: 7rem;
-    top: 31%;
+    top: 18%;
     font-size: 0.8rem;
     transition: all 250ms ease-in-out;
   }
 
   .breed {
     width: 7rem;
-    top: 33%;
+    top: 22%;
     left: 34%;
     font-size: 0.36rem;
     transition: all 250ms ease-in-out;
@@ -266,23 +319,25 @@
   transition: all 250ms ease-in-out;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 490px) {
   .profile {
     display: none;
   }
 
   .chatBox {
-    display: none;
-    height: 36rem;
+    position: static;
+    width: 20.7rem;
+    border-right: 2px solid #e1e1e1;
   }
 
   .listBox {
-    position: relative;
-    display: flexbox;
+    position: absolute;
     background-color: white;
-    width: 23rem;
+    width: 18rem;
+    height: 100%;
     overflow: auto;
     transition: all 250ms ease-in-out;
+    border-right: 2px solid #e1e1e1;
   }
 
   .main {
@@ -291,7 +346,8 @@
   }
 
   .flexBox {
-    margin-left: 16%;
+    margin-left: 6%;
+    height: 91%;
   }
 
   .profileBlock {
@@ -301,5 +357,25 @@
   }
   .block {
     height: 6rem;
+  }
+  .chatPost {
+    position: absolute;
+    display: flex;
+    top: 90%;
+    background-color: white;
+    height: 10%;
+    width: 53.2%;
+    border-right: 2px solid #e1e1e1;
+    border-bottom: 2px solid #e1e1e1;
+    transition: all 250ms ease-in-out;
+    outline: none;
+  }
+  .backList {
+    top: 12%;
+    left: 1%;
+    display: block;
+  }
+  .backList:hover {
+    transform: scale(1.02);
   }
 }

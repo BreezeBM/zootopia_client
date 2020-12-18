@@ -1,41 +1,97 @@
 import React, { createRef, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import io from 'socket.io-client';
+import axios from 'axios';
 import styles from './ChatUser.module.css';
-import iguanaImg from '../../images/iguana.jpeg';
+import OutImg from '../../images/roomOut.png';
 
-const ChatUser = ({ idValue, state, stateFunc }) => {
+const socket = io('https://chat.codestates-project.tk/', {
+  withCredentials: true,
+});
+
+const ChatUser = ({
+  idValue,
+  unread,
+  targetId,
+  targetToggle,
+  roomTitle,
+  userImg,
+  roomPeople,
+  dataFunc,
+  Myid,
+}) => {
   const Card = createRef();
-  console.log(idValue);
-
-  const [changes, changeToggle] = useState(state);
+  const history = useHistory();
 
   useEffect(() => {
-    if (state !== idValue) {
+    if (targetId !== idValue) {
       Card.current.style.backgroundColor = 'white';
-      console.log(changes);
-      console.log(changeToggle);
+      disconnect();
     }
-  });
+  }, [targetId]);
 
   const handleCard = function () {
-    const arr = ['Win16', 'Win32', 'Win64', 'Mac', 'MacIntel'];
-    stateFunc(idValue);
     Card.current.style.backgroundColor = 'rgba(255,198,0)';
-    if (arr.includes(navigator.platform)) {
-      if (state === 1) {
-        stateFunc(2);
-      } else {
-        stateFunc(idValue);
-        console.log(state);
-      }
-    }
+    targetToggle(idValue);
+    console.log(idValue);
+    dataFunc(idValue);
   };
+
+  const roomBye = function () {
+    const goobyeData = { id: Myid };
+    const config = {
+      method: 'post',
+      url: `https://chat.codestates-project.tk/room/${idValue}`,
+      headers: { 'Content-Type': 'application/json' },
+      data: goobyeData,
+      withCredentials: true,
+    };
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        history.push('/main');
+        history.push('/chat');
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const disconnect = function () {
+    const connectData = { id: Myid };
+    const config = {
+      method: 'post',
+      url: `https://chat.codestates-project.tk/chat/leave/${idValue}`,
+      headers: { 'Content-Type': 'application/json' },
+      data: connectData,
+      withCredentials: true,
+    };
+    axios(config, { withCredentials: true })
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
-    <div className={styles.usercard} ref={Card} onClick={handleCard}>
-      <img className={styles.userProfile} src={iguanaImg} alt="userprofile" />
-      <div className={styles.username}>닉네임은팔글자요</div>
-      <div className={styles.userbreed}>글자수는열다섯으로기준을잡겠다</div>
-      <div className={styles.status}>안 읽은 메시지가 있습니다.</div>
-    </div>
+    <>
+      <div className={styles.usercard} ref={Card} onClick={handleCard}>
+        <img className={styles.userProfile} src={userImg} alt="userprofile" />
+        <div className={styles.username}>{roomTitle}</div>
+        <div className={styles.userbreed}>{roomPeople}</div>
+        <div className={styles.status}>
+          {unread ? '안 읽은 메시지가 있습니다.' : ''}
+        </div>
+        <img
+          className={styles.outButton}
+          src={OutImg}
+          alt="roomOut"
+          onClick={roomBye}
+        />
+      </div>
+    </>
   );
 };
 export default ChatUser;

@@ -2,8 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 const IMG = styled.img`
-  width: 22rem;
+  width: 30vw;
   height: 25rem;
+  @media (max-width: 65rem) {
+    width: 100vw;
+  }
 `;
 
 const EachSlide = ({ imageSrc }) => {

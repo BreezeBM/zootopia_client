@@ -1,4 +1,6 @@
-import React from 'react';
+import { React, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 import styles from './LandingPage.module.css';
 import googleImg from '../../images/google.png';
 import githubImg from '../../images/github.png';
@@ -7,18 +9,48 @@ import gusetImg from '../../images/guest.png';
 const LandingPage = () => {
   const githubId = 'c88e8e9bc0063cfe57df';
   const githubReURI = 'https://server.codestates-project.tk/auth/github';
+  const googleId =
+    '162389495757-7kkbjf2q1n5moi2kdk4i217p7qeo1umm.apps.googleusercontent.com';
+  const googleReURI = 'https://server.codestates-project.tk/auth/google';
+  const history = useHistory();
 
   const handleLogin = async (e) => {
     if (e.target.name === 'google') {
-      alert('1.2패치 이후 제공예정');
-      window.location.href = 'https://e3fc39a5efdc.ngrok.io/main';
+      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleId}&redirect_uri=${googleReURI}&response_type=code&scope=email`;
     } else if (e.target.name === 'github') {
       window.location.href = `https://github.com/login/oauth/authorize?client_id=${githubId}&scope=user:email&redirect_uri=${githubReURI}`;
     } else if (e.target.name === 'guest') {
-      alert('1.2패치 이후 제공예정');
-      window.location.href = 'https://e3fc39a5efdc.ngrok.io/chat';
+      const config = {
+        method: 'get',
+        url: 'https://server.codestates-project.tk/auth/guest',
+        withCredentials: true,
+      };
+
+      axios(config)
+        .then(function (response) {
+          console.log(response);
+          history.push('/main');
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   };
+
+  const checkToken = async () => {
+    try {
+      await axios.get(`https://server.codestates-project.tk/user/0`, {
+        withCredentials: true,
+      });
+      history.push('/main');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   return (
     <>

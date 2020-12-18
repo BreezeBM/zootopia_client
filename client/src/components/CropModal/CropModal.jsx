@@ -6,6 +6,11 @@ import styles from './CropModal.module.css';
 import close from '../../images/close(white).png';
 
 const CropModal = ({
+  setUserProfile,
+  setProfile,
+  profile,
+  userProfile,
+  kind,
   setImgSrc,
   setNowImg,
   imgSrc,
@@ -88,9 +93,15 @@ const CropModal = ({
       headers: {
         'Content-Type': `multipart/form-data`,
       },
+      withCredentials: true,
     });
     setNowImg(response.data.thumbnail);
     setImgSrc(null);
+    if (kind === 'user' || kind === 'latest') {
+      setProfile({ ...profile, thumbnail: response.data.thumbnail });
+    }
+
+    setUserProfile({ ...userProfile, thumbnail: response.data.thumbnail });
     handleClose();
   };
 

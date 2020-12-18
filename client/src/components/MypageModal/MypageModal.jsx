@@ -1,21 +1,30 @@
-import { createRef, React, useState } from 'react';
+import { useEffect, React, useRef, useState } from 'react';
 import axios from 'axios';
 
 import styles from './MypageModal.module.css';
 import Modal from '../Modal/Modal';
-import defaultProfile from '../../images/defaultProfile.png';
 import logoImg from '../../images/logo.png';
 import DeleteModal from '../DeleteModal/DeleteModal';
 import CropModal from '../CropModal/CropModal';
 
-const MypageModal = ({ isModalOn, handleClose }) => {
+const MypageModal = ({
+  setProfile,
+  kind,
+  userProfile,
+  setUserProfile,
+  profile,
+  isModalOn,
+  handleClose,
+}) => {
   // img 변경관련 로직
+  const [petnameCaution, setPetnameCaution] = useState(null);
+  const [breedCaution, setBreedCaution] = useState(null);
   const [cropModalOn, setCropModalOn] = useState(false);
   const handleCropModalOn = () => {
     setCropModalOn(!cropModalOn);
   };
   const [imgSrc, setImgSrc] = useState(null);
-  const [nowImg, setNowImg] = useState(defaultProfile);
+  const [nowImg, setNowImg] = useState(profile.thumbnail);
   // const handleNowImg = (newImg) => {
   //   setNowImg(newImg);
   // };
@@ -34,13 +43,13 @@ const MypageModal = ({ isModalOn, handleClose }) => {
 
   // 서버에서 보내준 정보를 렌더링(초기)할 때 useState 디폴트 값으로 받기
   // + 유효성 검사 로직
-  const [nowPetName, setNowPetName] = useState('스눕독');
-  const [nowBreed, setNowBreed] = useState('시바견');
-  const petnameRef = createRef();
-  const breedRef = createRef();
+  const [nowPetName, setNowPetName] = useState(userProfile.petName);
+  const [nowBreed, setNowBreed] = useState(userProfile.breed);
+  const petnameRef = useRef(null);
+  const breedRef = useRef(null);
 
-  const [petName, setPetname] = useState(nowPetName);
-  const [breed, setBreed] = useState(nowBreed);
+  const [petName, setPetname] = useState(userProfile.petName);
+  const [breed, setBreed] = useState(userProfile.breed);
   const [checked, setChecked] = useState({ petname: true, breed: true });
 
   // 유효성 검사 로직
@@ -49,12 +58,16 @@ const MypageModal = ({ isModalOn, handleClose }) => {
       setChecked({ ...checked, petname: true });
       if (e.target.value.length > 18 || e.target.value.length === 0) {
         setChecked({ ...checked, petname: false });
+        setPetnameCaution(
+          '펫네임은 최소 1글자 이상 18글자 이하로 작성해주세요',
+        );
       }
       setPetname(e.target.value);
     } else if (e.target.name === 'breed') {
       setChecked({ ...checked, breed: true });
       if (e.target.value.length > 18 || e.target.value.length === 0) {
         setChecked({ ...checked, breed: false });
+        setBreedCaution('품종은 최소 1글자 이상 18글자 이하로 작성해주세요');
       }
       setBreed(e.target.value);
     }
@@ -74,14 +87,19 @@ const MypageModal = ({ isModalOn, handleClose }) => {
         if (response.status === 201) {
           setNowPetName(petName);
           setPetname(petName);
-          petnameRef.current.blur(); // 해결하기
+          if (kind === 'latest' || kind === 'user') {
+            setProfile({ ...profile, petName });
+          }
+          setUserProfile({ ...userProfile, petName });
+          petnameRef.current.blur();
         }
       } catch (err) {
         // 중복 펫네임 409
         if (err.response.status === 501) {
           alert('some errors occur at server, please try again');
-        } else if (err.response.status === 404) {
+        } else if (err.response.status === 409) {
           setChecked({ ...checked, petname: false });
+          setPetnameCaution('동일한 닉네임으로의 변경은 불가능합니다');
         } else {
           console.log(err);
         }
@@ -103,13 +121,18 @@ const MypageModal = ({ isModalOn, handleClose }) => {
         if (response.status === 201) {
           setNowBreed(breed);
           setBreed(breed);
+          if (kind === 'latest' || kind === 'user') {
+            setProfile({ ...profile, breed });
+          }
+          setUserProfile({ ...userProfile, breed });
           breedRef.current.blur();
         }
       } catch (err) {
         if (err.response.status === 501) {
           alert('some errors occur at server, please try again');
-        } else if (err.response.status === 404) {
+        } else if (err.response.status === 409) {
           setChecked({ ...checked, breed: false });
+          setPetnameCaution('동일한 품종으로의 변경은 불가능합니다');
         }
       }
     }
@@ -127,6 +150,14 @@ const MypageModal = ({ isModalOn, handleClose }) => {
   const viewDeleteModal = () => {
     setDeleteModalOn(!deleteModalOn);
   };
+
+  useEffect(() => {
+    if (isModalOn === false) {
+      setPetname(nowPetName);
+      setBreed(nowBreed);
+      setChecked({ petname: true, breed: true });
+    }
+  }, [isModalOn]);
 
   return (
     <>
@@ -176,9 +207,7 @@ const MypageModal = ({ isModalOn, handleClose }) => {
                 </button>
               </div>
               {checked.petname ? null : (
-                <div className={styles.caution}>
-                  펫네임은 최소 1글자 이상 18글자 이하로 작성해주세요
-                </div>
+                <div className={styles.caution}>{petnameCaution}</div>
               )}
             </div>
             <div className={styles.breedEdit}>
@@ -206,9 +235,7 @@ const MypageModal = ({ isModalOn, handleClose }) => {
                 </button>
               </div>
               {checked.breed ? null : (
-                <div className={styles.caution}>
-                  품종은 최소 1글자 이상 18글자 이하로 작성해주세요
-                </div>
+                <div className={styles.caution}>{breedCaution}</div>
               )}
             </div>
             <div className={styles.deleteEdit}>
@@ -229,6 +256,11 @@ const MypageModal = ({ isModalOn, handleClose }) => {
         </div>
       </Modal>
       <CropModal
+        setProfile={setProfile}
+        profile={profile}
+        userProfile={userProfile}
+        kind={kind}
+        setUserProfile={setUserProfile}
         setNowImg={setNowImg}
         imgSrc={imgSrc}
         setImgSrc={setImgSrc}
