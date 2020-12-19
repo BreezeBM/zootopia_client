@@ -12,6 +12,7 @@ const Comments = ({
   deleteComment,
   commentsInform,
   handleCommentBtn,
+  DMdefault,
 }) => {
   return (
     <div className={styles.comments}>
@@ -33,6 +34,7 @@ const Comments = ({
             text={comment.text}
             time={comment.time}
             handleCommentBtn={handleCommentBtn}
+            DMdefault={DMdefault}
           />
         );
       })}

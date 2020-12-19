@@ -25,21 +25,10 @@
 .dates {
   position: relative;
   display: flex;
-  margin-left: 69%;
+  margin-left: 80%;
   font-family: MaplestoryOTFLight;
   color: #8f8f8f;
   font-size: 0.6rem;
   transition: all 180ms ease-in-out;
   flex-direction: column;
-}
-
-@media (max-width: 600px) {
-  .message {
-    background-color: #ffc600;
-    width: 50%;
-    margin-left: 48%;
-  }
-  .dates {
-    margin-left: 59%;
-  }
 }

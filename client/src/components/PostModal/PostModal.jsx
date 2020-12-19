@@ -257,7 +257,9 @@ const PostModal = ({
     axios(config)
       .then(function (response) {
         console.log(response);
-        setTimeout(history.push('/chat'), 100);
+        setIsDeleteOn(false);
+        handleClose();
+        history.push('/chat');
       })
       .catch(function (error) {
         console.log(error);
@@ -279,6 +281,11 @@ const PostModal = ({
     if (day === 0) day = '일';
     const dateForm = `${year}/${month}/${dates} (${day})`;
     return dateForm;
+  };
+
+  const DMdefault = () => {
+    setIsDeleteOn(false);
+    handleClose();
   };
 
   useEffect(() => {
@@ -449,6 +456,7 @@ const PostModal = ({
                     deleteComment={deleteComment}
                     commentsInform={commentsInform}
                     handleCommentBtn={handleCommentBtn}
+                    DMdefault={DMdefault}
                   />
                 </>
               ) : (

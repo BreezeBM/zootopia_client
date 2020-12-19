@@ -84,8 +84,11 @@ const ChatPage = ({
         `https://chat.codestates-project.tk/room/${myIdData}`,
         { withCredentials: true },
       );
-      console.log(res.data);
+      if (res.data.length === 0) {
+        history.go(0);
+      }
       setRooms(res.data);
+
       console.log(roomState);
     } catch (err) {
       throw err;
@@ -161,7 +164,7 @@ const ChatPage = ({
               unread={me.unRead}
               targetId={targetId}
               targetToggle={targetToggle}
-              connection={you.isOnline ? 'online' : 'offline'}
+              connection={you.isOnline === true ? 'online' : 'offline'}
               setYou={setYou}
               getUserData={getUserData}
               dataFunc={getMessages}
@@ -297,15 +300,24 @@ const ChatPage = ({
       if (targetId.length > 5) {
         targetChat.current.style.display = '';
         targetList.current.style.display = 'none';
+      } else if (document.body.offsetWidth > 600) {
+        targetChat.current.style.display = '';
       }
     }
   }, [targetId]);
+
+  useEffect(() => {
+    if (document.body.offsetWidth > 600) {
+      targetChat.current.style.display = '';
+    }
+  }, [document.body.offsetWidth]);
 
   mapingFunc();
   console.log('랜더링');
   return (
     <>
       <AddroomModal
+        className={styles.addModal}
         isModalOn={addRoomOn}
         handleClose={viewAddRoompage}
         myId={myIdData}

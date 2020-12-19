@@ -23,6 +23,7 @@ const Comment = ({
   text,
   time,
   handleCommentBtn,
+  DMdefault,
 }) => {
   const history = useHistory();
   const [today, setToday] = useState(null);
@@ -90,8 +91,8 @@ const Comment = ({
     axios(config)
       .then(function (response) {
         console.log(response);
+        DMdefault();
         history.push('/chat');
-        console.log('야호~~~');
       })
       .catch(function (error) {
         console.log(error);
@@ -236,6 +237,7 @@ const Comment = ({
           refreshPost={refreshPost}
           replies={replies}
           handleCommentBtn={handleCommentBtn}
+          DMdefault={DMdefault}
         />
       </div>
     </>

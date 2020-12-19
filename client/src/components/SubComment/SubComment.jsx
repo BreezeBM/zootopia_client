@@ -21,6 +21,7 @@ const SubComment = ({
   text,
   time,
   handleCommentBtn,
+  DMdefault,
 }) => {
   const history = useHistory();
   const [today, setToday] = useState(null);
@@ -90,6 +91,32 @@ const SubComment = ({
     if (e.keyCode === 13) {
       updateSubComment();
     }
+  };
+
+  const DMchat = () => {
+    console.log('DM 보내기');
+    console.log(userProfileId);
+    console.log(userId);
+
+    const idData = {
+      myId: userProfileId,
+    };
+    const config = {
+      method: 'post',
+      url: `https://chat.codestates-project.tk/room/private/${userId}`,
+      data: idData,
+      withCredentials: true,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(response);
+        DMdefault();
+        history.push('/chat');
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const getDateType = () => {
@@ -166,9 +193,7 @@ const SubComment = ({
           className={styles.chatBtn}
           src={chatBtn}
           alt="chat button"
-          onClick={() => {
-            console.log(userId);
-          }}
+          onClick={DMchat}
         />
         <span
           className={styles.commentBtn}
