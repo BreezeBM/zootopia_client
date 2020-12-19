@@ -1,12 +1,14 @@
 <img width="500px" height="200px" src="https://user-images.githubusercontent.com/68838884/102683975-04ac9680-4218-11eb-9f95-3985d68f2930.png" alt="logo" />
 
-**:tiger::monkey_face: Zootopia :cat::dog:**
+---
+
+# **:tiger::monkey_face: Zootopia :cat::dog:**
 
 <p>
 팀명 : dayfly<br>
 프로젝트명 : Zootopia<br>
-설명 :
-
+설명 : 
+ 
 ---
 
 # :rainbow:**Development Stack :computer:**
