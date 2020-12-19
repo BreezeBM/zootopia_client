@@ -21,7 +21,14 @@ socket.on('connect_error', (err) => {
 });
 let roomLists = '';
 
-const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
+const ChatPage = ({
+  setIsLoading,
+  myPicture,
+  myId,
+  myNickname,
+  myBreed,
+  acceptUserData,
+}) => {
   const myIdData = myId;
   const username = myNickname;
   const breedname = myBreed;
@@ -59,6 +66,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
   };
 
   const getRooms = async function () {
+    setIsLoading(true);
     try {
       const res = await axios.get(
         `https://chat.codestates-project.tk/room/${myIdData}`,
@@ -71,6 +79,7 @@ const ChatPage = ({ myPicture, myId, myNickname, myBreed, acceptUserData }) => {
       throw err;
     } finally {
       console.log('룸 정보 GET 함수 실행');
+      setIsLoading(false);
     }
   };
 
