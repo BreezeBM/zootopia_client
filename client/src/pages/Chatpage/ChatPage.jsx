@@ -232,11 +232,14 @@ const ChatPage = ({
 
   const backFunc = () => {
     targetChat.current.style.display = 'none';
+    if (document.body.offsetWidth > 600) {
+      targetChat.current.style.display = '';
+    }
     targetList.current.style.display = '';
   };
 
   useEffect(() => {
-    // acceptUserData(0);
+    acceptUserData(0);
     getRooms();
   }, []);
 
@@ -289,16 +292,7 @@ const ChatPage = ({
 
   // 모바일 기종에선 전용 UI로 나올 수 있도록
   useEffect(() => {
-    const arr = [
-      'Win16',
-      'Win32',
-      'Win64',
-      'Mac',
-      'MacIntel',
-      'Linux x86_64',
-      'Linux x86_32',
-    ];
-    if (!arr.includes(navigator.platform)) {
+    if (document.body.offsetWidth < 600) {
       targetChat.current.style.display = 'none';
       if (targetId.length > 5) {
         targetChat.current.style.display = '';

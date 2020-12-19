@@ -13,12 +13,6 @@
   transition: all 20ms ease-in-out;
 }
 
-.backGround {
-  position: fixed;
-  width: 36rem;
-  height: 25rem;
-}
-
 .modal.isOn {
   z-index: 3;
   opacity: 1;
@@ -26,10 +20,13 @@
 
 .box {
   position: relative;
-
+  background-image: url('../../images/movingAni2.gif');
   width: 45rem;
   height: 28rem;
-  background: white;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: white;
   border-radius: 25px;
   box-shadow: 2px 4px 9px 0 rgba(0, 0, 0, 0.5);
   padding-top: 1.3rem;
@@ -51,9 +48,11 @@
   display: flex;
   position: relative;
   background-color: white;
-  border: 2px solid black;
-  width: 15rem;
-  top: -5rem;
+  border: 2px solid lightgrey;
+  width: 28rem;
+  height: 3rem;
+  font-size: 1rem;
+  top: 1rem;
 }
 
 .submit {
@@ -61,7 +60,7 @@
   display: flex;
   width: 6.2rem;
   height: 4.8rem;
-  top: -4.3rem;
+  top: 1.3rem;
   border-radius: 20%;
   padding-top: 0.5%;
   transition: all 250ms ease-in-out;
@@ -69,15 +68,31 @@
 }
 
 .submit:hover {
-  transform: scale(1.05);
+  transform: scale(1.13);
+}
+
+.title {
+  font-family: MaplestoryOTFBold;
+  font-size: 1.3rem;
+  color: #757575;
+  top: 5rem;
+  position: absolute;
+}
+
+.list {
+  font-family: MaplestoryOTFLight;
+  font-size: 0.8rem;
+  color: #3c3c3c;
+  position: relative;
+  margin: 0.2rem;
+  top: -0.5rem;
 }
 
 @media (max-width: 500px) {
   .box {
     position: relative;
     width: 22rem;
-    height: 28rem;
-    background: white;
+    height: 20rem;
     border-radius: 25px;
     box-shadow: 2px 4px 9px 0 rgba(0, 0, 0, 0.5);
     padding-top: 1.3rem;
@@ -85,11 +100,29 @@
     flex-direction: column;
     align-items: baseline;
   }
-  .backGround {
-    position: fixed;
-    left: 12%;
-    top: 50%;
-    width: 18rem;
-    height: 15rem;
+
+  .roomInput {
+    display: flex;
+    position: relative;
+    background-color: white;
+    border: 2px solid lightgrey;
+    width: 16rem;
+    height: 2rem;
+    font-size: 0.8rem;
+    top: 1rem;
+    left: 3rem;
+  }
+
+  .submit {
+    position: relative;
+    display: flex;
+    width: 4.7rem;
+    height: 3.5rem;
+    top: 1rem;
+    left: 8.7rem;
+    border-radius: 20%;
+    padding-top: 0.5%;
+    transition: all 250ms ease-in-out;
+    cursor: pointer;
   }
 }
