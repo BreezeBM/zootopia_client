@@ -1,5 +1,3 @@
-<img src="./README_IMAGE/Logo.png" width="600px" height="200px" alt="TodayingLogo"></img><br/>
-
 # **:tiger::monkey_face: Zootopia :cat::dog:**
 
 <p>
