@@ -3,11 +3,14 @@ import styled from 'styled-components';
 import styles from './MyChat.module.css';
 
 const MyChat = ({ textData, dateData }) => {
-  let sizes = '25%';
-  let sizes2 = '70%';
-  if (textData.length > 10) {
-    sizes = '30%';
-    sizes2 = '65.3%';
+  let sizes = '15%';
+  let sizes2 = '82%';
+  if (textData.length > 4 && textData.length < 12) {
+    sizes = '25%';
+    sizes2 = '72%';
+  } else if (textData.length >= 12) {
+    sizes = '40%';
+    sizes2 = '57%';
   }
   const messageContent = textData;
   const Message = styled.div`

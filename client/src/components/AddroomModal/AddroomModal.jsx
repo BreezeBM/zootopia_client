@@ -13,7 +13,6 @@ const socket = io('https://chat.codestates-project.tk/', {
 const AddroomModal = ({ isModalOn, handleClose, myId }) => {
   const [titleInfo, setTitleInfo] = useState('');
   const [checked, setChecked] = useState({ title: true });
-  const backNone = createRef();
 
   const checkTitle = (e) => {
     setChecked({ title: true });

@@ -20,6 +20,7 @@
   border-right: 2px solid #e1e1e1;
   border-bottom: 2px solid #e1e1e1;
   transition: all 250ms ease-in-out;
+  background-color: white;
   overflow-x: hidden;
 }
 
@@ -153,6 +154,10 @@
   top: 3rem;
 }
 
+.addModal {
+  position: relative;
+}
+
 @media (max-width: 1200px) {
   .flexBox {
     width: 80%;
@@ -192,7 +197,7 @@
 @media (max-width: 1038px) {
   .flexBox {
     top: 9%;
-    margin-left: 4rem;
+    margin-left: 4em;
     width: 85%;
   }
   .listBox {
