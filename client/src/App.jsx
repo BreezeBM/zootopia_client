@@ -183,7 +183,7 @@ function App() {
       <Spinner isSpinnerOn={isLoading} />
       <Switch>
         <Route path="/" exact>
-          <LandingPage />
+          <LandingPage setIsLoading={setIsLoading} />
         </Route>
         <Route path="/main">
           <Nav
