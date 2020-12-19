@@ -5,6 +5,7 @@ import Nav from './components/Nav/Nav';
 import LandingPage from './pages/LandingPage/LandingPage';
 import ChatPage from './pages/Chatpage/ChatPage';
 import MainPage from './pages/MainPage/MainPage';
+import Spinner from './components/Spinner/Spinner';
 
 // 굳이 state로 만들어서 비동기처리(setState)로 쓰지 않기위해(인피니트 스크롤 무한 요청의 위험성)
 // (setState가 비동기 처리이기에 그러한 위험이 있음)
@@ -19,6 +20,7 @@ let postsDatas = [];
 function App() {
   // Unauthorized Response시에 랜딩 페이지로 보내기 위한 history 변수
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(true);
 
   // 최상위 Component에서 관리할 states
   // ############################################
@@ -38,33 +40,13 @@ function App() {
 
   // app.jsx에서 필요한 함수들
   // ############################################
-  // 1) mainPage에서 첫 렌더링 이후에 서버로 요청을 보내 받아온 유저 정보 등
-  // 유저 정보를 profile state에 업데이트 해주기 위한 함수
-  const setProfileInform = ({
-    userId,
-    photo,
-    thumbnail,
-    petName,
-    breed,
-    postCount,
-  }) => {
-    setProfile({
-      ...profile,
-      userId,
-      photo,
-      thumbnail,
-      petName,
-      breed,
-      postCount,
-    });
-  };
-
   // 2) 처음 mainPage렌더링 이후에 포스트 정보를 서버로 요청하여 받아온 포스트 정보들을
   // posts state에 업데이트 해주는 함수
   const acceptPosts = async (id) => {
     setIsDone(false);
     window.scrollTo(0, 0);
     try {
+      setIsLoading(true);
       const response = await axios.post(
         'https://server.codestates-project.tk/post/grid',
         {
@@ -109,8 +91,10 @@ function App() {
       if (err.response.status === 401) {
         history.push('/');
       } else {
-        console.log(err);
+        alert('sorry server got some errors please try again');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -149,7 +133,7 @@ function App() {
       if (err.response.status === 401) {
         history.push('/');
       } else {
-        console.log(err);
+        alert('sorry server got some errors please try again');
       }
     }
   };
@@ -158,6 +142,7 @@ function App() {
   // 해당 유저의 아이디 값을 가지고 서버로 요청을 보내 해당 유저의 포스트들을 받아와서 grid view에 렌더링함
   const acceptUserData = async (userId) => {
     try {
+      setIsLoading(true);
       const response = await axios.get(
         `https://server.codestates-project.tk/user/${userId}`,
         { withCredentials: true },
@@ -172,6 +157,8 @@ function App() {
       } else {
         alert('sorry server got some errors please try again');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -193,6 +180,7 @@ function App() {
 
   return (
     <>
+      <Spinner isSpinnerOn={isLoading} />
       <Switch>
         <Route path="/" exact>
           <LandingPage />
@@ -233,6 +221,7 @@ function App() {
             acceptPosts={acceptPosts}
           />
           <ChatPage
+            setIsLoading={setIsLoading}
             myPicture={userProfile.thumbnail}
             myId={userProfile.userId}
             myNickname={userProfile.petName}

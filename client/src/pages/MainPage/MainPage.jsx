@@ -28,7 +28,6 @@ const MainPage = ({
     getPosts(0);
     acceptUserData(0);
   };
-
   useEffect(() => {
     firstOptionFunc();
     document.body.style.position = '';

@@ -1,5 +1,4 @@
 import { React, useRef, useEffect } from 'react';
-import axios from 'axios';
 import styles from './Posts.module.css';
 import Post from '../Post/Post';
 
