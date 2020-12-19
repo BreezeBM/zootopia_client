@@ -11,25 +11,24 @@ const UserChat = ({ textData, dateData, userId, img }) => {
       `https://server.codestates-project.tk/user/${id}`,
       { withCredentials: true },
     );
-    if (!userData) {
-      setData(res.data);
-      console.log(userData);
-    }
+
+    setData(res.data);
+    console.log(userData);
   };
 
   useEffect(() => {
-    if (userId) {
-      kakao(userId);
-    }
-  }, [userData]);
+    kakao(userId);
+    setData(false);
+  }, []);
 
   console.log('스몰메시지 랜딩');
+  console.log(img === 'false');
 
   return (
     <div className={styles.talkBox}>
       <img
         className={styles.chatProfile}
-        src={img === 'false' ? userData.thumbnail : img.thumbnail}
+        src={userData.thumbnail}
         alt="chatprofile_img"
       />
       <div className={styles.message}>{messageContent}</div>

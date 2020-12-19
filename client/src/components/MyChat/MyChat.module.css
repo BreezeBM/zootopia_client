@@ -25,7 +25,7 @@
 .dates {
   position: relative;
   display: flex;
-  margin-left: 78%;
+  margin-left: 69%;
   font-family: MaplestoryOTFLight;
   color: #8f8f8f;
   font-size: 0.6rem;
@@ -40,6 +40,6 @@
     margin-left: 48%;
   }
   .dates {
-    margin-left: 70%;
+    margin-left: 59%;
   }
 }

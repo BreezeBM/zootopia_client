@@ -19,6 +19,7 @@ const ChatUser = ({
   dataFunc,
   Myid,
   setRoomType,
+  setMessages,
 }) => {
   const Card = createRef();
   const history = useHistory();
@@ -32,10 +33,11 @@ const ChatUser = ({
 
   const handleCard = function () {
     setRoomType('public');
+    setMessages([]);
     Card.current.style.backgroundColor = 'rgba(255,198,0)';
     targetToggle(idValue);
     console.log(idValue);
-    dataFunc(idValue);
+    setTimeout(dataFunc(idValue), 150);
   };
 
   const roomBye = function () {

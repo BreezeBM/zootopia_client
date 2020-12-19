@@ -53,6 +53,7 @@ const ChatPage = ({
   };
 
   const mapFunction = function (el) {
+    console.log(el);
     if (el.user === myIdData) {
       return <MyChat textData={el.text} dateData={el.createdAt} />;
     } else if (roomType === 'public') {
@@ -65,12 +66,14 @@ const ChatPage = ({
         />
       );
     } else if (roomType === 'private') {
-      <UserChat
-        textData={el.text}
-        dateData={el.createdAt}
-        userId={el.user}
-        img="false"
-      />;
+      return (
+        <UserChat
+          textData={el.text}
+          dateData={el.createdAt}
+          userId={el.user}
+          img="false"
+        />
+      );
     }
   };
 
@@ -139,16 +142,17 @@ const ChatPage = ({
               dataFunc={getMessages}
               Myid={myIdData}
               setRoomType={setRoomType}
+              setMessages={setMessages}
             />
           );
         } else {
           let you = el.users.filter((dl) => dl.id !== myIdData)[0];
           let me = el.users.filter((dl) => dl.id === myIdData)[0];
           if (!you) {
-            you = { isOnline: undefined };
+            you = el.left.filter((dl) => dl.id !== myIdData)[0];
           }
           if (!me) {
-            me = { unRead: false };
+            me = el.left.filter((dl) => dl.id === myIdData)[0];
           }
 
           return (
@@ -164,6 +168,7 @@ const ChatPage = ({
               Myid={myIdData}
               Youid={you.id}
               setRoomType={setRoomType}
+              setMessages={setMessages}
             />
           );
         }
@@ -225,8 +230,13 @@ const ChatPage = ({
       });
   };
 
+  const backFunc = () => {
+    targetChat.current.style.display = 'none';
+    targetList.current.style.display = '';
+  };
+
   useEffect(() => {
-    acceptUserData(0);
+    // acceptUserData(0);
     getRooms();
   }, []);
 
@@ -241,8 +251,7 @@ const ChatPage = ({
 
   useEffect(() => {
     socket.on('newPrivate', (room, myid, id) => {
-      console.log(room);
-      if (myid === myIdData || id === myIdData) {
+      if (myid === myIdData || Number(id) === myIdData) {
         setRooms([...roomState, room]);
       }
     });
@@ -251,6 +260,7 @@ const ChatPage = ({
   }, [roomState]);
 
   useEffect(() => {
+    chatScroll.current.scrollTo(0, 1000);
     socket.on('newMessage', function (roomId, chat) {
       console.log(chat);
       if (roomId === targetId) {
@@ -275,7 +285,7 @@ const ChatPage = ({
       }
     });
     return () => socket.off('roomUpdate');
-  }, []);
+  }, [roomState]);
 
   // 모바일 기종에선 전용 UI로 나올 수 있도록
   useEffect(() => {
@@ -338,9 +348,7 @@ const ChatPage = ({
               src={backListImg}
               ref={backList}
               alt="backList"
-              onClick={() => {
-                history.go();
-              }}
+              onClick={backFunc}
             />
             <input
               className={styles.chatPost}
