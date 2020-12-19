@@ -10,12 +10,10 @@
 # :rainbow:**Development Stack :computer:**
 
 ![GitHub message](https://img.shields.io/badge/STACK-FRONT-lightgrey?style=for-the-badge)
-
-<img width="230px" height="30px" src="https://img.shields.io/badge/Front--end-javascript-yellow?style=flat-square&logo=JAVAscript"/>
-<img width="230px" height="30px" src="https://img.shields.io/badge/Front--end-react-blue?style=flat-square&logo=react"/>
-<img width="230px" height="30px" src="https://img.shields.io/badge/Front--end-HTML5-red?style=flat-square&logo=html5" />
-<img width="230px" height="30px" src="https://img.shields.io/badge/Front--end-CSS3-blue?style=flat-square&logo=css3" />
-
+> ![npm type definitions](https://img.shields.io/badge/Front--end-javascript-yellow?style=flat-square&logo=JAVAscript)
+> ![npm type definitions](https://img.shields.io/badge/Front--end-react-blue?style=flat-square&logo=react)
+> ![npm type definitions](https://img.shields.io/badge/Front--end-HTML5-red?style=flat-square&logo=html5)
+> ![npm type definitions](https://img.shields.io/badge/Front--end-CSS3-blue?style=flat-square&logo=css3)
 
 ![GitHub message](https://img.shields.io/badge/STACK-BACK-lightgrey?style=for-the-badge)
 
