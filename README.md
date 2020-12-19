@@ -1,4 +1,4 @@
-![zootopialogo](https://user-images.githubusercontent.com/68838884/102683975-04ac9680-4218-11eb-9f95-3985d68f2930.png)
+<img width="150px" height:"200px" src="https://user-images.githubusercontent.com/68838884/102683975-04ac9680-4218-11eb-9f95-3985d68f2930.png" alt="logo" />
 # **:tiger::monkey_face: Zootopia :cat::dog:**
 
 <p>
