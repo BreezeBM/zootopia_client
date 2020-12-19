@@ -319,7 +319,70 @@
   transition: all 250ms ease-in-out;
 }
 
-@media (max-width: 490px) {
+@media (max-width: 600px) {
+  .profile {
+    display: none;
+  }
+
+  .chatBox {
+    position: static;
+    width: 100%;
+    border-right: 2px solid #e1e1e1;
+  }
+
+  .listBox {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    transition: all 250ms ease-in-out;
+    border-right: 2px solid #e1e1e1;
+  }
+
+  .main {
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+
+  .flexBox {
+    width: 100%;
+    margin-left: 0%;
+    height: 91%;
+  }
+
+  .profileBlock {
+    display: flex;
+    height: 3rem;
+    color: white;
+  }
+  .block {
+    height: 6rem;
+  }
+  .chatPost {
+    position: absolute;
+    display: flex;
+    top: 90%;
+    background-color: white;
+    height: 10%;
+    width: 53.2%;
+    border-right: 2px solid #e1e1e1;
+    border-bottom: 2px solid #e1e1e1;
+    transition: all 250ms ease-in-out;
+    outline: none;
+  }
+  .backList {
+    top: 2.4rem;
+    display: block;
+    position: absolute;
+    z-index: 100;
+  }
+  .backList:hover {
+    transform: scale(1.02);
+  }
+}
+
+@media (max-width: 450px) {
   .profile {
     display: none;
   }
@@ -333,7 +396,7 @@
   .listBox {
     position: absolute;
     background-color: white;
-    width: 18rem;
+    width: 30%;
     height: 100%;
     overflow: auto;
     transition: all 250ms ease-in-out;
@@ -346,6 +409,7 @@
   }
 
   .flexBox {
+    width: 100%;
     margin-left: 6%;
     height: 91%;
   }
