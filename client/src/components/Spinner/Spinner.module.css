@@ -1,0 +1,48 @@
+.spinner {
+  position: fixed;
+  z-index: 0;
+  opacity: 0;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+}
+
+.spinner.isOn {
+  opacity: 1;
+  z-index: 9999;
+}
+
+.spinnerImg {
+  border-radius: 50%;
+  width: 20rem;
+  height: 20rem;
+}
+
+.nowLoading {
+  position: relative;
+  text-align: center;
+  top: 6rem;
+  left: 0;
+}
+
+.loadingMessage {
+  color: #ffd618;
+  font-family: MapleStoryOTFBold;
+  font-size: 2.3rem;
+  text-align: center;
+}
+
+@media screen and (max-width: 65rem) {
+  .spinnerImg {
+    width: 10rem;
+    height: 10rem;
+  }
+
+  .loadingMessage {
+    font-size: 1.5rem;
+  }
+
+  .nowLoading {
+    top: 33%;
+  }
+}
