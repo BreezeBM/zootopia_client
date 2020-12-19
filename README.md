@@ -30,6 +30,6 @@
 ---
 # **Workflow**
 
-## main server-side workflow
+## Main server workflow(클릭 하시면 크게 볼 수 있습니다)
 ![메인 서버 workflow](https://user-images.githubusercontent.com/68472067/102691557-aea81500-4250-11eb-8251-a41d1c7730e8.jpg)
 
