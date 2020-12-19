@@ -6,7 +6,7 @@ import googleImg from '../../images/google.png';
 import githubImg from '../../images/github.png';
 import gusetImg from '../../images/guest.png';
 
-const LandingPage = () => {
+const LandingPage = ({ setIsLoading }) => {
   const githubId = 'c88e8e9bc0063cfe57df';
   const githubReURI = 'https://server.codestates-project.tk/auth/github';
   const googleId =
@@ -49,6 +49,7 @@ const LandingPage = () => {
   };
 
   useEffect(() => {
+    setIsLoading(false);
     checkToken();
   }, []);
 
