@@ -21,6 +21,7 @@ const PrivateChat = ({
   Myid,
   Youid,
   setRoomType,
+  setMessages,
 }) => {
   const Card = createRef();
   const history = useHistory();
@@ -36,6 +37,7 @@ const PrivateChat = ({
 
   const handleCard = function () {
     setRoomType('private');
+    setMessages([]);
     Card.current.style.backgroundColor = 'rgba(255,198,0)';
     targetToggle(idValue);
     console.log(idValue);
