@@ -45,6 +45,7 @@ const ChatPage = ({
   const [messageState, setMessages] = useState([]);
   const [addRoomOn, setaddRoomOn] = useState(false);
   const [youProfile, setYou] = useState({ userId: -1 });
+  const [roomType, setRoomType] = useState('');
 
   const history = useHistory();
   const viewAddRoompage = () => {
@@ -54,14 +55,22 @@ const ChatPage = ({
   const mapFunction = function (el) {
     if (el.user === myIdData) {
       return <MyChat textData={el.text} dateData={el.createdAt} />;
-    } else {
+    } else if (roomType === 'public') {
       return (
         <UserChat
           textData={el.text}
           dateData={el.createdAt}
-          imgData={youProfile.thumbnail}
+          userId={el.user}
+          img={youProfile}
         />
       );
+    } else if (roomType === 'private') {
+      <UserChat
+        textData={el.text}
+        dateData={el.createdAt}
+        userId={el.user}
+        img="false"
+      />;
     }
   };
 
@@ -122,7 +131,6 @@ const ChatPage = ({
           return (
             <ChatUser
               idValue={el._id}
-              unread=""
               targetId={targetId}
               targetToggle={targetToggle}
               roomTitle={el.title}
@@ -130,6 +138,7 @@ const ChatPage = ({
               roomPeople={userNum}
               dataFunc={getMessages}
               Myid={myIdData}
+              setRoomType={setRoomType}
             />
           );
         } else {
@@ -149,11 +158,12 @@ const ChatPage = ({
               targetId={targetId}
               targetToggle={targetToggle}
               connection={you.isOnline ? 'online' : 'offline'}
-              youProfile={youProfile}
+              setYou={setYou}
               getUserData={getUserData}
               dataFunc={getMessages}
               Myid={myIdData}
               Youid={you.id}
+              setRoomType={setRoomType}
             />
           );
         }
@@ -162,10 +172,10 @@ const ChatPage = ({
   };
 
   const sendMessage = function (e) {
-    if (inputData.current.value !== '') {
+    if (e.keyCode !== 8) {
       targetButton.current.style.backgroundColor = 'rgba(255,198,0)';
       targetButton.current.style.color = 'black';
-    } else if (inputData.current.value === '') {
+    } else if (e.keyCode === 8 && inputData.current.value.length < 2) {
       targetButton.current.style.backgroundColor = 'rgba(248,248,248)';
       targetButton.current.style.color = '';
     }
@@ -241,9 +251,11 @@ const ChatPage = ({
   }, [roomState]);
 
   useEffect(() => {
-    socket.on('newMessage', function (chat) {
+    socket.on('newMessage', function (roomId, chat) {
       console.log(chat);
-      setMessages([...messageState, chat]);
+      if (roomId === targetId) {
+        setMessages([...messageState, chat]);
+      }
     });
     console.log(messageState);
     return () => socket.off('newMessage');
