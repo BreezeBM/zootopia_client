@@ -11,7 +11,6 @@ const socket = io('https://chat.codestates-project.tk/', {
 
 const ChatUser = ({
   idValue,
-  unread,
   targetId,
   targetToggle,
   roomTitle,
@@ -19,6 +18,7 @@ const ChatUser = ({
   roomPeople,
   dataFunc,
   Myid,
+  setRoomType,
 }) => {
   const Card = createRef();
   const history = useHistory();
@@ -31,6 +31,7 @@ const ChatUser = ({
   }, [targetId]);
 
   const handleCard = function () {
+    setRoomType('public');
     Card.current.style.backgroundColor = 'rgba(255,198,0)';
     targetToggle(idValue);
     console.log(idValue);
@@ -81,9 +82,6 @@ const ChatUser = ({
         <img className={styles.userProfile} src={userImg} alt="userprofile" />
         <div className={styles.username}>{roomTitle}</div>
         <div className={styles.userbreed}>{roomPeople}</div>
-        <div className={styles.status}>
-          {unread ? '안 읽은 메시지가 있습니다.' : ''}
-        </div>
         <img
           className={styles.outButton}
           src={OutImg}
