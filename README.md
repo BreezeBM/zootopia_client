@@ -29,3 +29,7 @@
 
 ---
 # **Workflow**
+
+## main server-side workflow
+![메인 서버 workflow](https://user-images.githubusercontent.com/68472067/102691557-aea81500-4250-11eb-8251-a41d1c7730e8.jpg)
+
