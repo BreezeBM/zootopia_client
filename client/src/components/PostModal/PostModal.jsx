@@ -257,8 +257,7 @@ const PostModal = ({
     axios(config)
       .then(function (response) {
         console.log(response);
-        history.push('/chat');
-        console.log('야호~~~');
+        setTimeout(history.push('/chat'), 100);
       })
       .catch(function (error) {
         console.log(error);

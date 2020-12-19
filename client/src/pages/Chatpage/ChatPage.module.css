@@ -325,7 +325,7 @@
   }
 
   .chatBox {
-    position: static;
+    position: relative;
     width: 100%;
     border-right: 2px solid #e1e1e1;
   }
@@ -365,12 +365,30 @@
     top: 90%;
     background-color: white;
     height: 10%;
-    width: 53.2%;
+    width: 77%;
     border-right: 2px solid #e1e1e1;
     border-bottom: 2px solid #e1e1e1;
     transition: all 250ms ease-in-out;
     outline: none;
   }
+  .send {
+    position: relative;
+    display: flex;
+    border: 1px solid lightgray;
+    border-radius: unset;
+    background-color: #f8f8f8;
+    width: 20%;
+    height: 9.2%;
+    margin-top: unset;
+    margin-left: 77.2%;
+    text-align: center;
+    font-size: 0.9rem;
+    color: lightgray;
+    align-items: center;
+    padding-left: 7.2%;
+    transition: all 200ms ease-in-out;
+  }
+
   .backList {
     top: 2.4rem;
     display: block;
@@ -388,7 +406,7 @@
   }
 
   .chatBox {
-    position: static;
+    position: relative;
     width: 20.7rem;
     border-right: 2px solid #e1e1e1;
   }
@@ -437,7 +455,6 @@
   .backList {
     top: 12%;
     left: 1%;
-    display: block;
   }
   .backList:hover {
     transform: scale(1.02);

@@ -64,9 +64,10 @@
 
 .login {
   display: flex;
-  color: black;
+  color: white;
   font-size: 1.3rem;
   font-weight: bold;
+  font-family: MaplestoryOTFLight;
   position: absolute;
   top: 65%;
   left: 25%;
@@ -117,12 +118,13 @@
     background-image: url('../../images/mobileBack.png');
   }
   .buttonBox {
-    top: 63%;
-    left: 17%;
+    top: 75%;
+    left: 15%;
     width: 50%;
   }
   .login {
-    left: 33%;
+    top: 77%;
+    left: 31%;
     font-size: 0.9rem;
   }
   .google {
