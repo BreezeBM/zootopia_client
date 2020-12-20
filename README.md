@@ -45,7 +45,7 @@
 <img src="https://user-images.githubusercontent.com/68838884/102705724-f3be5c80-42cd-11eb-9d44-6ddf65b51af7.png" />
 </details>
 <details>
-<summary>포스트 보내기 버튼 단계</summary>
+<summary>포스트  버튼 단계</summary>
  <img src="https://user-images.githubusercontent.com/68838884/102705535-734b2c00-42cc-11eb-96a9-587cd502cb2e.png" />
 </details>
 <details>
