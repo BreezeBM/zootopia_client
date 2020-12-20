@@ -29,6 +29,21 @@
 
 ---
 # **Workflow**
+## Client Flow
+![Untitled (1)](https://user-images.githubusercontent.com/68838884/102705427-2adf3e80-42cb-11eb-847c-b845e7a0f51e.jpg)
+<details>
+<summary>로그인 & 메인페이지 진입 전단계</summary>
+ ![image](https://user-images.githubusercontent.com/68838884/102705478-ca9ccc80-42cb-11eb-8e20-797d0300be95.png)
+</details>
+<details>
+<summary>Social Login(Google)</summary>
+</details>
+<details>
+<summary>Social Login(Google)</summary>
+</details>
+<details>
+<summary>Social Login(Google)</summary>
+</details>
 
 ## Main server workflow(클릭 하시면 크게 볼 수 있습니다)
 ![메인 서버 workflow](https://user-images.githubusercontent.com/68472067/102691557-aea81500-4250-11eb-8251-a41d1c7730e8.jpg)
