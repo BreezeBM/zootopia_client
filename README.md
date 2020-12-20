@@ -29,8 +29,8 @@
 
 ---
 # **Workflow**
-## Client Flow
-![Untitled (1)](https://user-images.githubusercontent.com/68838884/102705427-2adf3e80-42cb-11eb-847c-b845e7a0f51e.jpg)
+## Client Flow (클릭 하시면 크게 'Miro' 사이트로 이동합니다)
+<a href="https://miro.com/app/live-embed/o9J_la0saIo=/?moveToViewport=687,2636,2212,1439"><img src="https://user-images.githubusercontent.com/68838884/102705427-2adf3e80-42cb-11eb-847c-b845e7a0f51e.jpg" /></a>
 <details>
 <summary>로그인 & 메인페이지 진입 전단계</summary>
 <img src="https://user-images.githubusercontent.com/68838884/102705478-ca9ccc80-42cb-11eb-8e20-797d0300be95.png" />
@@ -39,6 +39,7 @@
 <summary>포스트 그리드 뷰에서의 infinite scroll 단계</summary>
 <img src="https://user-images.githubusercontent.com/68838884/102705523-3da64300-42cc-11eb-95b2-c317bf840181.png" />
 </details>
+<details>
 <summary>유저 프로필 및 메인 로그 클릭</summary>
 <img src="https://user-images.githubusercontent.com/68838884/102705724-f3be5c80-42cd-11eb-9d44-6ddf65b51af7.png" />
 </details>
@@ -55,12 +56,8 @@
  <img src="https://user-images.githubusercontent.com/68838884/102705657-4f3c1a80-42cd-11eb-819d-39bff462e10c.png" />
 </details>
 <details>
-<summary>개별 포스팅(3) - 이미지 캐러셀 및 유저 정보 클릭 이벤트</summary>
+<summary>개별 포스팅(3) - 이미지 캐러셀 및 유저 정보 관련 이벤트</summary>
  <img src="https://user-images.githubusercontent.com/68838884/102705718-d8535180-42cd-11eb-9d89-f09d493ca798.png" />
-</details>
-<details>
-<summary>개별 포스팅(4) - 좋아요 토글</summary>
- <img src="https://user-images.githubusercontent.com/68838884/102705697-a5a95900-42cd-11eb-8667-694c2c305661.png" />
 </details>
 <details>
 <summary>개별 포스팅(4) - 좋아요 토글</summary>
