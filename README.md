@@ -14,6 +14,7 @@
 
 **주토피아 안에서 다른 동물들과 교감하며 하루의 스트레스를 풀어보세요**
 
+
 프로젝트에 대해서 더 자세하게 알고 싶다면, [위키로 이동하기](https://github.com/codestates/zootopia_client/wiki)
  
 ---
