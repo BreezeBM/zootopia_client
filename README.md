@@ -29,7 +29,7 @@
 
 ---
 # **Workflow**
-## Client Flow (클릭 하시면 크게 'Miro' 사이트로 이동합니다)
+## Client Flow (클릭 하시면 'Miro' 사이트로 이동하며 크게 )
 <a href="https://miro.com/app/live-embed/o9J_la0saIo=/?moveToViewport=687,2636,2212,1439"><img src="https://user-images.githubusercontent.com/68838884/102705427-2adf3e80-42cb-11eb-847c-b845e7a0f51e.jpg" /></a>
 <details>
 <summary>로그인 & 메인페이지 진입 전단계</summary>
