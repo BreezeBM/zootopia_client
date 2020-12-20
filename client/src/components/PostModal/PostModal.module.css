@@ -264,6 +264,7 @@
 .commentInput {
   border: lightgray 1px solid;
   margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
   padding: 0.2rem;
   outline: none;
   width: 100%;
