@@ -234,6 +234,7 @@ const ChatPage = ({
   };
 
   const backFunc = () => {
+    targetToggle(-1);
     targetChat.current.style.display = 'none';
     if (document.body.offsetWidth > 600) {
       targetChat.current.style.display = '';
@@ -300,17 +301,11 @@ const ChatPage = ({
       if (targetId.length > 5) {
         targetChat.current.style.display = '';
         targetList.current.style.display = 'none';
-      } else if (document.body.offsetWidth > 600) {
-        targetChat.current.style.display = '';
       }
-    }
-  }, [targetId]);
-
-  useEffect(() => {
-    if (document.body.offsetWidth > 600) {
+    } else if (document.body.offsetWidth > 600) {
       targetChat.current.style.display = '';
     }
-  }, [document.body.offsetWidth]);
+  }, [targetId]);
 
   mapingFunc();
   console.log('랜더링');

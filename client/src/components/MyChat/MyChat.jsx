@@ -9,7 +9,7 @@ const MyChat = ({ textData, dateData }) => {
     sizes = '25%';
     sizes2 = '72%';
   } else if (textData.length >= 12) {
-    sizes = '40%';
+    sizes = '37%';
     sizes2 = '57%';
   }
   const messageContent = textData;

@@ -32,6 +32,7 @@
   overflow: auto;
   transition: all 250ms ease-in-out;
   overflow-x: hidden;
+  border-right: 1px solid #e1e1e1;
 }
 
 .profile {
@@ -187,10 +188,14 @@
 
   .listBox {
     width: 40%;
+    display: flexbox;
   }
 
   .flexBox {
     width: 75%;
+  }
+  .chatBox {
+    display: flexbox;
   }
 }
 
@@ -202,6 +207,10 @@
   }
   .listBox {
     width: 55%;
+    display: flexbox;
+  }
+  .chatBox {
+    display: flexbox;
   }
 }
 
@@ -235,9 +244,11 @@
   }
   .listBox {
     width: 50%;
+    display: flexbox;
   }
   .chatBox {
     width: 70%;
+    display: flexbox;
   }
 }
 
@@ -362,7 +373,7 @@
     color: white;
   }
   .block {
-    height: 6rem;
+    height: 7rem;
   }
   .chatPost {
     position: absolute;
@@ -405,7 +416,7 @@
   }
 }
 
-@media (max-width: 450px) {
+/* @media (max-width: 450px) {
   .profile {
     display: none;
   }
@@ -464,4 +475,4 @@
   .backList:hover {
     transform: scale(1.02);
   }
-}
+} */
