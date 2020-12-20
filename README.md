@@ -34,5 +34,5 @@
 ![메인 서버 workflow](https://user-images.githubusercontent.com/68472067/102691557-aea81500-4250-11eb-8251-a41d1c7730e8.jpg)
 
 ## Chat server workflow(클릭 하시면 크게 볼 수 있습니다)
-
+![채팅 서버 workflow](https://user-images.githubusercontent.com/68472067/102705134-58c28400-42c7-11eb-846b-e5e478e627d2.jpeg)
 
