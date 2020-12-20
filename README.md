@@ -28,6 +28,11 @@
 ![Untitled presentation (2)](https://user-images.githubusercontent.com/68838884/102682430-bcd44200-420c-11eb-9839-eff5347c3760.png)
 
 ---
+# **Stack Architecture**
+<img width="1031" alt="아키텍쳐" src="https://user-images.githubusercontent.com/68472067/102713251-29813680-430a-11eb-83e6-e5ea592195ce.png">
+
+
+---
 # **Workflow**
 ## Client Flow 
 ** 클릭 하시면 'Miro' 사이트로 이동하며 크게 볼 수 있습니다
