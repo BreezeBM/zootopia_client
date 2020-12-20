@@ -40,7 +40,7 @@
 <img src="https://user-images.githubusercontent.com/68838884/102705523-3da64300-42cc-11eb-95b2-c317bf840181.png" />
 </details>
 <summary>유저 프로필 및 메인 로그 클릭</summary>
- <img src="https://user-images.githubusercontent.com/68838884/102705724-f3be5c80-42cd-11eb-9d44-6ddf65b51af7.png" />
+<img src="https://user-images.githubusercontent.com/68838884/102705724-f3be5c80-42cd-11eb-9d44-6ddf65b51af7.png" />
 </details>
 <details>
 <summary>포스트 보내기 버튼 단계</summary>
@@ -50,16 +50,38 @@
 <summary>개별 포스팅(1) - 채팅 보내기 </summary>
  <img src="https://user-images.githubusercontent.com/68838884/102705683-87435d80-42cd-11eb-81d8-d21946c983ac.png" />
 </details>
+<details>
 <summary>개별 포스팅(2) - 댓글</summary>
  <img src="https://user-images.githubusercontent.com/68838884/102705657-4f3c1a80-42cd-11eb-819d-39bff462e10c.png" />
 </details>
+<details>
 <summary>개별 포스팅(3) - 이미지 캐러셀 및 유저 정보 클릭 이벤트</summary>
  <img src="https://user-images.githubusercontent.com/68838884/102705718-d8535180-42cd-11eb-9d89-f09d493ca798.png" />
 </details>
+<details>
 <summary>개별 포스팅(4) - 좋아요 토글</summary>
  <img src="https://user-images.githubusercontent.com/68838884/102705697-a5a95900-42cd-11eb-8667-694c2c305661.png" />
 </details>
-
+<details>
+<summary>개별 포스팅(4) - 좋아요 토글</summary>
+ <img src="https://user-images.githubusercontent.com/68838884/102705697-a5a95900-42cd-11eb-8667-694c2c305661.png" />
+</details>
+<details>
+<summary>Nav Bar - 채팅 페이지</summary>
+ <img src="https://user-images.githubusercontent.com/68838884/102705799-bad2b780-42ce-11eb-9706-2b3cc607cfc6.png" />
+</details>
+<details>
+<summary>Nav Bar - MyPage(1) : 프로필 변경</summary>
+ <img src="https://user-images.githubusercontent.com/68838884/102705749-439d2380-42ce-11eb-89b1-16f81517f354.png" />
+</details>
+<details>
+<summary>Nav Bar - MyPage(2) : 품종 변경 및 회원탈퇴</summary>
+ <img src="https://user-images.githubusercontent.com/68838884/102705768-6f200e00-42ce-11eb-96fa-94f1444e2716.png" />
+</details>
+<details>
+<summary>Nav Bar - 로그아웃</summary>
+ <img src="https://user-images.githubusercontent.com/68838884/102705779-84953800-42ce-11eb-90c1-736f9a76e4b5.png" />
+</details>
 
 ## Main server workflow(클릭 하시면 크게 볼 수 있습니다)
 ![메인 서버 workflow](https://user-images.githubusercontent.com/68472067/102691557-aea81500-4250-11eb-8251-a41d1c7730e8.jpg)
