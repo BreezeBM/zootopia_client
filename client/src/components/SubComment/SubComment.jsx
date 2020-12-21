@@ -167,7 +167,7 @@ const SubComment = ({
           src={chatBtn}
           alt="chat button"
           onClick={() => {
-            console.log(userId);
+            history.push('/chat');
           }}
         />
         <span
