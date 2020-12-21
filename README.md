@@ -100,3 +100,101 @@
 ## Chat server workflow(클릭 하시면 크게 볼 수 있습니다)
 ![채팅 서버 workflow](https://user-images.githubusercontent.com/68472067/102705134-58c28400-42c7-11eb-846b-e5e478e627d2.jpeg)
 
+---
+# **Final App View**
+<details>
+<summary>Social Login(Google)</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102715282-aff04500-4317-11eb-81c8-d9ac09c64930.gif" alt="social login" />
+</details>
+<details>
+<summary>Social Login(Github)</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102715583-c8615f00-4319-11eb-84ea-e92af7b34c5b.gif" alt="social login" />
+</details>
+<details>
+<summary>Guest Login</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102715886-86d1b380-431b-11eb-89e8-74e35baa737d.gif" alt="guest login" />
+</details>
+<details>
+<summary>Logout</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102715955-f0ea5880-431b-11eb-8454-c8d33bc95642.gif" alt="logout" />
+</details>
+<details>
+<summary>특정 유저의 프로필 및 포스트 데이터 받아오기</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716052-9d2c3f00-431c-11eb-845d-3158d4f5e52c.gif" alt="guest login" />
+</details>
+<details>
+<summary>포스트 추가 요청</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716758-30677380-4321-11eb-89dd-d03ca47baa75.gif" alt="guest login" />
+</details>
+<details>
+<summary>포스트 쓰기</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716802-7c1a1d00-4321-11eb-9099-832a3ed1ae11.gif" alt="send post" />
+</details>
+<details>
+<summary>포스트 보기</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716146-48d58f00-431d-11eb-87f8-1dc956744625.gif" alt="see post" />
+</details>
+<details>
+<summary>포스트 수정</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716209-ac5fbc80-431d-11eb-8978-c63a984a7a68.gif" alt="update post" />
+</details>
+<details>
+<summary>포스트 삭제</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716238-ea5ce080-431d-11eb-9676-c4f661c46079.gif" alt="delete post" />
+</details>
+<details>
+<summary>댓글 쓰기</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716278-3576f380-431e-11eb-90be-29c1da8a2c2f.gif" alt="write comment" />
+</details>
+<details>
+<summary>댓글 수정</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716315-7ec74300-431e-11eb-84dd-82509bb8419b.gif" alt="write comment" />
+</details>
+<details>
+<summary>댓글 삭제</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716371-d36abe00-431e-11eb-8353-c97948d7d476.gif" alt="write comment" />
+</details>
+<details>
+<summary>대댓글 쓰기</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716405-0e6cf180-431f-11eb-830b-bf2d5ced45cf.gif" alt="write comment" />
+</details>
+<details>
+<summary>대댓글 수정</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716424-38261880-431f-11eb-9b83-b547f97e6a55.gif" alt="write comment" />
+</details>
+<details>
+<summary>대댓글 삭제</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716438-4aa05200-431f-11eb-9129-b9f711923fae.gif" alt="write comment" />
+</details>
+<details>
+<summary>좋아요 및 좋아요 취소</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716462-78859680-431f-11eb-8816-cbbe9c5f9c22.gif" alt="write comment" />
+</details>
+<details>
+<summary>펫네임 변경</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716508-a9fe6200-431f-11eb-8a52-e9fd5a65ca9e.gif" alt="write comment" />
+</details>
+<details>
+<summary>프로필 사진 변경</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716544-ddd98780-431f-11eb-9c30-d0a9312f84d4.gif" alt="write comment" />
+</details>
+<details>
+<summary>품종 변경</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716587-298c3100-4320-11eb-93dd-1364d9954b34.gif" alt="write comment" />
+</details>
+<details>
+<summary>회원 탈퇴</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716608-4f193a80-4320-11eb-89eb-ec49b8bdadd7.gif" alt="write comment" />
+</details>
+<details>
+<summary>채팅방 만들기</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716643-8e478b80-4320-11eb-8711-1ebd8fc39bc7.gif" alt="write comment" />
+</details>
+<details>
+<summary>채팅방 나가기</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716680-bc2cd000-4320-11eb-88bf-60cb3320f86f.gif" alt="write comment" />
+</details>
+<details>
+<summary>채팅 보내기</summary>
+<img src="https://user-images.githubusercontent.com/68838884/102716702-e1214300-4320-11eb-91a8-18f7bbc6b5b8.gif" alt="write comment" />
+</details>
