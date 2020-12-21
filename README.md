@@ -3,7 +3,7 @@
 ---
 
 # **:tiger::monkey_face: Zootopia :cat::dog:**
-![초기화면](https://user-images.githubusercontent.com/68472067/102728363-cfff2300-436e-11eb-955c-f65f69548af7.gif)
+![ezgif-3-934797681419](https://user-images.githubusercontent.com/68472067/102728389-ffae2b00-436e-11eb-8be4-ae7e83789bf5.gif)
 ### **사람으로 사는 게 피곤한 당신, 그럼 동물로 변해서 놀아봐요.**
 
 저희 주토피아에서는 
