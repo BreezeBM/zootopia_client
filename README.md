@@ -18,6 +18,100 @@
 프로젝트에 대해서 더 자세하게 알고 싶다면, [위키로 이동하기](https://github.com/codestates/zootopia_client/wiki)
  
 ---
+# 👨👩팀원소개
+## 클릭해서 펼쳐주세요
+
+
+<details>
+  <summary>홍용기</summary>
+  
+
+  - [![badge](https://img.shields.io/badge/Github-0715yk-red?style=for-the-badge&logo=github)](https://github.com/0715yk)
+  - **Role** : Team Leader
+  - **Position** : Front-end
+  - **Stack** :  React, HTML, CSS, VanillaJS
+  - **Works** : 
+     1. **Intersection Observer API 를 이용한 infinite scroll을 통한 포스트 추가 요청 기능**
+     2. **React-easy-crop과 canvas를 이용한 image input crop 기능**
+     3. **display grid를 이용한 메인 페이지 UI 및 내부 state 설계**
+        - MainPage Posts 부분  grid view UI 및 내부 설계
+        - New Posting Form Modal UI 및 내부 로직 설계(Crop Modal 포함)
+        - 유저 정보(프로필) 부분 UI 및 내부 설계
+        - 개별 Post Modal 창 UI 및 내부 설계(carousel 포함)
+     4. **nav bar 구현**
+        - Modal Component를 재활용하여 MyPage Modal UI 및 내부 설계
+        - 로고 클릭시 Main Grid View로 연결되며 정보를 받아오는 이벤트 설계
+        - 로그아웃 버튼 UI 및 내부 설계
+     5. **모바일 UI (media query를 통한 반응형 설계) 구현**
+        - Main Page 내의 모든 컴포넌트 및 Nav Bar 부분 반응형 UI 및 내부 로직 설계
+</details>
+
+<details>
+  <summary>임채영</summary>
+  
+  - [![badge](https://img.shields.io/badge/Github-icy9377-red?style=for-the-badge&logo=github)](https://github.com/icy9377)
+  - **Role** : Team Member
+  - **Position** : Front-end
+  - **Stack** : react ( react hook, dom), oauth, socket.io
+  - **Works** : 채팅페이지와 랜딩페이지를 제작.
+      1. 소셜로그인 과 게스트 로그인 연결
+      2. 공개채팅, 프라이빗채팅 구현
+      3. 서비스 UI 디자인
+      4. 모바일 디바이스 최적화
+  
+</details>
+
+<details>
+  <summary>강원준</summary>
+  
+  - [![badge](https://img.shields.io/badge/Github-wj--kang-red?style=for-the-badge&logo=github)](https://github.com/wj-kang)
+  - **Role** : Team Member
+  - **Position** : Back-end
+  - **Stack** :
+    - Server : Node.js(Express)
+    - Database : MYSQL
+    - ORM : Sequelize
+    - Auth : JWT Token, oAuth(Google, Github)
+    - Deploy : AWS EC2, RDS, S3, ELB, CloudFront, ACM, Route53
+    - Libraries : Multer, Multer-s3, Sharp, AWS-SDK, etc...
+  - **Works** :
+     1. AWS 배포환경 및 메인서비스 서버 세팅
+     2. 메인서비스 DB (유저 정보, 포스트 컨텐츠 정보 등)
+     3. 메인서비스 APIs
+     4. 이미지파일 리사이징 및 AWS-S3 버킷 연동 등
+  
+</details>
+
+<details>
+  <summary>피승권</summary>
+  
+  - [![badge](https://img.shields.io/badge/Github-gwon92-red?style=for-the-badge&logo=github)](https://github.com/gwon92)
+  - **Role** : Team member
+  - **Position** : Backend
+  - **Stack** : node.js, Express, Socket.io, mongoDB, Mongoose, Heroku, AWS(EC2, RDS, S3, ELB, CloudFront, ACM, Route53)
+  - **Works** : 채팅 서버 구현
+    - DB 구성
+        - 채팅 방, 채팅 메세지를 저장하는 데이터 베이스 생성
+        - mongoDB 쿼리를 이용해서 실시간 유저 상태 업데이트
+    - 서버 API 작성
+        - 채팅 메세지 전송
+        - 해당 채팅방에 저장된 채팅 메세지 렌더링
+        - 채팅방 퇴장
+        - 방 만들기(공개 채팅방, 비공개 채팅방)
+        - 채팅방 렌더링
+        - 현재 참여한 채팅방을 변경할 시 유저의 상태 변화
+    - Socket.io를 활용한 실시간 채팅 기능 구현
+        - 새로운 채팅을 받거나 방이 생기면 실시간으로 렌더링되게 서버에서 데이터 전송
+        - 방의 상태(새로운 방 생성 및 삭제)변경 시 실시간으로 적용
+        - 실시간으로 변화하는 유저의 상태(온라인 여부, 안 읽은 메세지,채팅방 참여여부)를 변경
+    - Heroku를 통해서 배포 환경 조성
+        - Heroku를 통해 채팅 서버 배포 
+        - AWS에 추가적인 배포 환경 구성
+  
+</details>
+
+
+--- 
 
 # :rainbow:**Development Stack :computer:**
 
