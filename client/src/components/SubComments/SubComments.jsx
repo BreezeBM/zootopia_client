@@ -12,6 +12,7 @@ const SubComments = ({
   setCommentId,
   replies,
   handleCommentBtn,
+  DMdefault,
 }) => {
   return (
     <div className={styles.subComments}>
@@ -32,6 +33,7 @@ const SubComments = ({
             text={reply.text}
             time={reply.time}
             handleCommentBtn={handleCommentBtn}
+            DMdefault={DMdefault}
           />
         );
       })}

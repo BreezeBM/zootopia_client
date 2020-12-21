@@ -53,6 +53,7 @@ const ChatPage = ({
   };
 
   const mapFunction = function (el) {
+    console.log(el);
     if (el.user === myIdData) {
       return <MyChat textData={el.text} dateData={el.createdAt} />;
     } else if (roomType === 'public') {
@@ -65,12 +66,14 @@ const ChatPage = ({
         />
       );
     } else if (roomType === 'private') {
-      <UserChat
-        textData={el.text}
-        dateData={el.createdAt}
-        userId={el.user}
-        img="false"
-      />;
+      return (
+        <UserChat
+          textData={el.text}
+          dateData={el.createdAt}
+          userId={el.user}
+          img="false"
+        />
+      );
     }
   };
 
@@ -81,8 +84,11 @@ const ChatPage = ({
         `https://chat.codestates-project.tk/room/${myIdData}`,
         { withCredentials: true },
       );
-      console.log(res.data);
+      if (res.data.length === 0) {
+        history.go(0);
+      }
       setRooms(res.data);
+
       console.log(roomState);
     } catch (err) {
       throw err;
@@ -139,16 +145,17 @@ const ChatPage = ({
               dataFunc={getMessages}
               Myid={myIdData}
               setRoomType={setRoomType}
+              setMessages={setMessages}
             />
           );
         } else {
           let you = el.users.filter((dl) => dl.id !== myIdData)[0];
           let me = el.users.filter((dl) => dl.id === myIdData)[0];
           if (!you) {
-            you = { isOnline: undefined };
+            you = el.left.filter((dl) => dl.id !== myIdData)[0];
           }
           if (!me) {
-            me = { unRead: false };
+            me = el.left.filter((dl) => dl.id === myIdData)[0];
           }
 
           return (
@@ -157,13 +164,14 @@ const ChatPage = ({
               unread={me.unRead}
               targetId={targetId}
               targetToggle={targetToggle}
-              connection={you.isOnline ? 'online' : 'offline'}
+              connection={you.isOnline === true ? 'online' : 'offline'}
               setYou={setYou}
               getUserData={getUserData}
               dataFunc={getMessages}
               Myid={myIdData}
               Youid={you.id}
               setRoomType={setRoomType}
+              setMessages={setMessages}
             />
           );
         }
@@ -225,6 +233,15 @@ const ChatPage = ({
       });
   };
 
+  const backFunc = () => {
+    targetToggle(-1);
+    targetChat.current.style.display = 'none';
+    if (document.body.offsetWidth > 600) {
+      targetChat.current.style.display = '';
+    }
+    targetList.current.style.display = '';
+  };
+
   useEffect(() => {
     acceptUserData(0);
     getRooms();
@@ -241,8 +258,7 @@ const ChatPage = ({
 
   useEffect(() => {
     socket.on('newPrivate', (room, myid, id) => {
-      console.log(room);
-      if (myid === myIdData || id === myIdData) {
+      if (myid === myIdData || Number(id) === myIdData) {
         setRooms([...roomState, room]);
       }
     });
@@ -251,6 +267,7 @@ const ChatPage = ({
   }, [roomState]);
 
   useEffect(() => {
+    chatScroll.current.scrollTo(0, 1000);
     socket.on('newMessage', function (roomId, chat) {
       console.log(chat);
       if (roomId === targetId) {
@@ -275,25 +292,18 @@ const ChatPage = ({
       }
     });
     return () => socket.off('roomUpdate');
-  }, []);
+  }, [roomState]);
 
   // 모바일 기종에선 전용 UI로 나올 수 있도록
   useEffect(() => {
-    const arr = [
-      'Win16',
-      'Win32',
-      'Win64',
-      'Mac',
-      'MacIntel',
-      'Linux x86_64',
-      'Linux x86_32',
-    ];
-    if (!arr.includes(navigator.platform)) {
+    if (document.body.offsetWidth < 600) {
       targetChat.current.style.display = 'none';
       if (targetId.length > 5) {
         targetChat.current.style.display = '';
         targetList.current.style.display = 'none';
       }
+    } else if (document.body.offsetWidth > 600) {
+      targetChat.current.style.display = '';
     }
   }, [targetId]);
 
@@ -302,6 +312,7 @@ const ChatPage = ({
   return (
     <>
       <AddroomModal
+        className={styles.addModal}
         isModalOn={addRoomOn}
         handleClose={viewAddRoompage}
         myId={myIdData}
@@ -338,9 +349,7 @@ const ChatPage = ({
               src={backListImg}
               ref={backList}
               alt="backList"
-              onClick={() => {
-                history.go();
-              }}
+              onClick={backFunc}
             />
             <input
               className={styles.chatPost}

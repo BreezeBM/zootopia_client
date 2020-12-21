@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, createRef } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 import styles from './AddroomModal.module.css';
@@ -10,7 +10,7 @@ const socket = io('https://chat.codestates-project.tk/', {
   withCredentials: true,
 });
 
-const AddroomModal = ({ isModalOn, handleClose, children, myId }) => {
+const AddroomModal = ({ isModalOn, handleClose, myId }) => {
   const [titleInfo, setTitleInfo] = useState('');
   const [checked, setChecked] = useState({ title: true });
 
@@ -57,9 +57,16 @@ const AddroomModal = ({ isModalOn, handleClose, children, myId }) => {
             alt="close"
             onClick={handleClose}
           />
-          {/* ** */}
-          {children}
-          <img className={styles.backGround} src={backImg} alt="movingBack" />
+          <div className={styles.title}>공개 채팅방 만들기</div>
+          <ls className={styles.list}>
+            참가인원이 아무도 없으면 채팅방은 자동 삭제됩니다.
+          </ls>
+          <ls className={styles.list}>
+            한번 나간 채팅방은 다시 들어갈 수 없으니 주의해주세요.
+          </ls>
+          <ls className={styles.list}>
+            다른 동물들을 위해서 `애니멀 에티켓`을 지켜주세요.
+          </ls>
           <input
             className={styles.roomInput}
             type="text"

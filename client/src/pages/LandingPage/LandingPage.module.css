@@ -1,5 +1,5 @@
 .landingpage {
-  background-image: url('../../images/qulityBack.png');
+  background-image: url('../../images/shallwe.gif');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -14,8 +14,8 @@
   height: 15%;
   display: flexbox;
   position: relative;
-  top: 63%;
-  left: 33%;
+  top: 65%;
+  left: 13%;
 }
 
 .google {
@@ -65,12 +65,12 @@
 .login {
   display: flex;
   color: white;
-  font-family: MaplestoryOTFBold;
   font-size: 1.3rem;
   font-weight: bold;
+  font-family: MaplestoryOTFLight;
   position: absolute;
-  top: 63%;
-  left: 45%;
+  top: 65%;
+  left: 25%;
 }
 
 @media (max-width: 1000px) {
@@ -90,12 +90,12 @@
   }
 
   .buttonBox {
-    left: 29%;
+    left: 7%;
     transition: all 250ms ease-in-out;
   }
   .login {
     transition: all 250ms ease-in-out;
-    left: 41%;
+    left: 19%;
     font-size: 1rem;
   }
 }
@@ -118,12 +118,13 @@
     background-image: url('../../images/mobileBack.png');
   }
   .buttonBox {
-    top: 63%;
-    left: 17%;
+    top: 75%;
+    left: 15%;
     width: 50%;
   }
   .login {
-    left: 33%;
+    top: 77%;
+    left: 31%;
     font-size: 0.9rem;
   }
   .google {
