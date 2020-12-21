@@ -159,6 +159,11 @@ const MypageModal = ({
     }
   }, [isModalOn]);
 
+  useEffect(() => {
+    setPetname(userProfile.petName);
+    setBreed(userProfile.breed);
+    setNowImg(userProfile.thumbnail);
+  });
   return (
     <>
       <DeleteModal isModalOn={deleteModalOn} handleClose={viewDeleteModal} />

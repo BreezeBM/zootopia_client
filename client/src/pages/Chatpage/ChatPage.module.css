@@ -130,6 +130,7 @@
 }
 
 .send {
+  cursor: pointer;
   position: relative;
   display: flex;
   border: 1px solid lightgray;

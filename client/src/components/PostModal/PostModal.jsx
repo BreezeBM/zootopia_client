@@ -90,7 +90,7 @@ const PostModal = ({
   // ################################################
   // 답글 달기 버튼 눌렀을 때 처리 logic
   const handleCommentBtn = async () => {
-    await setWhichComment('subComment');
+    setWhichComment('subComment');
     commentInputRef.current.focus();
   };
   // ################################################
@@ -126,12 +126,10 @@ const PostModal = ({
   };
   const sendComment = (e) => {
     if (e.keyCode === 13) {
-      commentInputRef.current.blur();
+      postComment();
     }
   };
-  const clickPostCommentBtn = () => {
-    commentInputRef.current.blur();
-  };
+
   // 포스트 수정
   const updatePost = async () => {
     if (textUpdateToggled === true) {
@@ -471,7 +469,6 @@ const PostModal = ({
               )}
               <div className={styles.inputPart}>
                 <input
-                  onBlur={postComment}
                   onKeyDown={sendComment}
                   onChange={(e) => {
                     setComment(e.target.value);
@@ -501,10 +498,7 @@ const PostModal = ({
                     님께 답글 달기 취소
                   </div>
                 ) : null}
-                <span
-                  onClick={clickPostCommentBtn}
-                  className={styles.commentBtn}
-                >
+                <span onClick={postComment} className={styles.commentBtn}>
                   게시
                 </span>
               </div>
