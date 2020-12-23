@@ -65,7 +65,7 @@ const AddroomModal = ({ isModalOn, handleClose, myId }) => {
             한번 나간 채팅방은 다시 들어갈 수 없으니 주의해주세요.
           </ls>
           <ls className={styles.list}>
-            다른 동물들을 위해서 `애니멀 에티켓`을 지켜주세요.
+            다른 동물들을 위해서 `애니멀 에티켓`을 지켜주세요!!.
           </ls>
           <input
             className={styles.roomInput}
